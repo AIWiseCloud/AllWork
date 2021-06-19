@@ -1,0 +1,406 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AllWork.Web</name>
+    </assembly>
+    <members>
+        <member name="T:AllWork.Web.Controllers.BaiduController">
+            <summary>
+            百度智能云
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.BaiduController.getAccessToken(System.String,System.String,System.String)">
+            <summary>
+            鉴权认证机制--获取Access Token
+            </summary>
+            <param name="apikey"></param>
+            <param name="secretkey"></param>
+            <param name="cachekey"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.BaiduController.SpeechRecognition(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            短语音识别（支持pcm/wav/amr/m4a格式的语音文件）
+            </summary>
+            <param name="formCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.BaiduController.BusinessCardRecognition(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            名片识别
+            </summary>
+            <param name="formCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.BaiduController.IdentityRecognition(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            身份证识别
+            </summary>
+            <param name="formCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.BaiduController.DrivingLicenseRecognition(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            驾驶证识别
+            </summary>
+            <param name="formCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.LogisticsController">
+            <summary>
+            物流助手
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.LogisticsController.getAccessToken(System.String,System.String,System.String)">
+            <summary>
+            获取小程序全局唯一后台接口调用凭据（access_token）。调用绝大多数后台接口时都需使用 access_token，开发者需要进行妥善保存。
+            </summary>
+            <param name="cachekey">缓存token的key</param>
+            <param name="appid"></param>
+            <param name="secret"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.LogisticsController.getAllDelivery">
+            <summary>
+            获取支持的快递公司列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.LogisticsController.updatePrinter(System.String,System.String)">
+            <summary>
+            配置面单打印员（可以设置多个，若需要使用微信打单 PC 软件，才需要调用）
+            </summary>
+            <param name="openid">打印员 openid</param>
+            <param name="update_type">更新类型（合法值有bind，unbind）</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.#ctor(AllWork.IServices.Sys.IUserServices,Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="userServices"></param>
+            <param name="configuration"></param>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.LoadMyInfo">
+            <summary>
+            获取我的信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UploadController.UploadFiles(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            文件上传
+            </summary>
+            <param name="formCollection"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.WXController">
+            <summary>
+            微信
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXController.DecryptSensitiveData(System.String,System.String,System.String)">
+            <summary>
+            解密微信对称加密数据，获取用户联合运营编号UnionID
+            </summary>
+            <param name="sessionKey">临时会话秘钥</param>
+            <param name="encryptedData">微信用户敏感加密数据</param>
+            <param name="iv">解密初始向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXController.DecryptByAesBytes(System.String,System.String,System.String)">
+            <summary>
+            AES对称解密
+            </summary>
+            <param name="encryptedData">包括敏感数据在内的完整用户信息的加密数据</param>
+            <param name="sessionKey">临时会话秘钥</param>
+            <param name="iv">加密算法的初始向量</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXController.GetUserData(System.String,System.String,System.String)">
+            <summary>
+            获取用户openid, session_key等数据
+            </summary>
+            <param name="appid">小程序ID</param>
+            <param name="secret">小程序密钥</param>
+            <param name="json_code">登录态(先从wx.login()获取)</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.WXOffiaccountController">
+            <summary>
+            微信公众平台
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOffiaccountController.GetAccess_token">
+            <summary>
+            获取公众号全局唯一接口调用凭据access_token
+            (注意：要在公众号设定服务器IP到IP白名单才可以成功调用)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOffiaccountController.GetJsapi_ticket">
+            <summary>
+            获取调用微信JS接口的临时票据（必须在自己的服务全局缓存jsapi_ticket）
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOffiaccountController.GetSignature(System.String)">
+            <summary>
+            签名算法
+            </summary>
+            <param name="url">调用JS接口页面的完整URL</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.WXOpenController">
+            <summary>
+            微信开放平台
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOpenController.GetAccess_token(System.String)">
+            <summary>
+            获取接口调用凭证access_token (返回包括access_token、expires_in、refresh_token、openid、scope、unionid）
+            </summary>
+            <param name="code">填写第一步获取的code参数（一个code只能成功换取一次access_token即失效）</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOpenController.RefreshAccess_token(System.String)">
+            <summary>
+            刷新access_token有效期(返回包括access_token、expires_in、refresh_token、openid、scope）
+            </summary>
+            <param name="refresh_token">填写通过access_token获取到的refresh_token参数</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOpenController.GetUserInfo(System.String,System.String,System.String)">
+            <summary>
+            获取用户个人信息（UnionID机制）
+            </summary>
+            <param name="access_token">调用凭证</param>
+            <param name="openid">普通用户的标识，对当前开发者帐号唯一</param>
+            <param name="lang">国家地区语言版本，zh_CN 简体，zh_TW 繁体，en 英语，默认为zh-CN</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXOpenController.AuthAccess_token(System.String,System.String)">
+            <summary>
+            检验授权凭证（access_token）是否有效
+            </summary>
+            <param name="access_token">调用接口凭证</param>
+            <param name="openid">普通用户标识，对该公众帐号唯一</param>
+            <returns>errcode为0表示有效</returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.WXWorkController">
+            <summary>
+            企业微信
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.GetQYAccessToken(System.String,System.String)">
+            <summary>
+            获取access_token是调用企业微信API接口的第一步，相当于创建了一个登录凭证，其它的业务API接口，都需要依赖于access_token来鉴权调用者身份。
+            需要缓存access_token，用于后续接口的调用,有效期2小时，不能频繁调用gettoken接口，否则会受到频率拦截
+            为了安全考虑，开发者请勿将access_token返回给前端，需要开发者保存在后台，所有访问企业微信api的请求由后台发起
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.GetUserInfo(System.String)">
+            <summary>
+            获取访问用户身份
+            </summary>
+            <param name="code"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.GetDeptList(System.String)">
+            <summary>
+            获取部门列表
+            </summary>
+            <param name="deptId">部门id。获取指定部门及其下的子部门（以及及子部门的子部门等等，递归）。 如果不填，默认获取全量组织架构</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.GetDeptUsers(System.String,System.Int32)">
+            <summary>
+            获取部门成员详情
+            </summary>
+            <param name="department_id">获取的部门id</param>
+            <param name="fetch_child">1/0：是否递归获取子部门下面的成员</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.GetUserId(System.String)">
+            <summary>
+            通过手机号获取其所对应的userid
+            </summary>
+            <param name="mobile">手机号码。长度为5~32个字节</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.SendMessage(AllWork.Web.Helper.WXWork.MsgEntity)">
+            <summary>
+            发送应用消息
+            </summary>
+            <param name="msgEntity"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.UploadMedia(Microsoft.AspNetCore.Http.IFormFile)">
+            <summary>
+            上传临时素材 (手工选择文件后上传）
+            </summary>
+            <param name="file">素材</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.WXWorkController.UploadMedia2(System.String)">
+            <summary>
+            上传临时素材(以流的形式接收后上传)
+            </summary>
+            <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync">
+            <summary>
+            异步版本自定义全局异常过滤器
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
+            <summary>
+            重新OnExceptionAsync方法
+            </summary>
+            <param name="context">异常信息</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Filter.WebApiResultMiddleware">
+            <summary>
+            返回统一格式参数
+            </summary>
+        </member>
+        <member name="T:AllWork.Web.Helper.WXWork.CorpSendBase">
+            <summary>
+            企业微信发送消息的基础消息内容
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.touser">
+            <summary>
+            UserID列表（消息接收者，多个接收者用‘|’分隔）。特殊情况：指定为@all，则向关注该企业应用的全部成员发送
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.toparty">
+            <summary>
+            PartyID列表，多个接受者用‘|’分隔。当touser为@all时忽略本参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.totag">
+            <summary>
+            TagID列表，多个接受者用‘|’分隔。当touser为@all时忽略本参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.msgtype">
+            <summary>
+            消息类型
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.agentid">
+            <summary>
+            企业应用的id，整型。可在应用的设置页面查看
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.CorpSendBase.safe">
+            <summary>
+            表示是否是保密消息，0表示否，1表示是，默认0
+            </summary>
+        </member>
+        <member name="T:AllWork.Web.Helper.WXWork.Miniprogram">
+            <summary>
+            小程序消息内容实体参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.appid">
+            <summary>
+            小程序appid，必须是与当前小程序应用关联的小程序
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.page">
+            <summary>
+            点击消息卡片后的小程序页面，仅限本小程序内的页面。该字段不填则消息点击后不跳转。
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.title">
+            <summary>
+            消息标题，长度限制4-12个汉字（支持id转译）
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.description">
+            <summary>
+            消息描述，长度限制4-12个汉字（支持id转译）
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.emphasis_first_item">
+            <summary>
+            是否放大第一个content_item
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.Miniprogram.content_item">
+            <summary>
+            消息内容键值对，最多允许10个item
+            </summary>
+        </member>
+        <member name="T:AllWork.Web.Helper.WXWork.MsgEntity">
+            <summary>
+            消息参数实体
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.ToUser">
+            <summary>
+            指定接收消息的成员，成员ID列表（多个接收者用‘|’分隔，最多支持1000个）。特殊情况：指定为”@all”，则向该企业应用的全部成员发送
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.ToParty">
+            <summary>
+            指定接收消息的部门，部门ID列表，多个接收者用‘|’分隔，最多支持100个。当touser为”@all”时忽略本参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.ToTag">
+            <summary>
+            指定接收消息的标签，标签ID列表，多个接收者用‘|’分隔，最多支持100个。当touser为”@all”时忽略本参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.Media_Id">
+            <summary>
+            文件id，可以调用上传临时素材接口获取
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.Content">
+            <summary>
+            消息内容（发送text、markdown消息时的内容)
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.Miniprogram">
+            <summary>
+            消息类型为小程序消息时，要提供的实体参数信息
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Helper.WXWork.MsgEntity.MsgType">
+            <summary>
+            消息类型（官方支持多种，目前已对接的有text, markdown, file, miniprogram_notice)
+            </summary>
+        </member>
+        <member name="T:AllWork.Web.Helper.Redis.RedisClient">
+            <summary>
+            Redis帮助类
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Helper.Util.Sha1(System.String,System.String)">
+            <summary>
+            Sha1
+            </summary>
+            <param name="orgStr"></param>
+            <param name="encode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Helper.Util.CreateNonce_str">
+            <summary>
+            创建随机字符串
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Helper.Util.CreateTimestamp">
+            <summary>
+            创建时间戳
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

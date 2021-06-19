@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "38Z21hslAeWiEdaPjJxcIH11+sIMGnbhaM6Ssjoql+ZchVOvxUSFTZZgXtlmESzW/75gav4yo0A8m8vH4WC0Kg==",
+  "success": true,
+  "projectFilePath": "D:\\Develop\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\royyi\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

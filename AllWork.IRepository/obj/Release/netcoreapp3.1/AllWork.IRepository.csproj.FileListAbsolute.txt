@@ -1,0 +1,12 @@
+D:\Develop\AllWork\AllWork.IRepository\bin\Release\netcoreapp3.1\AllWork.IRepository.deps.json
+D:\Develop\AllWork\AllWork.IRepository\bin\Release\netcoreapp3.1\AllWork.IRepository.dll
+D:\Develop\AllWork\AllWork.IRepository\bin\Release\netcoreapp3.1\AllWork.IRepository.pdb
+D:\Develop\AllWork\AllWork.IRepository\bin\Release\netcoreapp3.1\AllWork.Model.dll
+D:\Develop\AllWork\AllWork.IRepository\bin\Release\netcoreapp3.1\AllWork.Model.pdb
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.csprojAssemblyReference.cache
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.AssemblyInfoInputs.cache
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.AssemblyInfo.cs
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.csproj.CoreCompileInputs.cache
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.csproj.CopyComplete
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.dll
+D:\Develop\AllWork\AllWork.IRepository\obj\Release\netcoreapp3.1\AllWork.IRepository.pdb

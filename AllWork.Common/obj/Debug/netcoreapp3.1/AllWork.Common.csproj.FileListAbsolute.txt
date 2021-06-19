@@ -1,0 +1,8 @@
+D:\Develop\AllWork\AllWork.Common\bin\Debug\netcoreapp3.1\AllWork.Common.deps.json
+D:\Develop\AllWork\AllWork.Common\bin\Debug\netcoreapp3.1\AllWork.Common.dll
+D:\Develop\AllWork\AllWork.Common\bin\Debug\netcoreapp3.1\AllWork.Common.pdb
+D:\Develop\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.AssemblyInfoInputs.cache
+D:\Develop\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.AssemblyInfo.cs
+D:\Develop\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.csproj.CoreCompileInputs.cache
+D:\Develop\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.dll
+D:\Develop\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.pdb

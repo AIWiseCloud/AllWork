@@ -1,0 +1,63 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v3.1",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v3.1": {
+      "AllWork.Services/1.0.0": {
+        "dependencies": {
+          "AllWork.IRepository": "1.0.0",
+          "AllWork.IServices": "1.0.0"
+        },
+        "runtime": {
+          "AllWork.Services.dll": {}
+        }
+      },
+      "AllWork.IRepository/1.0.0": {
+        "dependencies": {
+          "AllWork.Model": "1.0.0"
+        },
+        "runtime": {
+          "AllWork.IRepository.dll": {}
+        }
+      },
+      "AllWork.IServices/1.0.0": {
+        "dependencies": {
+          "AllWork.Model": "1.0.0"
+        },
+        "runtime": {
+          "AllWork.IServices.dll": {}
+        }
+      },
+      "AllWork.Model/1.0.0": {
+        "runtime": {
+          "AllWork.Model.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "AllWork.Services/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AllWork.IRepository/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AllWork.IServices/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "AllWork.Model/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

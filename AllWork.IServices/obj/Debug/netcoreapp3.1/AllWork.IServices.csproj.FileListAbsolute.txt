@@ -1,0 +1,12 @@
+D:\Develop\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.IServices.deps.json
+D:\Develop\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.IServices.dll
+D:\Develop\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.IServices.pdb
+D:\Develop\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.Model.dll
+D:\Develop\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.Model.pdb
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.csprojAssemblyReference.cache
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.AssemblyInfoInputs.cache
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.AssemblyInfo.cs
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.csproj.CoreCompileInputs.cache
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.csproj.CopyComplete
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.dll
+D:\Develop\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.pdb

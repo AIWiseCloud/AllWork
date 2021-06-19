@@ -1,0 +1,9 @@
+D:\Develop\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.deps.json
+D:\Develop\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.dll
+D:\Develop\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.pdb
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.AssemblyInfoInputs.cache
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.AssemblyInfo.cs
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csproj.CoreCompileInputs.cache
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.dll
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.pdb
+D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csprojAssemblyReference.cache
