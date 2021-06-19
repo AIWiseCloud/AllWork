@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "DPF+XoG+1AuZmMq/TJvlcA5GJVwt5gtuT82vdP+TCtT1OW2KLwaiXsIASpF4lrHlUCo7P6chrg7G6oYzwt9jNQ==",
+  "dgSpecHash": "jECUZeEHN9DdbIgUeEugW74l/YNJ/tNX6gIMF/rzJ4+j+RZOzCDfSyViBZjIl0LcdqOKplbmb8KSB/kKeJJqRA==",
   "success": true,
-  "projectFilePath": "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
+  "projectFilePath": "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\royyi\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+    "C:\\Users\\gains\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
   ],
   "logs": []
 }

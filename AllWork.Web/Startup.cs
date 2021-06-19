@@ -125,8 +125,6 @@ namespace AllWork.Web
                     }
                 });
                 #endregion
-
-
             });
         }
 

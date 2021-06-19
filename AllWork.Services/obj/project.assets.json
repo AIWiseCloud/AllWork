@@ -107,23 +107,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\royyi\\.nuget\\packages\\": {},
+    "C:\\Users\\gains\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Develop\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
+      "projectUniqueName": "C:\\AppCode\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
       "projectName": "AllWork.Services",
-      "projectPath": "D:\\Develop\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
-      "packagesPath": "C:\\Users\\royyi\\.nuget\\packages\\",
-      "outputPath": "D:\\Develop\\AllWork\\AllWork.Services\\obj\\",
+      "projectPath": "C:\\AppCode\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
+      "packagesPath": "C:\\Users\\gains\\.nuget\\packages\\",
+      "outputPath": "C:\\AppCode\\AllWork\\AllWork.Services\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\royyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\gains\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -131,18 +131,16 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-        "C:\\Program Files (x86)\\Stimulsoft Ultimate 2019.3.1\\Nuget Packages 2019.3.1\\Packages": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
-              "projectPath": "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
+            "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
+              "projectPath": "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
             },
-            "D:\\Develop\\AllWork\\AllWork.IServices\\AllWork.IServices.csproj": {
-              "projectPath": "D:\\Develop\\AllWork\\AllWork.IServices\\AllWork.IServices.csproj"
+            "C:\\AppCode\\AllWork\\AllWork.IServices\\AllWork.IServices.csproj": {
+              "projectPath": "C:\\AppCode\\AllWork\\AllWork.IServices\\AllWork.IServices.csproj"
             }
           }
         }
@@ -155,7 +153,6 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
-        "targetAlias": "netcoreapp3.1",
         "imports": [
           "net461",
           "net462",
@@ -171,7 +168,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

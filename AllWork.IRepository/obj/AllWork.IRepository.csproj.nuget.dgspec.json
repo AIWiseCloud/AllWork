@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {}
+    "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {}
   },
   "projects": {
-    "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
+    "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
+        "projectUniqueName": "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
         "projectName": "AllWork.IRepository",
-        "projectPath": "D:\\Develop\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
-        "packagesPath": "C:\\Users\\royyi\\.nuget\\packages\\",
-        "outputPath": "D:\\Develop\\AllWork\\AllWork.IRepository\\obj\\",
+        "projectPath": "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj",
+        "packagesPath": "C:\\Users\\gains\\.nuget\\packages\\",
+        "outputPath": "C:\\AppCode\\AllWork\\AllWork.IRepository\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\royyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gains\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,15 +25,13 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files (x86)\\Stimulsoft Ultimate 2019.3.1\\Nuget Packages 2019.3.1\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {
-              "D:\\Develop\\AllWork\\AllWork.Model\\AllWork.Model.csproj": {
-                "projectPath": "D:\\Develop\\AllWork\\AllWork.Model\\AllWork.Model.csproj"
+              "C:\\AppCode\\AllWork\\AllWork.Model\\AllWork.Model.csproj": {
+                "projectPath": "C:\\AppCode\\AllWork\\AllWork.Model\\AllWork.Model.csproj"
               }
             }
           }
@@ -46,7 +44,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "imports": [
             "net461",
             "net462",
@@ -62,24 +59,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\Develop\\AllWork\\AllWork.Model\\AllWork.Model.csproj": {
+    "C:\\AppCode\\AllWork\\AllWork.Model\\AllWork.Model.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Develop\\AllWork\\AllWork.Model\\AllWork.Model.csproj",
+        "projectUniqueName": "C:\\AppCode\\AllWork\\AllWork.Model\\AllWork.Model.csproj",
         "projectName": "AllWork.Model",
-        "projectPath": "D:\\Develop\\AllWork\\AllWork.Model\\AllWork.Model.csproj",
-        "packagesPath": "C:\\Users\\royyi\\.nuget\\packages\\",
-        "outputPath": "D:\\Develop\\AllWork\\AllWork.Model\\obj\\",
+        "projectPath": "C:\\AppCode\\AllWork\\AllWork.Model\\AllWork.Model.csproj",
+        "packagesPath": "C:\\Users\\gains\\.nuget\\packages\\",
+        "outputPath": "C:\\AppCode\\AllWork\\AllWork.Model\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\royyi\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\gains\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -87,12 +84,10 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files (x86)\\Stimulsoft Ultimate 2019.3.1\\Nuget Packages 2019.3.1\\Packages": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
-            "targetAlias": "netcoreapp3.1",
             "projectReferences": {}
           }
         },
@@ -104,7 +99,6 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "targetAlias": "netcoreapp3.1",
           "dependencies": {
             "Newtonsoft.Json": {
               "target": "Package",
@@ -126,7 +120,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
         }
       }
     }
