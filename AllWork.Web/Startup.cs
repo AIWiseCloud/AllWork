@@ -135,7 +135,6 @@ namespace AllWork.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-
             app.UseHttpsRedirection();
 
             app.UseAuthentication();//增加认证(jwt)
