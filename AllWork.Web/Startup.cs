@@ -19,6 +19,8 @@ namespace AllWork.Web
 {
     public class Startup
     {
+        //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -54,12 +56,22 @@ namespace AllWork.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
+            //过滤器
             services.AddControllers(options =>
             {
                 options.Filters.Add(typeof(WebApiResultMiddleware)); //通过自定义过滤器统一返回数据的格式
                 options.Filters.Add(typeof(CustomerGlobalExceptionFilterAsync)); //添加异常处理过滤器(Nlog日志）
+                options.Filters.Add(typeof(ModelValidateActionFilterAttribute));//模型验证
             });
+
+            //跨域问题
+            //services.AddCors(options =>
+            //{
+            //    options.AddPolicy(MyAllowSpecificOrigins,
+            //    builder => builder.AllowAnyOrigin()
+            //    .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS")
+            //    );
+            //});
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));//读取token配置信息
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
@@ -83,7 +95,7 @@ namespace AllWork.Web
             });
 
             services.AddSingleton<INLogHelper, NLogHelper>();//日志
-            services.AddScoped<IAuthenticateService, TokenAuthenticationService>();
+            services.AddScoped<IAuthenticateService, AuthenticationService>();
 
             services.AddHttpClient(); //HttpClient
             RedisClient.redisClient.InitConnect(Configuration); //Redis
@@ -141,6 +153,9 @@ namespace AllWork.Web
             app.UseRouting();
 
             app.UseAuthorization();//授权
+
+            //CORS 中间件必须配置为在对 UseRouting 和 UseEndpoints的调用之间执行。 配置不正确将导致中间件停止正常运行
+            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

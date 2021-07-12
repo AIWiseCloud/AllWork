@@ -9,27 +9,29 @@ using AllWork.IServices.Sys;
 
 namespace AllWork.Services.Sys
 {
-    public class UserServices : BaseServices<User>, IUserServices
+    public class UserServices : BaseServices<UserInfo>, IUserServices
     {
         readonly IUserRepository _dal;
 
+        //以依赖注入的形式使用_dal
         public UserServices(IUserRepository dal)
         {
             this._dal = dal;
             base.BaseDal = dal;
         }
 
-        public async Task<IEnumerable<User>> QueryUser(string userName, string password)
+        //获取用户信息
+        public async Task<UserInfo> GetUserInfo(string unionId)
         {
-            var result = await _dal.QueryList($"Select * from Sys_User Where UserName ='{userName}' and Password='{password}' ");
-
-            return result;
+            var res = await _dal.QueryFirst($"Select * from UserInfo Where UnionId = '{unionId}'");
+            return res;
         }
 
-        //模拟测试，默认都是人为验证有效
-        public bool IsValid(LoginRequestDTO req)
+        //验证是否为有效用户
+        public async Task<bool> IsValidUser(LoginRequestDTO req)
         {
-            return true;
+            var res = await _dal.QueryFirst($"Select * from UserInfo Where UnionId = '{req.Username}' or  Name = '{req.Username}'");
+            return res != null;
         }
     }
 }

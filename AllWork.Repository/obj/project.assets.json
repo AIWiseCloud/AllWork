@@ -689,23 +689,24 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\gains\\.nuget\\packages\\": {},
-    "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
+    "C:\\Users\\86134\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\AppCode\\AllWork\\AllWork.Repository\\AllWork.Repository.csproj",
+      "projectUniqueName": "D:\\AppCode\\AllWork\\AllWork.Repository\\AllWork.Repository.csproj",
       "projectName": "AllWork.Repository",
-      "projectPath": "C:\\AppCode\\AllWork\\AllWork.Repository\\AllWork.Repository.csproj",
-      "packagesPath": "C:\\Users\\gains\\.nuget\\packages\\",
-      "outputPath": "C:\\AppCode\\AllWork\\AllWork.Repository\\obj\\",
+      "projectPath": "D:\\AppCode\\AllWork\\AllWork.Repository\\AllWork.Repository.csproj",
+      "packagesPath": "C:\\Users\\86134\\.nuget\\packages\\",
+      "outputPath": "D:\\AppCode\\AllWork\\AllWork.Repository\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\gains\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\86134\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -717,9 +718,10 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
           "projectReferences": {
-            "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
-              "projectPath": "C:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
+            "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
+              "projectPath": "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
             }
           }
         }
@@ -732,6 +734,7 @@
     },
     "frameworks": {
       "netcoreapp3.1": {
+        "targetAlias": "netcoreapp3.1",
         "dependencies": {
           "Dapper": {
             "target": "Package",
@@ -761,7 +764,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.301\\RuntimeIdentifierGraph.json"
       }
     }
   }

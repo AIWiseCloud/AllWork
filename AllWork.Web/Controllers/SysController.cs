@@ -2,54 +2,82 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using System.Linq;
-
+using AllWork.Model.Sys;
+using System.Threading.Tasks;
+using System;
+using AllWork.Web.Auth;
 
 namespace AllWork.Web.Controllers
 {
-    [Route("allwork/[controller]/[action]")]
+    /// <summary>
+    /// 系统配置
+    /// </summary>
+    [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class SysController : BaseController
     {
         readonly IUserServices _userServices;
+        readonly IAuthenticateService _authService;
+        readonly ISettingsServices _settingsServices;
         readonly IConfiguration _configuration;
 
-        /// <summary>
-        /// 构造函数
-        /// </summary>
-        /// <param name="userServices"></param>
-        /// <param name="configuration"></param>
-        public SysController(IUserServices userServices,IConfiguration configuration)
+      
+        public SysController(IUserServices userServices, ISettingsServices settingsServices, IAuthenticateService authService, IConfiguration configuration)
         {
             _userServices = userServices;
+            _settingsServices = settingsServices;
             _configuration = configuration;
+            _authService = authService;
         }
 
         /// <summary>
-        /// 获取我的信息
+        /// 获取用户信息
+        /// </summary>
+        /// <param name="accessToken"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetUserInfo(string accessToken)
+        {
+            var unionId = _authService.ParseToken(accessToken);
+            try
+            {
+                var res = await _userServices.GetUserInfo(unionId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 保存App配置及首页轮播图
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> SaveSettings([FromBody]Settings model)
+        {
+            var res = await _settingsServices.SaveSettings(model);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取App配置及首页轮播图等
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public string LoadMyInfo()
+        public async Task<IActionResult> GetSettings()
         {
-            var info = new
+            try
             {
-                name = "roy",
-                age = 30,
-                desc = "就在那一刻，世间安静了"
-            };
-            return Newtonsoft.Json.JsonConvert.SerializeObject(info);
-        }
-
-        [HttpGet]
-        public string GetUser()
-        {
-            var items = _userServices.QueryUser("roy", "123").Result.ToList();
-            if (items.Count > 0)
-                return items[0].UserName + "there is will ,there is way" + _configuration["WXWork:corpid"];
-            else
-                return "没有找到";
+                var res = await _settingsServices.GetSettings();
+                return Ok(res);
+            }catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

@@ -104,6 +104,7 @@ namespace AllWork.Web.Helper.Redis
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.Message);
                 return false;
             }
         }

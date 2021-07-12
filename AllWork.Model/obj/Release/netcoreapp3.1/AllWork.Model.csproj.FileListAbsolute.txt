@@ -7,3 +7,12 @@ D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csproj.
 D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.dll
 D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.pdb
 D:\Develop\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csprojAssemblyReference.cache
+D:\AppCode\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.deps.json
+D:\AppCode\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.dll
+D:\AppCode\AllWork\AllWork.Model\bin\Release\netcoreapp3.1\AllWork.Model.pdb
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csproj.AssemblyReference.cache
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.AssemblyInfoInputs.cache
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.AssemblyInfo.cs
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.csproj.CoreCompileInputs.cache
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.dll
+D:\AppCode\AllWork\AllWork.Model\obj\Release\netcoreapp3.1\AllWork.Model.pdb

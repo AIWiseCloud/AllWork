@@ -10,3 +10,16 @@ D:\Develop\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IReposito
 D:\Develop\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.csproj.CopyComplete
 D:\Develop\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.dll
 D:\Develop\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.pdb
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.IRepository.deps.json
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.IRepository.dll
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.IRepository.pdb
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.Model.dll
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.Model.pdb
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.csproj.AssemblyReference.cache
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.AssemblyInfoInputs.cache
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.AssemblyInfo.cs
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.csproj.CoreCompileInputs.cache
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.csproj.CopyComplete
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.dll
+D:\AppCode\AllWork\AllWork.IRepository\obj\Debug\netcoreapp3.1\AllWork.IRepository.pdb
+D:\AppCode\AllWork\AllWork.IRepository\bin\Debug\netcoreapp3.1\AllWork.Model.xml

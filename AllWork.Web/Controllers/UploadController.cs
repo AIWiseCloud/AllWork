@@ -37,7 +37,7 @@ namespace AllWork.Web.Controllers
             long size = filelist.Sum(f => f.Length);
             foreach (IFormFile file in filelist)
             {
-                var subpath = "/SpeechRecognition/";
+                string subpath = "/" + DateTime.Now.ToString("yyyy-MM-dd") + "/";//日期作文件夹
                 string FilePath = webRootPath + subpath;
                 var extendname = file.FileName.Substring(file.FileName.LastIndexOf('.')); //扩展名（含点号)
                 var newfilename = DateTime.Now.ToString("yyyyMMddHHmmssfff") + extendname;

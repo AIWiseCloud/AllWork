@@ -10,3 +10,15 @@ D:\Develop\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices
 D:\Develop\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.csproj.CopyComplete
 D:\Develop\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.dll
 D:\Develop\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.pdb
+D:\AppCode\AllWork\AllWork.IServices\bin\Release\netcoreapp3.1\AllWork.IServices.deps.json
+D:\AppCode\AllWork\AllWork.IServices\bin\Release\netcoreapp3.1\AllWork.IServices.dll
+D:\AppCode\AllWork\AllWork.IServices\bin\Release\netcoreapp3.1\AllWork.IServices.pdb
+D:\AppCode\AllWork\AllWork.IServices\bin\Release\netcoreapp3.1\AllWork.Model.dll
+D:\AppCode\AllWork\AllWork.IServices\bin\Release\netcoreapp3.1\AllWork.Model.pdb
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.csproj.AssemblyReference.cache
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.AssemblyInfoInputs.cache
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.AssemblyInfo.cs
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.csproj.CoreCompileInputs.cache
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.csproj.CopyComplete
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.dll
+D:\AppCode\AllWork\AllWork.IServices\obj\Release\netcoreapp3.1\AllWork.IServices.pdb

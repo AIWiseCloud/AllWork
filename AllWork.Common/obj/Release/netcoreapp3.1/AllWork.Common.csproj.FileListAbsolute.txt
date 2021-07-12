@@ -7,3 +7,12 @@ D:\Develop\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.cspro
 D:\Develop\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.dll
 D:\Develop\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.pdb
 D:\Develop\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.csprojAssemblyReference.cache
+D:\AppCode\AllWork\AllWork.Common\bin\Release\netcoreapp3.1\AllWork.Common.deps.json
+D:\AppCode\AllWork\AllWork.Common\bin\Release\netcoreapp3.1\AllWork.Common.dll
+D:\AppCode\AllWork\AllWork.Common\bin\Release\netcoreapp3.1\AllWork.Common.pdb
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.csproj.AssemblyReference.cache
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.AssemblyInfoInputs.cache
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.AssemblyInfo.cs
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.csproj.CoreCompileInputs.cache
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.dll
+D:\AppCode\AllWork\AllWork.Common\obj\Release\netcoreapp3.1\AllWork.Common.pdb

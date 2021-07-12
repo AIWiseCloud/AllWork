@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using AllWork.IServices.Base;
+﻿using AllWork.IServices.Base;
 using AllWork.Model.Sys;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.IServices.Sys
 {
-    public interface IUserServices: IBaseServices<User>
+    public interface IUserServices : IBaseServices<UserInfo>
     {
-        Task<IEnumerable<User>> QueryUser(string userName, string password);
+        Task<UserInfo> GetUserInfo(string unionId);
 
-        bool IsValid(LoginRequestDTO req);
+        Task<bool> IsValidUser(LoginRequestDTO req);
     }
 }
