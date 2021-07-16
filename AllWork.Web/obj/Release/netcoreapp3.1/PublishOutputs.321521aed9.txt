@@ -9,7 +9,12 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Web.
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Autofac.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Autofac.Configuration.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Autofac.Extensions.DependencyInjection.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\BouncyCastle.Crypto.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Dapper.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Google.Protobuf.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Compression.LZ4.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Compression.LZ4.Streams.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Hash.xxHash.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
@@ -22,6 +27,9 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Id
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.OpenApi.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Win32.Registry.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Win32.SystemEvents.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\MySql.Data.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Ubiety.Dns.Core.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Zstandard.Net.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Newtonsoft.Json.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\NLog.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\NLog.Extensions.Logging.dll

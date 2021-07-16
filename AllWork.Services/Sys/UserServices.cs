@@ -33,5 +33,26 @@ namespace AllWork.Services.Sys
             var res = await _dal.QueryFirst($"Select * from UserInfo Where UnionId = '{req.Username}' or  Name = '{req.Username}'");
             return res != null;
         }
+
+        //保存用户信息
+        public async Task<bool> SaveUserInfo(UserInfo userInfo)
+        {
+            var model = await _dal.QueryFirst("Select * from UserInfo Where UnionId = @UnionId", userInfo);
+            userInfo.UserState = 1;
+            userInfo.Roles = string.IsNullOrEmpty(userInfo.Roles) ? "ediror" : userInfo.Roles;
+            if (model == null)
+            {
+                var insertSql = @"Insert UserInfo (UnionId,NickName,Password,PhoneNumber,Email,Avatar,Province,City,County,Gender,UserState,Roles)values
+(@UnionId,@NickName,@Password,@PhoneNumber,@Email,@Avatar,@Province,@City,@County,@Gender,@UserState,@Roles)";
+                return await _dal.Execute(insertSql, userInfo) > 0;
+            }
+            else
+            {
+                var updateSql = @"Update UserInfo set UnionId = @UnionId,NickName = @NickName,Password = @Password,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
+                return await _dal.Execute(updateSql, userInfo) > 0;
+            }
+        }
+
+
     }
 }

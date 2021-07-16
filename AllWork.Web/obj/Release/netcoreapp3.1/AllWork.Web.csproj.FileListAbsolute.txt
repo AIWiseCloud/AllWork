@@ -230,3 +230,11 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\AllWork.Web.csproj.Copy
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\AllWork.Web.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\AllWork.Web.pdb
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\AllWork.Web.genruntimeconfig.cache
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\BouncyCastle.Crypto.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Google.Protobuf.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\K4os.Compression.LZ4.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\K4os.Compression.LZ4.Streams.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\K4os.Hash.xxHash.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\MySql.Data.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Ubiety.Dns.Core.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Zstandard.Net.dll

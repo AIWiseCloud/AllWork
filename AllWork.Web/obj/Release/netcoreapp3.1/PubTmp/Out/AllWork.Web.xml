@@ -58,6 +58,39 @@
             <param name="formCollection"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.GoodsController">
+            <summary>
+            商品服务
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsCategory(AllWork.Model.Goods.GoodsCategory)">
+            <summary>
+            保存商品分类
+            </summary>
+            <param name="goodsCategory"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsCategory(System.String)">
+            <summary>
+            获取商品分类记录
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsCategories(System.String)">
+            <summary>
+            获取商品分类列表
+            </summary>
+            <param name="parentId">>上级分类ID (为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsCategory(System.String)">
+            <summary>
+            删除商品分类
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.LogisticsController">
             <summary>
             物流助手
@@ -98,6 +131,27 @@
             <param name="accessToken"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveUserCertification(AllWork.Model.Sys.UserCertification)">
+            <summary>
+            提交用户认证
+            </summary>
+            <param name="userCertification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetUserCertification(System.String)">
+            <summary>
+            获取用户认证信息
+            </summary>
+            <param name="unionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveUserInfo(AllWork.Model.Sys.UserInfo)">
+            <summary>
+            保存用户信息
+            </summary>
+            <param name="userInfo"></param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.SysController.SaveSettings(AllWork.Model.Sys.Settings)">
             <summary>
             保存App配置及首页轮播图
@@ -109,6 +163,88 @@
             <summary>
             获取App配置及首页轮播图等
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveShop(AllWork.Model.Sys.Shop)">
+            <summary>
+            保存店铺设置
+            </summary>
+            <param name="shop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetShop(System.String)">
+            <summary>
+            获取店铺设置
+            </summary>
+            <param name="shopId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetShops">
+            <summary>
+            获取所有店铺记录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.DeleteShop(System.String)">
+            <summary>
+            删除店铺设置
+            </summary>
+            <param name="shopId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveSubMesType(AllWork.Model.Sys.SubMesType)">
+            <summary>
+            保存辅助资料分类
+            </summary>
+            <param name="subMesType"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetSubMesType(System.String)">
+            <summary>
+            获取辅助资料分类
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetSubMesTypes">
+            <summary>
+            获取辅助资料所有分类
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.DeleteSubMesType(System.String)">
+            <summary>
+            删除辅助资料分类
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveSubMessage(AllWork.Model.Sys.SubMessage)">
+            <summary>
+            保存辅助资料项目
+            </summary>
+            <param name="subMessage"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetSubMessage(System.String)">
+            <summary>
+            获取辅助资料项目
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetSubMessageList(System.String)">
+            <summary>
+            获取指定分类下的辅助资料列表
+            </summary>
+            <param name="parentId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.DeleteSubMessage(System.String)">
+            <summary>
+            删除辅助资料项
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.UploadController.UploadFiles(Microsoft.AspNetCore.Http.IFormCollection)">
@@ -276,7 +412,7 @@
         </member>
         <member name="T:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync">
             <summary>
-            异步版本自定义全局异常过滤器
+            异步版本自定义全局异常过滤器  
             </summary>
         </member>
         <member name="M:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
@@ -293,7 +429,7 @@
         </member>
         <member name="T:AllWork.Web.Filter.WebApiResultMiddleware">
             <summary>
-            返回统一格式参数
+            返回统一格式参数  (这里的返回格式要与全局异常过滤器中的格式结合起来考虑 roy注)
             </summary>
         </member>
         <member name="T:AllWork.Web.Helper.WXWork.CorpSendBase">
