@@ -8,7 +8,6 @@ namespace AllWork.Repository.Sys
     {
         public SettingsRepository(IConfiguration configuration) : base(configuration)
         {
-
         }
     }
 }

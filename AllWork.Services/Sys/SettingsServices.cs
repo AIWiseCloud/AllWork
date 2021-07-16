@@ -19,15 +19,15 @@ namespace AllWork.Services.Sys
             OperResult res = new OperResult();
             try
             {
-                var instance =  _dal.QueryFirst("Select top 1 * from Settings").Result;
+                var instance =  _dal.QueryFirst("Select * from Settings limit 1").Result;
                 //无则新增
                 if (instance == null)
                 {
                     var sql = @"Insert into Settings(ID,IsMaintain,ImgUrl1,Nav1,ImgUrl2,Nav2,ImgUrl3,Nav3,Notication,ShowNotice)values
 (@ID,@IsMaintain,@ImgUrl1,@Nav1,@ImgUrl2,@Nav2,@ImgUrl3,@Nav3,@Notication,@ShowNotice)";
-                    res.IdentityKey = "sdgsds";
+                    res.IdentityKey = "";
                     res.Status = await _dal.Execute(sql, model) > 0;
-                    res.ErrorMsg = "roy";
+                    res.ErrorMsg = "success";
                 }
                 else//有则修改
                 {
@@ -55,7 +55,7 @@ Where ID = @ID";
     
         public async Task<Settings> GetSettings()
         {
-            return await _dal.QueryFirst("Select top 1 * from Settings");
+            return await _dal.QueryFirst("Select * from Settings limit 1");
         }
     }
 }

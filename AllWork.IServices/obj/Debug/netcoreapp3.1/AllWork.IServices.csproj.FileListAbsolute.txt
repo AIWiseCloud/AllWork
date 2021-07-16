@@ -22,4 +22,3 @@ D:\AppCode\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.c
 D:\AppCode\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.csproj.CopyComplete
 D:\AppCode\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.dll
 D:\AppCode\AllWork\AllWork.IServices\obj\Debug\netcoreapp3.1\AllWork.IServices.pdb
-D:\AppCode\AllWork\AllWork.IServices\bin\Debug\netcoreapp3.1\AllWork.Model.xml

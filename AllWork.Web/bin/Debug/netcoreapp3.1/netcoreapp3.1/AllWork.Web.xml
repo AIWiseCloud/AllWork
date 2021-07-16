@@ -111,6 +111,33 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.SysController.SaveShop(AllWork.Model.Sys.Shop)">
+            <summary>
+            保存店铺设置
+            </summary>
+            <param name="shop"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetShop(System.String)">
+            <summary>
+            获取店铺设置
+            </summary>
+            <param name="shopId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.GetShops">
+            <summary>
+            获取所有店铺记录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.DeleteShop(System.String)">
+            <summary>
+            删除店铺设置
+            </summary>
+            <param name="shopId"></param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.UploadController.UploadFiles(Microsoft.AspNetCore.Http.IFormCollection)">
             <summary>
             文件上传
@@ -276,7 +303,7 @@
         </member>
         <member name="T:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync">
             <summary>
-            异步版本自定义全局异常过滤器
+            异步版本自定义全局异常过滤器  
             </summary>
         </member>
         <member name="M:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync.OnExceptionAsync(Microsoft.AspNetCore.Mvc.Filters.ExceptionContext)">
@@ -293,7 +320,7 @@
         </member>
         <member name="T:AllWork.Web.Filter.WebApiResultMiddleware">
             <summary>
-            返回统一格式参数
+            返回统一格式参数  (这里的返回格式要与全局异常过滤器中的格式结合起来考虑 roy注)
             </summary>
         </member>
         <member name="T:AllWork.Web.Helper.WXWork.CorpSendBase">

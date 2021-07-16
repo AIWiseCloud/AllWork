@@ -21,14 +21,22 @@ namespace AllWork.Web.Controllers
         readonly IAuthenticateService _authService;
         readonly ISettingsServices _settingsServices;
         readonly IConfiguration _configuration;
+        readonly IShopServices _shopServices;
 
-      
-        public SysController(IUserServices userServices, ISettingsServices settingsServices, IAuthenticateService authService, IConfiguration configuration)
+
+        public SysController(
+            IUserServices userServices,
+            ISettingsServices settingsServices,
+            IAuthenticateService authService,
+            IShopServices shopServices,
+            IConfiguration configuration
+            )
         {
             _userServices = userServices;
             _settingsServices = settingsServices;
             _configuration = configuration;
             _authService = authService;
+            _shopServices = shopServices;
         }
 
         /// <summary>
@@ -57,7 +65,7 @@ namespace AllWork.Web.Controllers
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> SaveSettings([FromBody]Settings model)
+        public async Task<IActionResult> SaveSettings([FromBody] Settings model)
         {
             var res = await _settingsServices.SaveSettings(model);
             return Ok(res);
@@ -74,10 +82,58 @@ namespace AllWork.Web.Controllers
             {
                 var res = await _settingsServices.GetSettings();
                 return Ok(res);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-    }
+
+        /// <summary>
+        /// 保存店铺设置
+        /// </summary>
+        /// <param name="shop"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> SaveShop([FromBody] Shop shop)
+        {
+            var res = await _shopServices.SaveShop(shop);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取店铺设置
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetShop(string shopId)
+        {
+            var res = await _shopServices.GetShop(shopId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取所有店铺记录
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetShops()
+        {
+            var res = await _shopServices.GetShops();
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 删除店铺设置
+        /// </summary>
+        /// <param name="shopId"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteShop(string shopId)
+        {
+            var res = await _shopServices.DeleteShop(shopId);
+            return Ok(res);
+        }
+}
 }

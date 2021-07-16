@@ -60,5 +60,49 @@ namespace AllWork.Common
             }
             return strRet;
         }
+
+        /// <summary>
+        /// 获取10位时间戳
+        /// </summary>
+        /// <param name="dt"></param>
+        /// <returns></returns>
+        public static long GetTimeStamp()
+        {
+            return (DateTime.Now.Ticks - DateTime.Parse("1970-01-01 00:00:00").Ticks) / 10000000;
+        }
+
+        /// <summary>
+        /// /加密随机数生成器 生成随机种子
+        /// </summary>
+        /// <returns></returns>
+        static int GetRandomSeed()
+        {
+            byte[] bytes = new byte[4];
+            System.Security.Cryptography.RNGCryptoServiceProvider r = new System.Security.Cryptography.RNGCryptoServiceProvider();
+            r.GetBytes(bytes);
+            return BitConverter.ToInt32(bytes, 0);
+        }
+
+        /// <summary>
+        /// 获取随机数
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static int GetRandomNum(int min = 0, int max = 30)
+        {
+            return new Random(GetRandomSeed()).Next(min, max);
+        }
+
+        /// <summary>
+        /// 产生13位不重复的数字码（时间戮+随机数）
+        /// </summary>
+        /// <returns></returns>
+        public static long CreateUniqueId()
+        {
+            var prefix = GetTimeStamp();
+            var postfix = GetRandomNum(100, 999);
+            return long.Parse($"{prefix}{postfix}");
+        }
     }
 }

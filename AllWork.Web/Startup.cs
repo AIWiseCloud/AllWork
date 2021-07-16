@@ -106,7 +106,7 @@ namespace AllWork.Web
                 {
                     Title = "AllWork API",
                     Version = "V1",
-                    Description = "AllWork全栈学习平台 API描述文档",
+                    Description = "AllWork平台 API描述文档",
                 });
                 //配置XML文档的输出路径
                 var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录

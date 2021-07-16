@@ -26,4 +26,3 @@ D:\AppCode\AllWork\AllWork.Repository\obj\Debug\netcoreapp3.1\AllWork.Repository
 D:\AppCode\AllWork\AllWork.Repository\obj\Debug\netcoreapp3.1\AllWork.Repository.csproj.CopyComplete
 D:\AppCode\AllWork\AllWork.Repository\obj\Debug\netcoreapp3.1\AllWork.Repository.dll
 D:\AppCode\AllWork\AllWork.Repository\obj\Debug\netcoreapp3.1\AllWork.Repository.pdb
-D:\AppCode\AllWork\AllWork.Repository\bin\Debug\netcoreapp3.1\AllWork.Model.xml

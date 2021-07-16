@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -22,8 +23,12 @@ namespace AllWork.Repository.Base
         public IDbConnection GetOpenConn()
         {
             IDbConnection con;
-            string connectionString = _ccnfiguration["ConnectionStrings:LocalConn"]; //从appsettings.json读取连接配置
-            con = new SqlConnection(connectionString);
+            //string connectionString = _ccnfiguration["ConnectionStrings:SqlServerConn"]; //从appsettings.json读取连接配置
+            //con = new SqlConnection(connectionString);
+
+            string connectionString = _ccnfiguration["ConnectionStrings:MySqlConn"]; //从appsettings.json读取连接配置
+            con = new MySqlConnection(connectionString);
+
             try
             {
                 con.Open();
@@ -270,20 +275,20 @@ namespace AllWork.Repository.Base
         public TEntity Execute(string command, Dictionary<string, object> paras)
         {
             using var con = GetOpenConn();
-                IDbCommand com = con.CreateCommand();
-                com.CommandText = command;
-                com.CommandType = CommandType.StoredProcedure;
+            IDbCommand com = con.CreateCommand();
+            com.CommandText = command;
+            com.CommandType = CommandType.StoredProcedure;
 
-                if (paras != null)
+            if (paras != null)
+            {
+                foreach (var item in paras.Keys)
                 {
-                    foreach (var item in paras.Keys)
-                    {
-                        IDbDataParameter para = com.CreateParameter();
-                        para.Value = paras[item];
-                        para.ParameterName = item;
-                        com.Parameters.Add(para);
-                    }
+                    IDbDataParameter para = com.CreateParameter();
+                    para.Value = paras[item];
+                    para.ParameterName = item;
+                    com.Parameters.Add(para);
                 }
+            }
 
             return (TEntity)com.ExecuteScalar();
         }
