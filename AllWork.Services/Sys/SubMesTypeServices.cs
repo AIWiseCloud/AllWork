@@ -17,37 +17,25 @@ namespace AllWork.Services.Sys
 
         public async Task<bool> SaveSubMesType(SubMesType subMesType)
         {
-            var instance = await _dal.QueryFirst("Select * from SubMesType Where ID = @ID", new { ID = subMesType.ID });
-            if (instance == null)
-            {
-                var insertSql = "Insert SubMesType (ID,FName)values(@ID,@FName)";
-                return await _dal.Execute(insertSql, subMesType) > 0;
-            }
-            else
-            {
-                var updateSql = "Update SubMesType set ID = @ID,FName = @FName Where ID = @ID";
-                return await _dal.Execute(updateSql, subMesType) > 0;
-            }
+            var res = await _dal.SaveSubMesType(subMesType);
+            return res;
         }
 
         public async Task<SubMesType> GetSubMesType(string id)
         {
-            var sql = "Select * from SubMesType Where ID = @ID";
-            var res = await _dal.QueryFirst(sql, new { ID = id });
-            return res ;
+            var res = await _dal.GetSubMesType(id);
+            return res;
         }
 
         public async Task<bool> DeleteSubMesType(string id)
         {
-            var sql = "Delete from SubMesType Where ID = @ID";
-            var res = await _dal.Execute(sql, new { ID = id })>0;
+            var res = await _dal.DeleteSubMesType(id);
             return res;
         }
 
         public async  Task<IEnumerable<SubMesType>> GetSubMesTypes()
         {
-            var sql = "Select * from SubMesType";
-            var res = await _dal.QueryList(sql);
+            var res = await _dal.GetSubMesTypes();
             return res;
         }
 

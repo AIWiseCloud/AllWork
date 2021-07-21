@@ -1,7 +1,6 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
 using AllWork.Model.Goods;
-using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,29 +18,20 @@ namespace AllWork.Services.Goods
 
         public async Task<bool> SaveGoodsCategory(GoodsCategory goodsCategory)
         {
-            var instance = await _dal.QueryFirst("Select * from GoodsCategory Where CateogryId = @CategoryId");
-            if (instance == null)
-            {
-                var insertSql = "Insert GoodsCategory (CategoryId,CategoryName,ShopId,ImgUrl,ParentId,Findex,IsCancellation)values(@CategoryId,@CategoryName,@ShopId,@ImgUrl,@ParentId)";
-                return await _dal.Execute(insertSql, goodsCategory) > 0;
-            }
-            else
-            {
-                var updateSql = "Update GoodsCategory set CategoryName = @CategoryName,ShopId = @ShopId,ImgUrl = @ImgUrl,ParentId = @ParentId,Findex = @Findex,IsCancellation = @IsCancellation Where CategoryId = @CategoryId";
-                return await _dal.Execute(updateSql, goodsCategory) > 0;
-            }
+            var res = await _dal.SaveGoodsCategory(goodsCategory);
+            return res;
         }
 
         public async Task<GoodsCategory> GetGoodsCategory(string categoryId)
         {
-            var sql = "Select * from GoodsCategory Where CategoryId = @CategoryId";
-            return await _dal.QueryFirst(sql, new { CategoryId = categoryId });
+            var res = await _dal.GetGoodsCategory(categoryId);
+            return res;
         }
 
         public async Task<bool> DeleteGoodsCategory(string categoryId)
         {
-            var sql = "Delete from GoodsCategory Where CategoryId = @CategoryId";
-            return await _dal.Execute(sql, new { CategoryId = categoryId }) > 0;
+            var res = await _dal.DeleteGoodsCategory(categoryId);
+            return res;
         }
 
         /// <summary>
@@ -52,24 +42,7 @@ namespace AllWork.Services.Goods
         /// <returns></returns>
         public async Task<IEnumerable<GoodsCategory>> GetGoodsCategories(string parentId, bool onlyValidCategory = false)
         {
-            StringBuilder sql = new StringBuilder("Select * from GoodsCategory Where 1 = 1");
-            //一级分类条件
-            if (string.IsNullOrEmpty(parentId))
-            {
-                sql.Append(" and IFNULL(ParentId,'') = '' ");
-            }
-            else if (parentId != "*")//指定分类
-            {
-                sql.Append(" and ParentId = @ParentId");
-            }
-            //如果仅返回有效（未作废）的分类
-            if (onlyValidCategory)
-            {
-                sql.Append(" and IsCancellation = 0");
-            }
-            //按设定索引排序
-            sql.Append(" Order by Findex");
-            var res = await _dal.QueryList(sql.ToString(), new { ParentId = parentId });
+            var res = await _dal.GetGoodsCategories(parentId, onlyValidCategory);
             return res;
         }
     }

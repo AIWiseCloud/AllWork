@@ -5,7 +5,8 @@ namespace AllWork.Model.Sys
 {
     public class SubMessage
     {
-        public Guid ID
+        //由repository层去产生编号
+        public string ID
         { get; set; }
 
         [Required(ErrorMessage ="父节点代码不能为空")]

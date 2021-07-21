@@ -16,6 +16,8 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Compres
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Compression.LZ4.Streams.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\K4os.Hash.xxHash.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.JsonPatch.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Configuration.Abstractions.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Logging.Abstractions.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Microsoft.Extensions.Primitives.dll
@@ -31,6 +33,7 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\MySql.Data.d
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Ubiety.Dns.Core.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Zstandard.Net.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Newtonsoft.Json.dll
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\Newtonsoft.Json.Bson.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\NLog.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\NLog.Extensions.Logging.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\NLog.Web.AspNetCore.dll

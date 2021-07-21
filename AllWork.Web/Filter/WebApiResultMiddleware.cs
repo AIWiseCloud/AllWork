@@ -15,16 +15,23 @@ namespace AllWork.Web.Filter
                 var objectResult = (ObjectResult)context.Result;
                 if (objectResult.Value == null)
                 {
-                    context.Result = new ObjectResult(new { code = 400, sub_msg = "未找到资源", msg = "", returnStatus = 0 });
+                    context.Result = new ObjectResult(new { code = 400, msg = "未找到资源", returnStatus = 0 });
                 }
                 else
                 {
-                    context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = "", result = objectResult.Value, returnStatus = 1 });
+                    if (objectResult.StatusCode == 400)
+                    {
+                        context.Result = new ObjectResult(new { code = 400, msg = objectResult.Value, result = false, returnStatus = 0 });
+                    }
+                    else
+                    {
+                        context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = "", result = objectResult.Value, returnStatus = 1 });
+                    }
                 }
             }
             else if (context.Result is EmptyResult)
             {
-                context.Result = new ObjectResult(new { code = 404, sub_msg = "未找到资源", msg = "", returnStatus = 0 });
+                context.Result = new ObjectResult(new { code = 404,  msg = "未找到资源", returnStatus = 0 });
             }
             else if (context.Result is ContentResult)
             {

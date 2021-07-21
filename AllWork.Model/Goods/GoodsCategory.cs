@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
 
 namespace AllWork.Model.Goods
 {
@@ -27,5 +28,9 @@ namespace AllWork.Model.Goods
 
         public int IsCancellation
         { get; set; }
+
+        public IList<GoodsCategory> Children { get; set; }
     }
+
+    
 }

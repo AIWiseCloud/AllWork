@@ -541,6 +541,10 @@
               "target": "Package",
               "version": "[3.1.16, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.17, )"
+            },
             "NLog.Web.AspNetCore": {
               "target": "Package",
               "version": "[4.12.0, )"

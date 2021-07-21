@@ -94,6 +94,9 @@ namespace AllWork.Web
                 };
             });
 
+            //安装Microsoft.AspNetCore.Mvc.NewtonsoftJson后添加（解决前端实体中数字字符串不能转换为int32之类的错误
+            services.AddControllers().AddNewtonsoftJson();
+
             services.AddSingleton<INLogHelper, NLogHelper>();//日志
             services.AddScoped<IAuthenticateService, AuthenticationService>();
 

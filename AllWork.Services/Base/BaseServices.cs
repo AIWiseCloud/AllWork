@@ -73,7 +73,6 @@ namespace AllWork.Services.Base
         /// <param name="param">参数值（可选）</param>
         public async Task<Tuple<List<TFirst>, List<TSecond>>> QueryMultiple<TFirst, TSecond>(string sql, object param = null)
         {
-
             return await BaseDal.QueryMultiple<TFirst, TSecond>(sql, param);
         }
 

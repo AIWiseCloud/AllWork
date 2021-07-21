@@ -19,7 +19,7 @@ namespace AllWork.Model.Sys
         public string Contacter
         { get; set; }
 
-        [Phone(ErrorMessage ="请提供正确的手机号")]
+        //[Phone(ErrorMessage ="请提供正确的手机号")]
         public string PhoneNumber
         { get; set; }
 

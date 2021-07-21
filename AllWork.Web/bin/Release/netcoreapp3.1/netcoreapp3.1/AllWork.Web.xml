@@ -77,11 +77,18 @@
             <param name="categoryId"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.ToTreeItems(AllWork.Model.Goods.GoodsCategory,System.Collections.Generic.IEnumerable{AllWork.Model.Goods.GoodsCategory})">
+            <summary>
+            递归某商品分类产生该分类的树形
+            </summary>
+            <param name="parentCategory"></param>
+            <param name="categories"></param>
+        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsCategories(System.String)">
             <summary>
             获取商品分类列表
             </summary>
-            <param name="parentId">>上级分类ID (为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
+            <param name="parentId">上级分类parentId为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsCategory(System.String)">
@@ -89,6 +96,69 @@
             删除商品分类
             </summary>
             <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsInfo(AllWork.Model.Goods.GoodsInfo)">
+            <summary>
+            保存商品信息
+            </summary>
+            <param name="goodsInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfo(System.String)">
+            <summary>
+            获取商品信息
+            </summary>
+            <param name="goodsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsInfo(System.String)">
+            <summary>
+            删除商品信息(一并删除颜色及规格设置）
+            </summary>
+            <param name="goodsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsColor(AllWork.Model.Goods.GoodsColor)">
+            <summary>
+            保存商品颜色与图片记录
+            </summary>
+            <param name="goodsColor"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsColor(System.String)">
+            <summary>
+            获取商品颜色与图片记录
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsColor(System.String)">
+            <summary>
+            删除一条商品颜色记录
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsSpec(AllWork.Model.Goods.GoodsSpec)">
+            <summary>
+            保存商品规格及价格记录
+            </summary>
+            <param name="goodsSpec"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsSpec(System.String)">
+            <summary>
+            获取商品规格与价格记录
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsSpec(System.String)">
+            <summary>
+            删除一条商品规格与价格记录
+            </summary>
+            <param name="id"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.LogisticsController">

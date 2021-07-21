@@ -16,24 +16,14 @@ namespace AllWork.Services.Sys
         //提交用户验证
         public async Task<bool> SaveUserCertification(UserCertification userCertification)
         {
-            var instance = await _dal.QueryFirst("Select * from UserCertification Where UnionId = @UserId", userCertification);
-            if (instance == null)
-            {
-                var insertSql = "Insert UserCertification (UnionId,Name,AuthType,AuthState,CertificateId,CertificateFront,CertificateBack,CorpName,CorpAddress,SalesMan)values(@UnionId,@Name,@AuthType,@AuthState,@CertificateId,@CertificateFront,@CertificateBack,@CorpName,@CorpAddress,@SalesMan)";
-                return await _dal.Execute(insertSql, userCertification) > 0;
-            }
-            else
-            {
-                var updateSql = "Update UserCertification set UnionId = @UnionId,Name = @Name,AuthType = @AuthType,AuthState = @AuthState,CertificateId = @CertificateId,CertificateFront = @CertificateFront,CertificateBack = @CertificateBack,CorpName = @CorpName,CorpAddress = @CorpAddress,SalesMan = @SalesMan Where UnionId = @UnionId";
-                return await _dal.Execute(updateSql, userCertification) > 0;
-            }
+            var res = await _dal.SaveUserCertification(userCertification);
+            return res;
         }
 
         //获取用户验证信息
         public async Task<UserCertification> GetUserCertification(string unionId)
         {
-            var sql = "Select * from UserCertification Where UnionId = @UnionId";
-            var res = await _dal.QueryFirst(sql, new { UnionId = unionId });
+            var res = await _dal.GetUserCertification(unionId);
             return res;
         }
     }
