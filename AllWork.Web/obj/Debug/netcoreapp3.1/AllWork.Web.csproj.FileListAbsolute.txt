@@ -245,3 +245,6 @@ D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\K4os.Hash.x
 D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\MySql.Data.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Ubiety.Dns.Core.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Zstandard.Net.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Newtonsoft.Json.Bson.dll

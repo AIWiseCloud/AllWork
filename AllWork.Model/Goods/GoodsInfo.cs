@@ -24,6 +24,10 @@ namespace AllWork.Model.Goods
         public string GoodsDesc
         { get; set; }
 
+        [Required(ErrorMessageResourceName ="销售单位不能为空")]
+        public string UnitName
+        { get; set; }
+
         public int SalesTimes
         { get; set; }
 
@@ -46,13 +50,15 @@ namespace AllWork.Model.Goods
 
     public partial class GoodsInfo
     {
-        public virtual IEnumerable<GoodsColor> GoodsColors { get; set; }
-        public virtual IEnumerable<GoodsSpec> GoodsSpecs { get; set; }
+        public virtual List<GoodsColor> GoodsColors { get; set; }
+        public virtual List<GoodsSpec> GoodsSpecs { get; set; }
+        public virtual List<SpuImg> SpuImgs { get; set; }
 
         public GoodsInfo()
         {
             GoodsColors = new List<GoodsColor>();
             GoodsSpecs = new List<GoodsSpec>();
+            SpuImgs = new List<SpuImg>();
         }
     }
 

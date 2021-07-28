@@ -1,6 +1,7 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
 using AllWork.Model.Goods;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Services.Goods
@@ -23,6 +24,12 @@ namespace AllWork.Services.Goods
         public async Task<GoodsColor> GetGoodsColor(string id)
         {
             var res = await _dal.GetGoodsColor(id);
+            return res;
+        }
+
+        public async Task<IEnumerable<GoodsColor>> GetGoodsColors(string goodsId)
+        {
+            var res = await _dal.GetGoodsColors(goodsId);
             return res;
         }
 

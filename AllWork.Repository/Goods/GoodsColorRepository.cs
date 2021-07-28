@@ -1,6 +1,7 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model.Goods;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Repository.Goods
@@ -29,6 +30,12 @@ namespace AllWork.Repository.Goods
         public async Task<GoodsColor> GetGoodsColor(string id)
         {
             var res = await base.QueryFirst("Select * from GoodsColor Where ID = @ID", new { ID = id });
+            return res;
+        }
+
+        public async Task<IEnumerable<GoodsColor>> GetGoodsColors(string goodsId)
+        {
+            var res = await base.QueryList("Select * from GoodsColor Where GoodsId = @GoodsId", new { GoodsId = goodsId });
             return res;
         }
 

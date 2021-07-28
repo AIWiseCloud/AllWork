@@ -80,6 +80,53 @@ namespace AllWork.Repository.Base
             return await con.QueryAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
         }
 
+        //IEnumerable转List(Roy 2021-07-28)
+        private List<T> ToList<T>(IEnumerable<T> res)
+        {
+            List<T> items = new List<T>();
+            foreach(var item in res)
+            {
+                items.Add(item);
+            }
+            return items;
+        }
+
+        //join中涉及3个表的查询
+        public async Task<IList<TFirst>> QueryAsync<TFirst,TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird, TFirst> map,  object param = null , string splitNo="id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res= await con.QueryAsync<TFirst, TSecond, TThird, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
+            return ToList<TFirst>(res);
+        }
+
+        //join中涉及4个表的查询
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour>(string sql, Func<TFirst, TSecond, TThird, TFour,TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour,TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
+            return ToList<TFirst>(res);
+        }
+
+        //join中涉及5个表的查询
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
+            return ToList<TFirst>(res);
+        }
+
+        //join中涉及6个表的查询
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TSix,TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
+            return ToList<TFirst>(res);
+        }
+
         /// <summary>
         /// 简单分页，返回分页后的泛型集合
         /// </summary>
@@ -96,7 +143,7 @@ namespace AllWork.Repository.Base
         {
             using var con = GetOpenConn();
             var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
-            int totalCount = multi.Read<long>().AsList().Count;
+            var totalCount = multi.ReadFirst<int>();
             return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TEntity>(), totalCount);
         }
 

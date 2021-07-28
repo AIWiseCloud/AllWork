@@ -1,6 +1,7 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model.Goods;
 using Microsoft.Extensions.Configuration;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Repository.Goods
@@ -31,6 +32,12 @@ namespace AllWork.Repository.Goods
         {
             var sql = "Select * from GoodsSpec Where ID = @ID";
             return await base.QueryFirst(sql, new { ID = id });
+        }
+
+        public async Task<IEnumerable<GoodsSpec>> GetGoodsSpecs(string goodsId)
+        {
+            var res = await base.QueryList("Select * from GoodsSpec Where GoodsId = @GoodsId", new { GoodsId = goodsId });
+            return res;
         }
 
         public async Task<bool> DeleteGoodsSpec(string id)

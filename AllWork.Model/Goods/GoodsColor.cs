@@ -1,9 +1,10 @@
-﻿using System;
+﻿using AllWork.Model.Sys;
+using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
 {
-    public class GoodsColor
+    public partial class GoodsColor
     {
         [Required]
         public String ID
@@ -41,6 +42,11 @@ namespace AllWork.Model.Goods
 
         public string Creator
         { get; set; }
+    }
+
+    public partial class GoodsColor
+    {
+        public SubMessage ColorInfo { get; set; }
     }
 
 }

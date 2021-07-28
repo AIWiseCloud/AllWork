@@ -91,6 +91,13 @@
             <param name="parentId">上级分类parentId为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfoOverviews(System.String)">
+            <summary>
+            由商品最小分类获取商品列表(SPU列表)
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsCategory(System.String)">
             <summary>
             删除商品分类
@@ -119,6 +126,17 @@
             <param name="goodsId"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SearchGoods(System.String,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            搜索商品分页返回（后端）
+            </summary>
+            <param name="keywords">搜索的关键字</param>
+            <param name="pageNo">页码</param>
+            <param name="pageSize">每页记录数</param>
+            <param name="orderField">排序栏位</param>
+            <param name="orderWay">排序方向</param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsColor(AllWork.Model.Goods.GoodsColor)">
             <summary>
             保存商品颜色与图片记录
@@ -131,6 +149,13 @@
             获取商品颜色与图片记录
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsColors(System.String)">
+            <summary>
+            获取商品所有颜色图片记录
+            </summary>
+            <param name="goodsId"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsColor(System.String)">
@@ -154,9 +179,44 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsSpecs(System.String)">
+            <summary>
+            获取商品所有规定及定价记录
+            </summary>
+            <param name="goodsId"></param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsSpec(System.String)">
             <summary>
             删除一条商品规格与价格记录
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.SaveSpuImg(AllWork.Model.Goods.SpuImg)">
+            <summary>
+            保存SPU图片
+            </summary>
+            <param name="spuImg"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetSpuImg(System.String)">
+            <summary>
+            获取SPU图片记录
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetSpuImgs(System.String)">
+            <summary>
+            获取商品所Spu记录
+            </summary>
+            <param name="goodsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.DeleteSpuImg(System.String)">
+            <summary>
+            删除SPU图片记录
             </summary>
             <param name="id"></param>
             <returns></returns>

@@ -1,4 +1,5 @@
 ﻿using AllWork.Model.Goods;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.IRepository.Goods
@@ -10,5 +11,7 @@ namespace AllWork.IRepository.Goods
         Task<GoodsSpec> GetGoodsSepc(string id);
 
         Task<bool> DeleteGoodsSpec(string id);
+
+        Task<IEnumerable<GoodsSpec>> GetGoodsSpecs(string goodsId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AllWork.IServices.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -17,17 +18,23 @@ namespace AllWork.Web.Controllers
         readonly IGoodsInfoServices _goodsInfoServices;
         readonly IGoodsColorServices _goodsColorServices;
         readonly IGoodsSpecServices _goodsSpecServices;
+        readonly ISpuImgServices _spuImgServices;
+        readonly IGoodsInfoOverviewServices _goodsInfoOverviewServices;
         public GoodsController(
             IGoodsCategoryServices goodsCategoryServices,
             IGoodsInfoServices goodsInfoServices,
             IGoodsColorServices goodsColorServices,
-            IGoodsSpecServices goodsSpecServices
+            IGoodsSpecServices goodsSpecServices,
+            ISpuImgServices spuImgServices,
+            IGoodsInfoOverviewServices goodsInfoOverviewServices
             )
         {
             _goodsCategoryServices = goodsCategoryServices;
             _goodsInfoServices = goodsInfoServices;
             _goodsColorServices = goodsColorServices;
             _goodsSpecServices = goodsSpecServices;
+            _spuImgServices = spuImgServices;
+            _goodsInfoOverviewServices = goodsInfoOverviewServices;
         }
 
         /// <summary>
@@ -64,7 +71,7 @@ namespace AllWork.Web.Controllers
             parentCategory.Children = new List<GoodsCategory>();
             //下一级分类
             var items = new List<GoodsCategory>();
-            foreach(var item in categories)
+            foreach (var item in categories)
             {
                 if (item.ParentId == parentCategory.CategoryId)
                 {
@@ -101,7 +108,7 @@ namespace AllWork.Web.Controllers
 
             if (parentId == "*")
             {
-               
+
                 var aitems = new List<GoodsCategory>();//第一级分类
                 foreach (var item in res)
                 {
@@ -121,7 +128,18 @@ namespace AllWork.Web.Controllers
             {
                 return Ok(res);
             }
-            
+        }
+
+        /// <summary>
+        /// 由商品最小分类获取商品列表(SPU列表)
+        /// </summary>
+        /// <param name="categoryId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsInfoOverviews(string categoryId)
+        {
+            var res = await _goodsInfoOverviewServices.GetGoodsInfoOverviews(categoryId);
+            return Ok(res);
         }
 
         /// <summary>
@@ -172,6 +190,23 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 搜索商品分页返回（后端）
+        /// </summary>
+        /// <param name="keywords">搜索的关键字</param>
+        /// <param name="pageNo">页码</param>
+        /// <param name="pageSize">每页记录数</param>
+        /// <param name="orderField">排序栏位</param>
+        /// <param name="orderWay">排序方向</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> SearchGoods(string keywords, int pageNo = 1, int pageSize = 20, string orderField = "", string orderWay = "")
+        {
+            var res = await _goodsInfoServices.SearchGoods(keywords, new PageModel { PageNo = pageNo, PageSize = pageSize, OrderField = orderField, OrderWay = orderWay });
+            
+            return Ok(new { totalCount = res.Item2, items=res.Item1 });
+        }
+
+        /// <summary>
         /// 保存商品颜色与图片记录
         /// </summary>
         /// <param name="goodsColor"></param>
@@ -192,6 +227,18 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> GetGoodsColor(string id)
         {
             var res = await _goodsColorServices.GetGoodsColor(id);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品所有颜色图片记录
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsColors(string goodsId)
+        {
+            var res = await _goodsColorServices.GetGoodsColors(goodsId);
             return Ok(res);
         }
 
@@ -232,6 +279,18 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 获取商品所有规定及定价记录
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsSpecs(string goodsId)
+        {
+            var res = await _goodsSpecServices.GetGoodsSpecs(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
         /// 删除一条商品规格与价格记录
         /// </summary>
         /// <param name="id"></param>
@@ -240,6 +299,54 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> DeleteGoodsSpec(string id)
         {
             var res = await _goodsSpecServices.DeleteGoodsSpec(id);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 保存SPU图片
+        /// </summary>
+        /// <param name="spuImg"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> SaveSpuImg(SpuImg spuImg)
+        {
+            var res = await _spuImgServices.SaveSpuImg(spuImg);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取SPU图片记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSpuImg(string id)
+        {
+            var res = await _spuImgServices.GetSpuImg(id);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品所Spu记录
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSpuImgs(string goodsId)
+        {
+            var res = await _spuImgServices.GetSpuImgs(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 删除SPU图片记录
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpDelete]
+        public async Task<IActionResult> DeleteSpuImg(string id)
+        {
+            var res = await _spuImgServices.DeleteSpuImg(id);
             return Ok(res);
         }
 
