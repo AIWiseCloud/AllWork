@@ -15,5 +15,7 @@ namespace AllWork.IServices.Goods
         Task<bool> DeleteGoodsInfo(string goodsId);
 
         Task<Tuple<IEnumerable<GoodsInfo>, int>> SearchGoods(string keywords, PageModel pageModel);
+
+        Task<Tuple<IEnumerable<GoodsInfo>, int>> GetGoodsInfos(string categoryId, PageModel pageModel);
     }
 }

@@ -45,7 +45,7 @@ namespace AllWork.Common
         /// <returns></returns>
         public static String FileToBase64(Stream fs)
         {
-            string strRet = null;
+            string strRet ;
             try
             {
                 if (fs == null) return null;

@@ -38,6 +38,6 @@ namespace AllWork.Model.Goods
 
     public partial class GoodsSpec
     {
-        public SubMessage Spec { get; set; }
+        public SpecInfo Spec { get; set; }
     }
 }

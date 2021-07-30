@@ -38,15 +38,15 @@ namespace AllWork.Repository.Goods
             var sql = @"Select a.*,'' as pid, b.*, '' as pid, c.* ,'' as pid, d.*, '' as pid, e.*
 from GoodsInfo a left join GoodsSpec b
 on a.GoodsId = b.GoodsId
-left join SubMessage c
-on c.ParentId = 'pdspec' and b.SpecId = c.FNumber
+left join SpecInfo c
+on b.SpecId = c.SpecId
 left join GoodsColor d
 on d.GoodsId = a.GoodsId
-left join SubMessage e
-on e.ParentId = 'pdcolor' and d.ColorId = e.FNumber
+left join ColorInfo e
+on d.ColorId = e.ColorId
 where a.GoodsId = @GoodsId";
-            //注：split
-            var res = await base.QueryAsync<GoodsInfo, GoodsSpec, SubMessage,GoodsColor, SubMessage>(sql, (goodsInfo, goodsSpec, subMessage, goodsColor, subMessage2) =>
+           
+            var res = await base.QueryAsync<GoodsInfo, GoodsSpec, SpecInfo,GoodsColor, ColorInfo>(sql, (goodsInfo, goodsSpec, subMessage, goodsColor, subMessage2) =>
             {
                 GoodsInfo tempgoods;
                 if (!pairs.TryGetValue(goodsInfo.GoodsId, out tempgoods))
@@ -103,12 +103,46 @@ where a.GoodsId = @GoodsId";
             var sql = $"Select count(*) from GoodsInfo {wheresql}; Select * from GoodsInfo {wheresql}";
             var options = new
             {
-                OrderField = pageModel.OrderField,
                 Skip = pageModel.Skip,
+                OrderField = pageModel.OrderField,
                 PageSize = pageModel.PageSize,
                 OrderWay = pageModel.OrderWay
             };
             var res = await base.QueryPagination(sql, options);
+            return res;
+        }
+
+        //分页获取最末级商品分类下的商品列表
+        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> GetGoodsInfos(string categoryId, PageModel pageModel)
+        {
+            //sql公共部分
+            var sqlpub = @"from GoodsInfo a left join (select * from GoodsColor where ID in (select max(ID) from GoodsColor group by GoodsId )) b 
+on a.GoodsId = b.GoodsId 
+left join (select * from GoodsSpec where ID in (select max(ID) from GoodsSpec group by GoodsId )) c 
+on a.GoodsId = c.GoodsId
+Where IsUnder = 0 and CategoryId = @CategoryId";
+            //排序sql
+            string sqlorder = string.Empty;
+            if (!string.IsNullOrEmpty(pageModel.OrderField))
+            {
+                sqlorder = string.Format(" order by {0} {1} ", pageModel.OrderField, pageModel.OrderWay);
+            }
+            //sql语句1（求总记录数）
+            var sql1 = "Select count(a.GoodsId) as TotalCount " + sqlpub;
+            //sql语句2（求分页数据）
+            var sql2 = "Select a.*,'' as id1, b.*, '' as id2, c.* " + sqlpub + sqlorder + " limit @Skip, @PageSize";
+            //完整sql
+            var sql = sql1 + ";" + sql2;
+            var res = await base.QueryPagination<GoodsInfo,GoodsColor, GoodsSpec>(sql, (gi,gc,gs)=> {
+                gi.GoodsColors.Add(gc);
+                gi.GoodsSpecs.Add(gs);
+                return gi;
+            }, new
+            {
+                CategoryId = categoryId,
+                Skip = pageModel.Skip,
+                PageSize = pageModel.PageSize,
+            },"id1, id2");
             return res;
         }
 

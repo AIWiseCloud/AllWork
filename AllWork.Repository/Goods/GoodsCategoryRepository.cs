@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AllWork.Repository.Goods
 {
-    public class GoodsCategoryRepository:Base.BaseRepository<GoodsCategory>,IGoodsCategoryRepository
+    public class GoodsCategoryRepository : Base.BaseRepository<GoodsCategory>, IGoodsCategoryRepository
     {
         public GoodsCategoryRepository(IConfiguration configuration) : base(configuration)
         {
@@ -15,7 +15,7 @@ namespace AllWork.Repository.Goods
 
         public async Task<bool> SaveGoodsCategory(GoodsCategory goodsCategory)
         {
-            var instance = await base.QueryFirst("Select * from GoodsCategory Where CategoryId = @CategoryId", new { CategoryId=goodsCategory.CategoryId});
+            var instance = await base.QueryFirst("Select * from GoodsCategory Where CategoryId = @CategoryId", new { CategoryId = goodsCategory.CategoryId });
             if (instance == null)
             {
                 var insertSql = "Insert GoodsCategory (CategoryId,CategoryName,ShopId,ImgUrl,ParentId,Findex,IsCancellation)values(@CategoryId,@CategoryName,@ShopId,@ImgUrl,@ParentId,@Findex,@IsCancellation)";
@@ -66,7 +66,7 @@ namespace AllWork.Repository.Goods
             //按设定索引排序
             sql.Append(" Order by Findex");
             var res = await base.QueryList(sql.ToString(), new { ParentId = parentId });
-            
+
             return res;
         }
 

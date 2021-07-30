@@ -50,5 +50,11 @@ namespace AllWork.Services.Goods
             var res = await _dal.SearchGoods(keywords, pageModel);
             return res;
         }
+
+        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> GetGoodsInfos(string categoryId, PageModel pageModel)
+        {
+            var res = await _dal.GetGoodsInfos(categoryId, pageModel);
+            return res;
+        }
     }
 }

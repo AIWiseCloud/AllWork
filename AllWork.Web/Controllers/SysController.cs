@@ -21,7 +21,6 @@ namespace AllWork.Web.Controllers
         readonly IUserCertificationServices _userCertificationServices;
         readonly IAuthenticateService _authService;
         readonly ISettingsServices _settingsServices;
-        readonly IConfiguration _configuration;
         readonly IShopServices _shopServices;
         readonly ISubMesTypeServices _subMesTypeServices;
         readonly ISubMessageServices _subMessageServices;
@@ -40,7 +39,6 @@ namespace AllWork.Web.Controllers
             _userServices = userServices;
             _userCertificationServices = userCertificationServices;
             _settingsServices = settingsServices;
-            _configuration = configuration;
             _authService = authService;
             _shopServices = shopServices;
             _subMesTypeServices = subMesTypeServices;

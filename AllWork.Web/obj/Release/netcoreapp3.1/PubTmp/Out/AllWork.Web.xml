@@ -91,13 +91,6 @@
             <param name="parentId">上级分类parentId为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfoOverviews(System.String)">
-            <summary>
-            由商品最小分类获取商品列表(SPU列表)
-            </summary>
-            <param name="categoryId"></param>
-            <returns></returns>
-        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsCategory(System.String)">
             <summary>
             删除商品分类
@@ -165,6 +158,17 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfos(System.String,System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            分页获取末级商品分类下的商品列表
+            </summary>
+            <param name="categoryId">商品分类ID</param>
+            <param name="pageNo"></param>
+            <param name="pageSize"></param>
+            <param name="orderField"></param>
+            <param name="orderWay"></param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsSpec(AllWork.Model.Goods.GoodsSpec)">
             <summary>
             保存商品规格及价格记录
@@ -209,7 +213,7 @@
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetSpuImgs(System.String)">
             <summary>
-            获取商品所Spu记录
+            获取商品所S有spu记录
             </summary>
             <param name="goodsId"></param>
             <returns></returns>
@@ -219,6 +223,53 @@
             删除SPU图片记录
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.InventoryController">
+            <summary>
+            库存
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.GetGoodsInfoOverviews(System.String)">
+            <summary>
+            由商品最小分类获取商品列表(SPU列表)
+            </summary>
+            <param name="categoryId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.SaveStockBill(AllWork.Model.Goods.StockBill)">
+            <summary>
+            保存出入库单据
+            </summary>
+            <param name="stockBill"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.GetStockBill(System.String)">
+            <summary>
+            获取出入库单据信息
+            </summary>
+            <param name="billId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.SearchStockBill(AllWork.Model.RequestParams.StockBillParams)">
+            <summary>
+            分页查询出入库单据
+            </summary>
+            <param name="stockBillParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.DeleteStockBillRow(System.String)">
+            <summary>
+            删除出入库单据某行
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.DeleteStockBill(System.String)">
+            <summary>
+            删除出入库单据
+            </summary>
+            <param name="billId"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.LogisticsController">

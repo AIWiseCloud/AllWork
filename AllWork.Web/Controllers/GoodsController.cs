@@ -2,6 +2,7 @@
 using AllWork.Model;
 using AllWork.Model.Goods;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -19,14 +20,12 @@ namespace AllWork.Web.Controllers
         readonly IGoodsColorServices _goodsColorServices;
         readonly IGoodsSpecServices _goodsSpecServices;
         readonly ISpuImgServices _spuImgServices;
-        readonly IGoodsInfoOverviewServices _goodsInfoOverviewServices;
         public GoodsController(
             IGoodsCategoryServices goodsCategoryServices,
             IGoodsInfoServices goodsInfoServices,
             IGoodsColorServices goodsColorServices,
             IGoodsSpecServices goodsSpecServices,
-            ISpuImgServices spuImgServices,
-            IGoodsInfoOverviewServices goodsInfoOverviewServices
+            ISpuImgServices spuImgServices
             )
         {
             _goodsCategoryServices = goodsCategoryServices;
@@ -34,7 +33,6 @@ namespace AllWork.Web.Controllers
             _goodsColorServices = goodsColorServices;
             _goodsSpecServices = goodsSpecServices;
             _spuImgServices = spuImgServices;
-            _goodsInfoOverviewServices = goodsInfoOverviewServices;
         }
 
         /// <summary>
@@ -128,18 +126,6 @@ namespace AllWork.Web.Controllers
             {
                 return Ok(res);
             }
-        }
-
-        /// <summary>
-        /// 由商品最小分类获取商品列表(SPU列表)
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetGoodsInfoOverviews(string categoryId)
-        {
-            var res = await _goodsInfoOverviewServices.GetGoodsInfoOverviews(categoryId);
-            return Ok(res);
         }
 
         /// <summary>
@@ -255,6 +241,23 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 分页获取末级商品分类下的商品列表
+        /// </summary>
+        /// <param name="categoryId">商品分类ID</param>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="orderField"></param>
+        /// <param name="orderWay"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsInfos(string categoryId, int pageNo=1, int pageSize=10, string orderField="",string orderWay="")
+        {
+            var pageModel = new PageModel { PageNo = pageNo, PageSize = pageSize, OrderField = orderField, OrderWay = orderWay };
+            var res = await _goodsInfoServices.GetGoodsInfos(categoryId, pageModel);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
+        }
+
+        /// <summary>
         /// 保存商品规格及价格记录
         /// </summary>
         /// <param name="goodsSpec"></param>
@@ -327,7 +330,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取商品所Spu记录
+        /// 获取商品所S有spu记录
         /// </summary>
         /// <param name="goodsId"></param>
         /// <returns></returns>

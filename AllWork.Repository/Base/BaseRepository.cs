@@ -2,10 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
 using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace AllWork.Repository.Base
 {
@@ -78,38 +80,78 @@ namespace AllWork.Repository.Base
         {
             using var con = GetOpenConn();
             return await con.QueryAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
+
         }
 
         //IEnumerable转List(Roy 2021-07-28)
         private List<T> ToList<T>(IEnumerable<T> res)
         {
             List<T> items = new List<T>();
-            foreach(var item in res)
+            foreach (var item in res)
             {
                 items.Add(item);
             }
             return items;
         }
 
-        //join中涉及3个表的查询
-        public async Task<IList<TFirst>> QueryAsync<TFirst,TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird, TFirst> map,  object param = null , string splitNo="id", int? commandTimeout = null, CommandType? commandType = null)
+        /// <summary>
+        /// 多表查询与映射（3表）
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitNo"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
-            var res= await con.QueryAsync<TFirst, TSecond, TThird, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
             //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
             return ToList<TFirst>(res);
         }
 
-        //join中涉及4个表的查询
-        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour>(string sql, Func<TFirst, TSecond, TThird, TFour,TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        /// <summary>
+        /// 多表查询与映射（4表）
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <typeparam name="TFour"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitNo"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour>(string sql, Func<TFirst, TSecond, TThird, TFour, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
-            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour,TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
             //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
             return ToList<TFirst>(res);
         }
 
-        //join中涉及5个表的查询
+        /// <summary>
+        /// 多表查询与映射（5表）
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <typeparam name="TFour"></typeparam>
+        /// <typeparam name="TFive"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitNo"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
         public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
@@ -118,11 +160,51 @@ namespace AllWork.Repository.Base
             return ToList<TFirst>(res);
         }
 
-        //join中涉及6个表的查询
-        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TSix,TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        /// <summary>
+        /// 多表查询与映射（6表）
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <typeparam name="TFour"></typeparam>
+        /// <typeparam name="TFive"></typeparam>
+        /// <typeparam name="TSix"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitNo"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TSix, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
             var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
+            //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
+            return ToList<TFirst>(res);
+        }
+
+        /// <summary>
+        /// 多表查询与映射（7表）
+        /// </summary>
+        /// <typeparam name="TFirst"></typeparam>
+        /// <typeparam name="TSecond"></typeparam>
+        /// <typeparam name="TThird"></typeparam>
+        /// <typeparam name="TFour"></typeparam>
+        /// <typeparam name="TFive"></typeparam>
+        /// <typeparam name="TSix"></typeparam>
+        /// <typeparam name="TSeventh"></typeparam>
+        /// <param name="sql"></param>
+        /// <param name="map"></param>
+        /// <param name="param"></param>
+        /// <param name="splitNo"></param>
+        /// <param name="commandTimeout"></param>
+        /// <param name="commandType"></param>
+        /// <returns></returns>
+        public async Task<IList<TFirst>> QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix, TSeventh>(string sql, Func<TFirst, TSecond, TThird, TFour, TFive, TSix, TSeventh, TFirst> map, object param = null, string splitNo = "id", int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res = await con.QueryAsync<TFirst, TSecond, TThird, TFour, TFive, TSix, TSeventh, TFirst>(sql, map, param, null, true, splitNo, commandTimeout, commandType);
             //注：splitOn是从结果集最后往前找，所以sql命令中的命名也很很要，不要与后面现有的列名重复，否则dapper会查找失败
             return ToList<TFirst>(res);
         }
@@ -145,6 +227,60 @@ namespace AllWork.Repository.Base
             var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
             var totalCount = multi.ReadFirst<int>();
             return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TEntity>(), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond>(string sql, Func<TFirst, TSecond, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TEntity>(map, splitNo, buffered), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TEntity>(map, splitNo, buffered), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TEntity>(map, splitNo, buffered), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TEntity>(map, splitNo, buffered), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity>(map, splitNo, buffered), totalCount);
+        }
+
+        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TEntity>(map, splitNo, buffered), totalCount);
         }
 
         /// <summary>
@@ -293,6 +429,39 @@ namespace AllWork.Repository.Base
         {
             using var con = GetOpenConn();
             return await con.ExecuteAsync(sql, param, transaction, commandTimeout, commandType);
+        }
+
+        /// <summary>
+        /// 在一个事务中进行多表操作 (roy 2021-7-29)
+        /// </summary>
+        /// <param name="tranitems"></param>
+        /// <param name="commandTimeout"></param>
+        /// <returns></returns>
+        public async Task<Tuple<bool, string>> ExecuteTransaction(List<Tuple<string, object>> tranitems, int? commandTimeout = null)
+        {
+            if (!tranitems.Any())
+            {
+                return new Tuple<bool, string>(false, "执行事务的sql语句不能为空!");
+            }
+            using var con = GetOpenConn();
+            using var transaction = con.BeginTransaction();
+            try
+            {
+                foreach (var item in tranitems)
+                {
+                    await con.ExecuteAsync(item.Item1, item.Item2, transaction, commandTimeout);
+                }
+                var sw = new Stopwatch();
+                sw.Start();
+                transaction.Commit();
+                sw.Stop();
+                return new Tuple<bool, string>(true, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                transaction.Rollback();
+                return new Tuple<bool, string>(false, ex.Message);
+            }
         }
 
         /// <summary>

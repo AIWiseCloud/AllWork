@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using AllWork.Model.Sys;
+using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
 {
-    public class StockBillDetail
+    public partial class StockBillDetail
     {
-        [Required(ErrorMessage ="ID不能为空")]
+        [Required(ErrorMessage = "ID不能为空")]
         public string ID
         { get; set; }
 
@@ -33,5 +34,14 @@ namespace AllWork.Model.Goods
 
         public decimal Quantity
         { get; set; }
+    }
+
+    public partial class StockBillDetail
+    {
+        public GoodsInfo GoodsInfo { get; set; }
+        public StockInfo Stock { get; set; }
+        public ColorInfo ColorInfo { get; set; }
+        public SpecInfo Spec { get; set; }
+        public int IsNew { get; set; }
     }
 }

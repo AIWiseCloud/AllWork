@@ -1,11 +1,16 @@
-﻿using System;
+﻿using AllWork.Model.Sys;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
 {
-    public class StockBill
+    public partial class StockBill
     {
+        public StockBill()
+        {
+            StockBillDetail = new List<StockBillDetail>();
+        }
         [Required(ErrorMessage ="交易单号不能为空")]
         public string BillId
         { get; set; }
@@ -27,4 +32,9 @@ namespace AllWork.Model.Goods
         { get; set; }
     }
 
+    public partial class StockBill
+    {
+        public TransTypeInfo TransType { get; set; }
+        public List<StockBillDetail> StockBillDetail { get; set; }
+    }
 }

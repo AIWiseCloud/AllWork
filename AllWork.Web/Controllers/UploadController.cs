@@ -16,11 +16,9 @@ namespace AllWork.Web.Controllers
     public class UploadController : ControllerBase
     {
         readonly IWebHostEnvironment _env;
-        readonly IConfiguration _configuration;
-        public UploadController(IWebHostEnvironment env, IConfiguration configuration)
+        public UploadController(IWebHostEnvironment env)
         {
             _env = env;
-            _configuration = configuration;
         }
 
         /// <summary>
@@ -46,12 +44,10 @@ namespace AllWork.Web.Controllers
                 {
                     di.Create();
                 }
-                using (FileStream fs = System.IO.File.Create(FilePath + newfilename))
-                {
-                    diclist.Add(file.FileName, subpath + newfilename);
-                    await file.CopyToAsync(fs);
-                    fs.Flush();
-                }
+                using FileStream fs = System.IO.File.Create(FilePath + newfilename);
+                diclist.Add(file.FileName, subpath + newfilename);
+                await file.CopyToAsync(fs);
+                fs.Flush();
             }
             return Ok(new { count = filelist.Count, size, diclist });
         }

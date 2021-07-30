@@ -46,7 +46,7 @@ namespace AllWork.Model.Goods
 
     public partial class GoodsColor
     {
-        public SubMessage ColorInfo { get; set; }
+        public ColorInfo ColorInfo { get; set; }
     }
 
 }
