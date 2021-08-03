@@ -46,14 +46,35 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取用户信息
+        /// 获取用户信息(需先token认证)
         /// </summary>
-        /// <param name="accessToken"></param>
+        /// <param name="unionId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetUserInfo(string accessToken)
+        [Authorize]
+        public async Task<IActionResult> GetUserInfo(string unionId)
         {
-            var unionId = _authService.ParseToken(accessToken);
+            //var unionId = _authService.ParseToken(accessToken);
+            try
+            {
+                var res = await _userServices.GetUserInfo(unionId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 通过Access_token获取用户信息(后端平台用)
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetUserInfoByToken(string token)
+        {
+            var unionId = _authService.ParseToken(token);
             try
             {
                 var res = await _userServices.GetUserInfo(unionId);

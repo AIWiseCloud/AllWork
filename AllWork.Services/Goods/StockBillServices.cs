@@ -45,5 +45,11 @@ namespace AllWork.Services.Goods
             var res = await _dal.DeleteStockBill(billId);
             return res;
         }
+
+        public async Task<OperResult> AuditStockBill(string billId, int isAdit)
+        {
+            var res = await _dal.AuditStockBill(billId, isAdit);
+            return res;
+        }
     }
 }

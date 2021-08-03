@@ -1215,6 +1215,7 @@
       },
       "AllWork.Repository/1.0.0": {
         "dependencies": {
+          "AllWork.Common": "1.0.0",
           "AllWork.IRepository": "1.0.0",
           "Dapper": "2.0.78",
           "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",

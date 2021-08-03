@@ -409,6 +409,16 @@
           }
         }
       },
+      "AllWork.Common/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/AllWork.Common.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/AllWork.Common.dll": {}
+        }
+      },
       "AllWork.IRepository/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v3.1",
@@ -1332,6 +1342,11 @@
         "version.txt"
       ]
     },
+    "AllWork.Common/1.0.0": {
+      "type": "project",
+      "path": "../AllWork.Common/AllWork.Common.csproj",
+      "msbuildProject": "../AllWork.Common/AllWork.Common.csproj"
+    },
     "AllWork.IRepository/1.0.0": {
       "type": "project",
       "path": "../AllWork.IRepository/AllWork.IRepository.csproj",
@@ -1345,6 +1360,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
+      "AllWork.Common >= 1.0.0",
       "AllWork.IRepository >= 1.0.0",
       "Dapper >= 2.0.78",
       "Microsoft.Extensions.Configuration.Abstractions >= 5.0.0",
@@ -1384,6 +1400,9 @@
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
           "projectReferences": {
+            "D:\\AppCode\\AllWork\\AllWork.Common\\AllWork.Common.csproj": {
+              "projectPath": "D:\\AppCode\\AllWork\\AllWork.Common\\AllWork.Common.csproj"
+            },
             "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
               "projectPath": "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
             }

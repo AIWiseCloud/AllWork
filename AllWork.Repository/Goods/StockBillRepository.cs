@@ -171,6 +171,16 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
             items.Add(new Tuple<string, object>("Delete from StockBill Where BillId = @BillId", new { BillId = billId }));
             var res = await base.ExecuteTransaction(items);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
+
+        }
+
+        public async Task<OperResult> AuditStockBill(string billId, int isAdit)
+        {
+            var paris = new Dictionary<string, object>();
+            paris.Add("_billId", billId);
+            paris.Add("isAudit", isAdit);
+            var res = await base.Execute<string>("AuditStockBill", paris);
+            return new OperResult { Status = res == "success" };
         }
     }
 

@@ -21,8 +21,8 @@ namespace AllWork.Web.Controllers
     {
         //建议将secret、用户数据（如access_token）放在App云端服务器，由云端中转接口调用请求
 
-        readonly string openPlatformAppId = "wx424c82fee2aeb08e";//应用唯一标识，在微信开放平台提交应用审核通过后获得
-        readonly string openPlatformAppSecret = "f3ccc3c59860c9bbe6c29d514ccfdc2e";//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
+        readonly string openPlatformAppId = "wxa4a2fb4b53a4597b";//应用唯一标识，在微信开放平台提交应用审核通过后获得
+        readonly string openPlatformAppSecret = "0dd0016757d1d7ebc0ced1e5bd239717";//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
         readonly IHttpClientFactory _httpClientFactory;
 
         public WXOpenController(IHttpClientFactory clientFactory)

@@ -136,17 +136,7 @@ namespace AllWork.IRepository.Base
         /// <returns>返回受影响的行数</returns>
         Task<int> Execute(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null);
 
-        /// <summary>
-        /// 执行sql语句，返回第一行第一列
-        /// </summary>
-        /// <typeparam name="T">指定类型</typeparam>
-        /// <param name="sql">查询Sql语句</param>
-        /// <param name="param">参数值（可选）</param>
-        /// <param name="transaction">事务名称（可选）</param>
-        /// <param name="commandTimeout">超时时间（可选）</param>
-        /// <param name="commandType">指定如果解释sql字符串：语句/存储过程（可选）</param>
-        /// <returns>返回返回第一行第一列</returns>
-        Task<TEntity> ExecuteScalar(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null);
+       
 
         /// <summary>
         /// 执行存储过程，返回第一行第一列
@@ -155,6 +145,7 @@ namespace AllWork.IRepository.Base
         /// <param name="command">存储过程名称</param>
         /// <param name="paras">参数键值对</param>
         /// <returns>返回第一行第一列</returns>
-        TEntity Execute(string command, Dictionary<string, object> paras);
+        //TEntity Execute(string command, Dictionary<string, object> paras);
+        //Task<TEntity> Execute(string spname, Dictionary<string, object> paras);
     }
 }

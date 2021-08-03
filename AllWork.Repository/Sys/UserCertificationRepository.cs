@@ -15,10 +15,12 @@ namespace AllWork.Repository.Sys
         //提交用户验证
         public async Task<bool> SaveUserCertification(UserCertification userCertification)
         {
-            var instance = await base.QueryFirst("Select * from UserCertification Where UnionId = @UserId", userCertification);
+            var instance = await base.QueryFirst("Select * from UserCertification Where UnionId = @UnionId", userCertification);
             if (instance == null)
             {
-                var insertSql = "Insert UserCertification (UnionId,Name,AuthType,AuthState,CertificateId,CertificateFront,CertificateBack,CorpName,CorpAddress,SalesMan)values(@UnionId,@Name,@AuthType,@AuthState,@CertificateId,@CertificateFront,@CertificateBack,@CorpName,@CorpAddress,@SalesMan)";
+                var insertSql = @"Insert UserCertification (UnionId,Name,AuthType,AuthState,CertificateId,CertificateFront,CertificateBack,CorpName,CorpAddress,SalesMan)
+values
+(@UnionId,@Name,@AuthType,@AuthState,@CertificateId,@CertificateFront,@CertificateBack,@CorpName,@CorpAddress,@SalesMan)";
                 return await base.Execute(insertSql, userCertification) > 0;
             }
             else

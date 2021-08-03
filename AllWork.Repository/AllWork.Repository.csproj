@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AllWork.Common\AllWork.Common.csproj" />
     <ProjectReference Include="..\AllWork.IRepository\AllWork.IRepository.csproj" />
   </ItemGroup>
 

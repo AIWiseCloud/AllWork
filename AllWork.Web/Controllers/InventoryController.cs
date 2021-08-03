@@ -1,12 +1,8 @@
 ﻿using AllWork.IServices.Goods;
-using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
@@ -19,14 +15,17 @@ namespace AllWork.Web.Controllers
     public class InventoryController : ControllerBase
     {
         readonly IStockBillServices _stockBillServices;
+        readonly IInventoryServices _inventoryServices;
         readonly IGoodsInfoOverviewServices _goodsInfoOverviewServices;
         public InventoryController(
          IGoodsInfoOverviewServices goodsInfoOverviewServices,
+         IInventoryServices inventoryServices,
          IStockBillServices stockBillServices
 
          )
         {
             _goodsInfoOverviewServices = goodsInfoOverviewServices;
+            _inventoryServices = inventoryServices;
             _stockBillServices = stockBillServices;
         }
 
@@ -101,6 +100,44 @@ namespace AllWork.Web.Controllers
         {
             var res = await _stockBillServices.DeleteStockBill(billId);
             return Ok(res);
+        }
+
+        /// <summary>
+        /// 审核出入库单据
+        /// </summary>
+        /// <param name="billId">单据编号</param>
+        /// <param name="isAudit">审核标记(1审核,0反审)</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> AuditStockBill(string billId, int isAudit)
+        {
+            var res = await _stockBillServices.AuditStockBill(billId, isAudit);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取某商品(SPU)下的库存(SKU)列表
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetInventories(string goodsId)
+        {
+            var res = await _inventoryServices.GetInventories(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 库存查询
+        /// </summary>
+        /// <param name="inventoryParams"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> SearchInventories(InventoryParams inventoryParams)
+        {
+            var res = await _inventoryServices.SearchInventories(inventoryParams);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
         }
     }
 }

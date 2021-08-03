@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Sys
 {
-    public class UserInfo
+    public partial class UserInfo
     {
         [Required(ErrorMessage ="UnionId不能为空")]
         public string UnionId
+        { get; set; }
+
+        public string OpenId
         { get; set; }
 
         [Required(ErrorMessage = "昵称不能为空")]
@@ -43,11 +44,22 @@ namespace AllWork.Model.Sys
         public int UserState
         { get; set; }
 
+        [Required(ErrorMessage ="角色不能为空，多个角色以逗号分隔")]
         public string Roles
         { get; set; }
 
         public DateTime CreateDate
         { get; set; }
+    }
+
+    public partial class UserInfo
+    {
+        public string[] UserRoles 
+        {
+            get {
+
+                if (string.IsNullOrEmpty(this.Roles)) return "editor".Split(","); else return this.Roles.Split(","); }
+        }
     }
 
 }

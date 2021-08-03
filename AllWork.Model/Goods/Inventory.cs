@@ -1,23 +1,23 @@
-﻿using System;
+﻿using AllWork.Model.Sys;
+using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
 {
-    public class Inventory 
+    public partial class Inventory 
     {
-
-        public string ID
+        public string SkuId
         { get; set; }
 
+        [Required(ErrorMessage ="商品ID不能为空")]
         public string GoodsId
         { get; set; }
 
+        [Required(ErrorMessage = "颜色ID不能为空")]
         public string ColorId
         { get; set; }
 
+        [Required(ErrorMessage = "规格ID不能为空")]
         public string SpecId
-        { get; set; }
-
-        public string StockNumber
         { get; set; }
 
         public decimal Quantity
@@ -31,12 +31,15 @@ namespace AllWork.Model.Goods
 
         public decimal ActiveQuantity
         { get; set; }
-
-        public DateTime CreateDate
-        { get; set; }
-
-        public string Creator
-        { get; set; }
     }
+
+    public partial class Inventory
+    {
+        public GoodsInfo GoodsInfo { get; set; }
+        public ColorInfo ColorInfo { get; set; }
+        public SpecInfo SpecInfo { get; set; }
+        public GoodsCategory GoodsCategory { get; set; }
+    }
+
 
 }

@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v3.1": {
       "AllWork.Repository/1.0.0": {
         "dependencies": {
+          "AllWork.Common": "1.0.0",
           "AllWork.IRepository": "1.0.0",
           "Dapper": "2.0.78",
           "Microsoft.Extensions.Configuration.Abstractions": "5.0.0",
@@ -324,6 +325,11 @@
           }
         }
       },
+      "AllWork.Common/1.0.0": {
+        "runtime": {
+          "AllWork.Common.dll": {}
+        }
+      },
       "AllWork.IRepository/1.0.0": {
         "dependencies": {
           "AllWork.Model": "1.0.0"
@@ -557,6 +563,11 @@
       "sha512": "sha512-CeWTdRNfRaSh0pm2gDTJFwVaXfTq6Xwv/sA887iwPTneW7oMtMlpvDIO+U60+3GWTB7Aom6oQwv5VZVUhQRdPQ==",
       "path": "system.windows.extensions/4.7.0",
       "hashPath": "system.windows.extensions.4.7.0.nupkg.sha512"
+    },
+    "AllWork.Common/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     },
     "AllWork.IRepository/1.0.0": {
       "type": "project",

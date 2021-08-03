@@ -34,13 +34,13 @@ namespace AllWork.Repository.Sys
             userInfo.Roles = string.IsNullOrEmpty(userInfo.Roles) ? "ediror" : userInfo.Roles;
             if (model == null)
             {
-                var insertSql = @"Insert UserInfo (UnionId,NickName,Password,PhoneNumber,Email,Avatar,Province,City,County,Gender,UserState,Roles)values
-(@UnionId,@NickName,@Password,@PhoneNumber,@Email,@Avatar,@Province,@City,@County,@Gender,@UserState,@Roles)";
+                var insertSql = @"Insert UserInfo (UnionId,OpenId,NickName,Password,PhoneNumber,Email,Avatar,Province,City,County,Gender,UserState,Roles)values
+(@UnionId,@OpenId, @NickName,@Password,@PhoneNumber,@Email,@Avatar,@Province,@City,@County,@Gender,@UserState,@Roles)";
                 return await base.Execute(insertSql, userInfo) > 0;
             }
             else
             {
-                var updateSql = @"Update UserInfo set UnionId = @UnionId,NickName = @NickName,Password = @Password,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
+                var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,Password = @Password,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
                 return await base.Execute(updateSql, userInfo) > 0;
             }
         }

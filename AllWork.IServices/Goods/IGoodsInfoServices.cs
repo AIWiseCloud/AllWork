@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AllWork.IServices.Goods
 {
-    public interface IGoodsInfoServices:Base.IBaseServices<GoodsInfo>
+    public interface IGoodsInfoServices
     {
         Task<bool> SaveGoodsInfo(GoodsInfo goodsInfo);
 

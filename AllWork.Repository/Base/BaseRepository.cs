@@ -2,12 +2,12 @@
 using Microsoft.Extensions.Configuration;
 using MySql.Data.MySqlClient;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace AllWork.Repository.Base
 {
@@ -79,7 +79,8 @@ namespace AllWork.Repository.Base
         public async Task<IEnumerable<TEntity>> QueryList(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
-            return await con.QueryAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
+            var res= await con.QueryAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
+            return res;
 
         }
 
@@ -464,20 +465,30 @@ namespace AllWork.Repository.Base
             }
         }
 
-        /// <summary>
-        /// 执行sql语句，返回第一行第一列
-        /// </summary>
-        /// <typeparam name="T">指定类型</typeparam>
-        /// <param name="sql">查询Sql语句</param>
-        /// <param name="param">参数值（可选）</param>
-        /// <param name="transaction">事务名称（可选）</param>
-        /// <param name="commandTimeout">超时时间（可选）</param>
-        /// <param name="commandType">指定如果解释sql字符串：语句/存储过程（可选）</param>
-        /// <returns>返回返回第一行第一列</returns>
-        public async Task<TEntity> ExecuteScalar(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
+     
+
+        public async Task<T> ExecuteScalar<T>(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
-            return await con.ExecuteScalarAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
+            return await con.ExecuteScalarAsync<T>(sql, param, transaction, commandTimeout, commandType);
+        }
+
+        /// <summary>
+        /// 执行存储过程 （roy 2021-7-31)
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="spname">存储过程名</param>
+        /// <param name="paras">键值对参数</param>
+        /// <returns></returns>
+        public async Task<T> Execute<T>(string spname, Dictionary<string, object> paras)
+        {
+            using var con = GetOpenConn();
+            DynamicParameters dynamicParameters = new DynamicParameters();
+            foreach (var item in paras)
+            {
+                dynamicParameters.Add("@" + item.Key, item.Value);
+            }
+            return await con.ExecuteScalarAsync<T>(spname, dynamicParameters, null, null, CommandType.StoredProcedure);
         }
 
         /// <summary>
@@ -487,26 +498,26 @@ namespace AllWork.Repository.Base
         /// <param name="command">存储过程名称</param>
         /// <param name="paras">参数键值对</param>
         /// <returns>返回第一行第一列</returns>
-        public TEntity Execute(string command, Dictionary<string, object> paras)
-        {
-            using var con = GetOpenConn();
-            IDbCommand com = con.CreateCommand();
-            com.CommandText = command;
-            com.CommandType = CommandType.StoredProcedure;
+        //public TEntity Execute(string command, Dictionary<string, object> paras)
+        //{
+        //    using var con = GetOpenConn();
+        //    IDbCommand com = con.CreateCommand();
+        //    com.CommandText = command;
+        //    com.CommandType = CommandType.StoredProcedure;
 
-            if (paras != null)
-            {
-                foreach (var item in paras.Keys)
-                {
-                    IDbDataParameter para = com.CreateParameter();
-                    para.Value = paras[item];
-                    para.ParameterName = item;
-                    com.Parameters.Add(para);
-                }
-            }
+        //    if (paras != null)
+        //    {
+        //        foreach (var item in paras.Keys)
+        //        {
+        //            IDbDataParameter para = com.CreateParameter();
+        //            para.Value = paras[item];
+        //            para.ParameterName = item;
+        //            com.Parameters.Add(para);
+        //        }
+        //    }
 
-            return (TEntity)com.ExecuteScalar();
-        }
+        //    return (TEntity)com.ExecuteScalar();
+        //}
 
         /// <summary>
         /// 数据适配器，扩展Fill方法

@@ -18,5 +18,7 @@ namespace AllWork.IServices.Goods
         Task<bool> DeleteStockBillRow(string id);
 
         Task<OperResult> DeleteStockBill(string billId);
+
+        Task<OperResult> AuditStockBill(string billId, int isAdit);
     }
 }
