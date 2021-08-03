@@ -1,6 +1,7 @@
 ﻿using AllWork.IServices.Goods;
 using AllWork.Model;
 using AllWork.Model.Goods;
+using AllWork.Model.RequestParams;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -175,23 +176,6 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 搜索商品分页返回（后端）
-        /// </summary>
-        /// <param name="keywords">搜索的关键字</param>
-        /// <param name="pageNo">页码</param>
-        /// <param name="pageSize">每页记录数</param>
-        /// <param name="orderField">排序栏位</param>
-        /// <param name="orderWay">排序方向</param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> SearchGoods(string keywords, int pageNo = 1, int pageSize = 20, string orderField = "", string orderWay = "")
-        {
-            var res = await _goodsInfoServices.SearchGoods(keywords, new PageModel { PageNo = pageNo, PageSize = pageSize, OrderField = orderField, OrderWay = orderWay });
-            
-            return Ok(new { totalCount = res.Item2, items=res.Item1 });
-        }
-
-        /// <summary>
         /// 保存商品颜色与图片记录
         /// </summary>
         /// <param name="goodsColor"></param>
@@ -240,19 +224,14 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 分页获取末级商品分类下的商品列表
+        /// 商品查询
         /// </summary>
-        /// <param name="categoryId">商品分类ID</param>
-        /// <param name="pageNo"></param>
-        /// <param name="pageSize"></param>
-        /// <param name="orderField"></param>
-        /// <param name="orderWay"></param>
+        /// <param name="goodsQueryParams"></param>
         /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetGoodsInfos(string categoryId, int pageNo=1, int pageSize=10, string orderField="",string orderWay="")
+        [HttpPost]
+        public async Task<IActionResult> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
-            var pageModel = new PageModel { PageNo = pageNo, PageSize = pageSize, OrderField = orderField, OrderWay = orderWay };
-            var res = await _goodsInfoServices.GetGoodsInfos(categoryId, pageModel);
+            var res = await _goodsInfoServices.QueryGoods(goodsQueryParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });
         }
 
@@ -281,7 +260,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取商品所有规定及定价记录
+        /// 获取商品所有规格及定价记录
         /// </summary>
         /// <param name="goodsId"></param>
         /// <returns></returns>

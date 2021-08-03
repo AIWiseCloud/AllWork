@@ -1,7 +1,7 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
-using AllWork.Model;
 using AllWork.Model.Goods;
+using AllWork.Model.RequestParams;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -39,21 +39,9 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        /// <summary>
-        /// 搜索商品分页返回
-        /// </summary>
-        /// <param name="keywords"></param>
-        /// <param name="pageModel"></param>
-        /// <returns></returns>
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> SearchGoods(string keywords, PageModel pageModel)
+        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
-            var res = await _dal.SearchGoods(keywords, pageModel);
-            return res;
-        }
-
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> GetGoodsInfos(string categoryId, PageModel pageModel)
-        {
-            var res = await _dal.GetGoodsInfos(categoryId, pageModel);
+            var res = await _dal.QueryGoods(goodsQueryParams);
             return res;
         }
     }

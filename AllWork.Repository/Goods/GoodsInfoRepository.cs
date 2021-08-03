@@ -1,6 +1,7 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model;
 using AllWork.Model.Goods;
+using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
 using Microsoft.Extensions.Configuration;
 using System;
@@ -45,34 +46,34 @@ on d.GoodsId = a.GoodsId
 left join ColorInfo e
 on d.ColorId = e.ColorId
 where a.GoodsId = @GoodsId";
-           
-            var res = await base.QueryAsync<GoodsInfo, GoodsSpec, SpecInfo,GoodsColor, ColorInfo>(sql, (goodsInfo, goodsSpec, subMessage, goodsColor, subMessage2) =>
-            {
-                GoodsInfo tempgoods;
-                if (!pairs.TryGetValue(goodsInfo.GoodsId, out tempgoods))
-                {
-                    tempgoods = goodsInfo;
-                    pairs.Add(tempgoods.GoodsId, tempgoods);
-                }
-                GoodsSpec tempSpec = tempgoods.GoodsSpecs.Find(list => list.GoodsId == goodsSpec.GoodsId && list.SpecId == goodsSpec.SpecId);
-                if (tempSpec == null)
-                {
+
+            var res = await base.QueryAsync<GoodsInfo, GoodsSpec, SpecInfo, GoodsColor, ColorInfo>(sql, (goodsInfo, goodsSpec, subMessage, goodsColor, subMessage2) =>
+             {
+                 GoodsInfo tempgoods;
+                 if (!pairs.TryGetValue(goodsInfo.GoodsId, out tempgoods))
+                 {
+                     tempgoods = goodsInfo;
+                     pairs.Add(tempgoods.GoodsId, tempgoods);
+                 }
+                 GoodsSpec tempSpec = tempgoods.GoodsSpecs.Find(list => list.GoodsId == goodsSpec.GoodsId && list.SpecId == goodsSpec.SpecId);
+                 if (tempSpec == null)
+                 {
                     //子表信息
                     tempSpec = goodsSpec;
                     //子表中的规格信息
                     //goodsSpec.SpecId = subMessage.FNumber;//不能少
                     goodsSpec.Spec = subMessage;
-                    tempgoods.GoodsSpecs.Add(tempSpec);
-                }
-                GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.GoodsId == goodsColor.GoodsId && x.ColorId == goodsColor.ColorId);
-                if (tempColor == null)
-                {
-                    tempColor = goodsColor;
-                    goodsColor.ColorInfo = subMessage2;
-                    tempgoods.GoodsColors.Add(tempColor);
-                }
-                return goodsInfo;
-            }, new { GoodsId = goodsId }, "pid, pid, pid, pid");
+                     tempgoods.GoodsSpecs.Add(tempSpec);
+                 }
+                 GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.GoodsId == goodsColor.GoodsId && x.ColorId == goodsColor.ColorId);
+                 if (tempColor == null)
+                 {
+                     tempColor = goodsColor;
+                     goodsColor.ColorInfo = subMessage2;
+                     tempgoods.GoodsColors.Add(tempColor);
+                 }
+                 return goodsInfo;
+             }, new { GoodsId = goodsId }, "pid, pid, pid, pid");
             return pairs.Values.Count > 0 ? pairs[goodsId] : null;
         }
 
@@ -90,59 +91,82 @@ where a.GoodsId = @GoodsId";
             return await base.Execute(sql.ToString(), new { GoodsId = goodsId }) > 0;
         }
 
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> SearchGoods(string keywords, PageModel pageModel)
+        //商品分页查询  (查询方案queryScheme：0关键字查询 1商品分类 2推荐商品 3最新商品)
+        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
-            //条件语句
-            var wheresql = new StringBuilder(string.Format(" Where GoodsName like '%{0}%' or GoodsId = '{0}' or GoodsName like '%{0}%' ", keywords));
-            if (!string.IsNullOrEmpty(pageModel.OrderField))
+            //(1) sql公共部分
+            var sqlpub = new StringBuilder();
+            // 如果是按商品类别查询，通过with语句查出所有相关类别（目前直接3级）
+            if (goodsQueryParams.QueryScheme == 1)
             {
-                wheresql.Append(" order by @OrderField @OrderWay");
-            }
-            wheresql.Append(" limit @Skip,@PageSize");
-            //sql语句
-            var sql = $"Select count(*) from GoodsInfo {wheresql}; Select * from GoodsInfo {wheresql}";
-            var options = new
-            {
-                Skip = pageModel.Skip,
-                OrderField = pageModel.OrderField,
-                PageSize = pageModel.PageSize,
-                OrderWay = pageModel.OrderWay
+                sqlpub.Append(@"with tab as(
+select CategoryId 
+from goodscategory g 
+where CategoryId  = @CategoryId or ParentId = @CategoryId
+)
+,tab2 as(select CategoryId 
+from GoodsCategory
+where CategoryId in (select * from tab) or ParentId in (select * from tab) )");
             };
-            var res = await base.QueryPagination(sql, options);
-            return res;
-        }
-
-        //分页获取最末级商品分类下的商品列表
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> GetGoodsInfos(string categoryId, PageModel pageModel)
-        {
-            //sql公共部分
-            var sqlpub = @"from GoodsInfo a left join (select * from GoodsColor where ID in (select max(ID) from GoodsColor group by GoodsId )) b 
-on a.GoodsId = b.GoodsId 
-left join (select * from GoodsSpec where ID in (select max(ID) from GoodsSpec group by GoodsId )) c 
+            //公共语句主体
+            sqlpub.Append(@" select {0} 
+from GoodsInfo a 
+left join (select GoodsId, max(ID)as ID from GoodsColor group by GoodsId) c
 on a.GoodsId = c.GoodsId
-Where IsUnder = 0 and CategoryId = @CategoryId";
-            //排序sql
-            string sqlorder = string.Empty;
-            if (!string.IsNullOrEmpty(pageModel.OrderField))
+left join GoodsColor t1 on c.ID = t1.ID
+left join (select GoodsId, max(ID) as ID from GoodsSpec group by GoodsId) s
+on a.GoodsId = s.GoodsId
+left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
+            //如果是按关键字搜索
+            if (goodsQueryParams.QueryScheme == 0)
             {
-                sqlorder = string.Format(" order by {0} {1} ", pageModel.OrderField, pageModel.OrderWay);
+                sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber) ", goodsQueryParams.QueryValue);
             }
-            //sql语句1（求总记录数）
-            var sql1 = "Select count(a.GoodsId) as TotalCount " + sqlpub;
+            // 如果是方案1，要把上在with中查出的类别在条件中体现
+            if (goodsQueryParams.QueryScheme == 1)
+            {
+                sqlpub.Append(" and CategoryId in (select * from tab2) ");
+            }
+            //如果是查询推荐商品
+            if (goodsQueryParams.QueryScheme == 2)
+            {
+                sqlpub.Append(" and IsRecommend = 1 ");
+            }
+            //如果是查最新商品
+            if (goodsQueryParams.QueryScheme == 3)
+            {
+                sqlpub.Append(" and IsNew = 1 ");
+            }
+            //如果要隐藏下架商品
+            if (goodsQueryParams.HideUnderGoods == 1)
+            {
+                sqlpub.Append(" and IsUnder = 0 ");
+            }
+            //(2) 排序sql
+            string sqlorder = string.Empty;
+            if (!string.IsNullOrEmpty(goodsQueryParams.PageModel.OrderField))
+            {
+                sqlorder = string.Format(" order by {0} {1} ", goodsQueryParams.PageModel.OrderField, goodsQueryParams.PageModel.OrderWay);
+            }
+            //(3) sql语句1（求总记录数）
+            var sql1 = string.Format(sqlpub.ToString(), "count(a.GoodsId) as TotalCount");
             //sql语句2（求分页数据）
-            var sql2 = "Select a.*,'' as id1, b.*, '' as id2, c.* " + sqlpub + sqlorder + " limit @Skip, @PageSize";
+            var sql2 = string.Format(sqlpub.ToString(), " a.*,'' as id1, t1.*,'' as id2, t2.* ") + sqlorder + " limit @Skip, @PageSize ";
             //完整sql
             var sql = sql1 + ";" + sql2;
-            var res = await base.QueryPagination<GoodsInfo,GoodsColor, GoodsSpec>(sql, (gi,gc,gs)=> {
+            var res = await base.QueryPagination<GoodsInfo, GoodsColor, GoodsSpec>(sql, (gi, gc, gs) =>
+            {
                 gi.GoodsColors.Add(gc);
                 gi.GoodsSpecs.Add(gs);
                 return gi;
             }, new
             {
-                CategoryId = categoryId,
-                Skip = pageModel.Skip,
-                PageSize = pageModel.PageSize,
-            },"id1, id2");
+                CategoryId=goodsQueryParams.QueryValue,
+                GoodsId = goodsQueryParams.QueryValue,
+                ProdNumber = goodsQueryParams.QueryValue,
+                Skip = goodsQueryParams.PageModel.Skip,
+                PageSize = goodsQueryParams.PageModel.PageSize,
+            }, "id1, id2");
             return res;
         }
 

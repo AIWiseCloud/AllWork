@@ -196,17 +196,6 @@
             <param name="goodsId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.SearchGoods(System.String,System.Int32,System.Int32,System.String,System.String)">
-            <summary>
-            搜索商品分页返回（后端）
-            </summary>
-            <param name="keywords">搜索的关键字</param>
-            <param name="pageNo">页码</param>
-            <param name="pageSize">每页记录数</param>
-            <param name="orderField">排序栏位</param>
-            <param name="orderWay">排序方向</param>
-            <returns></returns>
-        </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsColor(AllWork.Model.Goods.GoodsColor)">
             <summary>
             保存商品颜色与图片记录
@@ -235,15 +224,11 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfos(System.String,System.Int32,System.Int32,System.String,System.String)">
+        <member name="M:AllWork.Web.Controllers.GoodsController.QueryGoods(AllWork.Model.RequestParams.GoodsQueryParams)">
             <summary>
-            分页获取末级商品分类下的商品列表
+            商品查询
             </summary>
-            <param name="categoryId">商品分类ID</param>
-            <param name="pageNo"></param>
-            <param name="pageSize"></param>
-            <param name="orderField"></param>
-            <param name="orderWay"></param>
+            <param name="goodsQueryParams"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsSpec(AllWork.Model.Goods.GoodsSpec)">
@@ -262,7 +247,7 @@
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsSpecs(System.String)">
             <summary>
-            获取商品所有规定及定价记录
+            获取商品所有规格及定价记录
             </summary>
             <param name="goodsId"></param>
             <returns></returns>
