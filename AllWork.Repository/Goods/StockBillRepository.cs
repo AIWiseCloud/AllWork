@@ -208,19 +208,46 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
         {
             //出入库明细转换成sql
             var strdetail = new StringBuilder();
-            foreach(var item in stockBill.StockBillDetail)
+            foreach (var item in stockBill.StockBillDetail)
             {
-                strdetail.AppendFormat(" {0} Select '{1}' as StockNumber, '{1}' as ColorId, '{2}' as SpecId, {3} as Quantity   ",
-                    strdetail.Length > 0 ? " union " : string.Empty, item.StockNumber, item.ColorId, item.SpecId, item.Quantity);
+                strdetail.AppendFormat(" {0} Select '{1}' as StockNumber, '{1}' as ColorId, '{2}' as SpecId, {3} as Quantity ,'{4}' as GoodsId  ",
+                    strdetail.Length > 0 ? " union " : string.Empty, item.StockNumber, item.ColorId, item.SpecId, item.Quantity, item.GoodsId);
             }
             //按仓库及颜色规格分组统计数量
-            var strgroup = $" Select StockNumber, ColorId, SpecId, sum(Quantity) as Quantity from ({strdetail})g ";
+            var strgroup = $" Select StockNumber, GoodsId, ColorId, SpecId, sum(Quantity) as Quantity from ({strdetail})g ";
             //关联库存明细比对库存
             var sql = string.Format(@" Select count(1) as RecordCount from ({0})t1 left join InventoryDetail t2 on t1.StockNumber = t2.StockNumber
-and t1.ColorId = t2.ColorId and t1.SpecId = t2.SpecId and t1.Quantity > IFNull(t1.Quantity,0) ", strgroup);
+ and t1.GoodsId = t2.GoodsId and t1.ColorId = t2.ColorId and t1.SpecId = t2.SpecId and t1.Quantity > IFNull(t1.Quantity,0) ", strgroup);
             var res = await base.ExecuteScalar<int>(sql, new { });
             return new OperResult { Status = res == 0, ErrorMsg = res > 0 ? "此操作将导致负结存" : string.Empty };
+        }
 
+
+        //获取商品实际库存信息
+        public async Task<decimal> GetInventoryDetail(string goodsId, string colorId, string specId, string stockNumber)
+        {
+            var sql = "Select Quantity from InventoryDetail Where GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId and StockNumber = @StockNumber";
+            var res = await base.ExecuteScalar<decimal>(sql, new { GoodsId = goodsId, ColorId = colorId, SpecId = specId, StockNumber = stockNumber });
+            return res;
+        }
+
+        //获取待发货订单列表
+        public async Task<dynamic> GetToBeShipped(string orderId = "")
+        {
+            var str = @"Select a.OrderId,a.OrderTime ,a.DeliveryAddress ,a.Receiver
+ from OrderMain a left join StockBill b on a.OrderId = b.OrderId where a.StatusId = 1 and isnull(b.BillId) ";
+;            var sql = new StringBuilder();
+            if (!string.IsNullOrEmpty(orderId))
+            {
+                sql.AppendFormat(" Select * from ({0})t Where OrderId = {1} ", str, orderId);
+            }
+            else
+            {
+                sql.Append(str);
+            }
+            sql.AppendFormat(" order by OrderTime");
+            var res = await base.QueryList<dynamic>(sql.ToString());
+            return res;
         }
     }
 

@@ -42,8 +42,17 @@ namespace AllWork.Web.Controllers
             {
                 return BadRequest("未指定出入库明细");
             }
+            //若是出库要检查是否会导致负结存
+            if (_stockBillServices.IsOutStock(stockBill.TransTypeId))
+            {
+                var operResult = await _stockBillServices.CheckNegativeBalance(stockBill);
+                if (!operResult.Status)
+                {
+                    return BadRequest(operResult.ErrorMsg);
+                }
+            }
             //业务类型为销售出库时的验证
-            if(stockBill.TransTypeId== "transtype_sale")
+            if (stockBill.TransTypeId == "transtype_sale")
             {
                 if (stockBill.OrderId == 0)
                 {
@@ -55,7 +64,7 @@ namespace AllWork.Web.Controllers
                 {
                     return BadRequest("当前订单已生成过销售出库单！");
                 }
-               //订单实体
+                //订单实体
                 var orderModel = await _orderServices.GetOrderInfo(stockBill.OrderId);
                 if (orderModel == null)
                 {
@@ -66,10 +75,10 @@ namespace AllWork.Web.Controllers
                     return BadRequest("只能针对待发货状态的订单拣货制作销售出库单");
                 }
                 //验证订单数量与出库数量是否一致
-                foreach(var item in orderModel.OrderList)
+                foreach (var item in orderModel.OrderList)
                 {
                     decimal qty = 0;
-                    foreach(var detail in stockBill.StockBillDetail.FindAll(x => x.ColorId == item.ColorId && x.SpecId == item.SpecId))
+                    foreach (var detail in stockBill.StockBillDetail.FindAll(x => x.ColorId == item.ColorId && x.SpecId == item.SpecId))
                     {
                         qty = qty + detail.Quantity;
                     }
@@ -143,6 +152,17 @@ namespace AllWork.Web.Controllers
         [Authorize]
         public async Task<IActionResult> AuditStockBill(string billId, int isAudit)
         {
+            var stockBill = await _stockBillServices.GetStockBill(billId);
+            var isOutBill = _stockBillServices.IsOutStock(stockBill.TransTypeId);
+            //审核出库单或是反审核入库单要检查是否会导致负结存
+            if ((isOutBill && isAudit == 1) || (!isOutBill && isAudit == 0))
+            {
+                var operResult = await _stockBillServices.CheckNegativeBalance(stockBill);
+                if (!operResult.Status)
+                {
+                    return BadRequest(operResult.ErrorMsg);
+                }
+            }
             var res = await _stockBillServices.AuditStockBill(billId, isAudit);
             return Ok(res);
         }
@@ -194,6 +214,33 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> GetSKUActiveQuantity(string goodsId, string colorId, string specId)
         {
             var res = await _inventoryServices.GetSKUActiveQuantity(goodsId, colorId, specId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取指定商品在某仓库的实际库存
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="colorId">颜色ID</param>
+        /// <param name="specId">规格ID</param>
+        /// <param name="stockNumber">仓库代码</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetInventoryDetail(string goodsId,string colorId, string specId, string stockNumber)
+        {
+            var res = await _stockBillServices.GetInventoryDetail(goodsId, colorId, specId, stockNumber);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取待发货订单列表
+        /// </summary>
+        /// <param name="orderid">订单号(非必录)</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetToBeShipped(string orderid="")
+        {
+            var res = await _stockBillServices.GetToBeShipped(orderid);
             return Ok(res);
         }
     }

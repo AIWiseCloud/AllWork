@@ -66,5 +66,25 @@ namespace AllWork.Services.Goods
             var res = await _dal.CheckNegativeBalance(stockBill);
             return res;
         }
+
+        //根据单据的业务类型判断出入库
+        public bool IsOutStock(string transTypeId)
+        {
+            return transTypeId == "transtype_othout" || transTypeId == "transtype_sale";
+        }
+
+        //获取商品实际库存信息
+        public async Task<decimal> GetInventoryDetail(string goodsId, string colorId, string specId, string stockNumber)
+        {
+            var res = await _dal.GetInventoryDetail(goodsId, colorId, specId, stockNumber);
+            return res;
+        }
+
+        //获取待发货订单列表
+        public async Task<dynamic> GetToBeShipped(string orderId)
+        {
+            var res = await _dal.GetToBeShipped(orderId);
+            return res;
+        }
     }
 }

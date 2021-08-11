@@ -379,6 +379,23 @@
             <param name="specId"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.GetInventoryDetail(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取指定商品在某仓库的实际库存
+            </summary>
+            <param name="goodsId">商品ID</param>
+            <param name="colorId">颜色ID</param>
+            <param name="specId">规格ID</param>
+            <param name="stockNumber">仓库代码</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InventoryController.GetToBeShipped(System.String)">
+            <summary>
+            获取待发货订单列表
+            </summary>
+            <param name="orderid">订单号(非必录)</param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.LogisticsController">
             <summary>
             物流助手

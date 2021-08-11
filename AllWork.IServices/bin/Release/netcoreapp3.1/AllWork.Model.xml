@@ -324,6 +324,11 @@
             单据状态(0待审, 1已审, -1作废)
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.StockBill.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.StockBill.Remark">
             <summary>
             备注
