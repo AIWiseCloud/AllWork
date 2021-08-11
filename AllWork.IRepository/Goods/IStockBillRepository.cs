@@ -11,9 +11,11 @@ namespace AllWork.IRepository.Goods
     {
         Task<OperResult> SaveStockBill(StockBill stockBill);
 
-        Task<StockBill> GetStockBill(string billId);
+        Task<StockBillExt> GetStockBill(string billId);
 
-        Task<Tuple<IEnumerable<StockBill>,int>> SearchStockBill(StockBillParams stockBillParams);
+        //Task<Tuple<IEnumerable<StockBillExt>,int>> SearchStockBill(StockBillParams stockBillParams);
+
+        Task<Tuple<IEnumerable<StockBillExt>, int>> SearchStockBill(StockBillParams stockBillParams);
 
         Task<bool> DeleteStockBillRow(string id);
 

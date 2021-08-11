@@ -9,26 +9,27 @@ using System.Threading.Tasks;
 
 namespace AllWork.Services.Goods
 {
-    public class StockBillServices:Base.BaseServices<StockBill>,IStockBillServices
+    public class StockBillServices : Base.BaseServices<StockBill>, IStockBillServices
     {
         readonly IStockBillRepository _dal;
         public StockBillServices(IStockBillRepository stockBillRepository)
         {
             _dal = stockBillRepository;
         }
+
         public async Task<OperResult> SaveStockBill(StockBill stockBill)
         {
             var res = await _dal.SaveStockBill(stockBill);
             return res;
         }
 
-        public async Task<StockBill> GetStockBill(string billId)
+        public async Task<StockBillExt> GetStockBill(string billId)
         {
             var res = await _dal.GetStockBill(billId);
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<StockBill>, int>> SearchStockBill(StockBillParams stockBillParams)
+        public async Task<Tuple<IEnumerable<StockBillExt>, int>> SearchStockBill(StockBillParams stockBillParams)
         {
             var res = await _dal.SearchStockBill(stockBillParams);
             return res;
@@ -49,6 +50,20 @@ namespace AllWork.Services.Goods
         public async Task<OperResult> AuditStockBill(string billId, int isAdit)
         {
             var res = await _dal.AuditStockBill(billId, isAdit);
+            return res;
+        }
+
+        //检查订单是否制作过不同交易单号的出库单
+        public async Task<bool> IsCreateOthBill(string billId, long orderId)
+        {
+            var res = await _dal.IsCreateOthBill(billId, orderId);
+            return res > 0;
+        }
+
+        //检查出库数量是否会导致负结存(保存出库单、审核出库单、反审核入库单时均可用此检查)
+        public async Task<OperResult> CheckNegativeBalance(StockBill stockBill)
+        {
+            var res = await _dal.CheckNegativeBalance(stockBill);
             return res;
         }
     }

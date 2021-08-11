@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AllWork.IRepository.Base
@@ -40,7 +39,7 @@ namespace AllWork.IRepository.Base
         /// <param name="commandTimeout">超时时间（可选）</param>
         /// <param name="commandType">指定如何解释sql字符串：语句/存储过程（可选）</param>
         /// <returns>返回指定泛型集合</returns>
-        Task<IEnumerable<TEntity>> QueryList(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null);
+        //Task<IEnumerable<TEntity>> QueryList(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null);
 
         /// <summary>
         /// 简单分页，返回分页后的泛型集合

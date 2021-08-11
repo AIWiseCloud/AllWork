@@ -76,11 +76,19 @@ namespace AllWork.Repository.Base
         /// <param name="commandTimeout">超时时间（可选）</param>
         /// <param name="commandType">指定如果解释sql字符串：语句/存储过程（可选）</param>
         /// <returns>返回指定泛型集合</returns>
-        public async Task<IEnumerable<TEntity>> QueryList(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        public async Task<List<TEntity>> QueryList(string sql, object param = null, IDbTransaction transaction = null,  int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
             var res= await con.QueryAsync<TEntity>(sql, param, transaction, commandTimeout, commandType);
-            return res;
+            return ToList<TEntity>(res);
+
+        }
+
+        public async Task<List<TFirst>> QueryList<TFirst>(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var res = await con.QueryAsync<TFirst>(sql, param, transaction, commandTimeout, commandType);
+            return ToList<TFirst>(res);
 
         }
 
@@ -239,13 +247,33 @@ namespace AllWork.Repository.Base
             return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TEntity>(map, splitNo, buffered), totalCount);
         }
 
-        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        //public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        //{
+        //    using var con = GetOpenConn();
+        //    var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+        //    var totalCount = multi.ReadFirst<int>();
+        //    return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TEntity>(map, splitNo, buffered), totalCount);
+        //}
+
+        // 分页查询1表)
+        public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst>(string sql, object param = null, IDbTransaction transaction = null,int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
             var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
 
             var totalCount = multi.ReadFirst<int>();
-            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TEntity>(map, splitNo, buffered), totalCount);
+            return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst>(), totalCount);
+        }
+
+        // 分页查询(3表)
+        public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird, TFirst> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst, TSecond, TThird, TFirst>(map, splitNo, buffered), totalCount);
         }
 
         public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
@@ -266,22 +294,33 @@ namespace AllWork.Repository.Base
             return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TEntity>(map, splitNo, buffered), totalCount);
         }
 
-        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        //public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        //{
+        //    using var con = GetOpenConn();
+        //    var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+        //    var totalCount = multi.ReadFirst<int>();
+        //    return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity>(map, splitNo, buffered), totalCount);
+        //}
+
+        //分页查询(6表)
+        public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TFirst> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
             var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
 
             var totalCount = multi.ReadFirst<int>();
-            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TEntity>(map, splitNo, buffered), totalCount);
+            return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TFirst>(map, splitNo, buffered), totalCount);
         }
 
-        public async Task<Tuple<IEnumerable<TEntity>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh,TEntity> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        //分页查询(7表)
+        public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh>(string sql, Func<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TFirst> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
             using var con = GetOpenConn();
             var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
 
             var totalCount = multi.ReadFirst<int>();
-            return Tuple.Create<IEnumerable<TEntity>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TEntity>(map, splitNo, buffered), totalCount);
+            return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TFirst>(map, splitNo, buffered), totalCount);
         }
 
         /// <summary>
@@ -413,7 +452,7 @@ namespace AllWork.Repository.Base
         /// <returns>泛型实体类型</returns>
         public async Task<TEntity> QueryOne(string sql, object param = null, IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {
-            var dataResult = await QueryList(sql, param, transaction, buffered, commandTimeout, commandType);
+            var dataResult = await QueryList(sql, param, transaction, commandTimeout, commandType);
             return dataResult != null && dataResult.AsList().Count > 0 ? dataResult.AsList()[0] : new TEntity();
         }
 

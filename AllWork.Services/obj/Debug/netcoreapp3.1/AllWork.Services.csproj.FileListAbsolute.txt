@@ -30,3 +30,4 @@ D:\AppCode\AllWork\AllWork.Services\obj\Debug\netcoreapp3.1\AllWork.Services.csp
 D:\AppCode\AllWork\AllWork.Services\obj\Debug\netcoreapp3.1\AllWork.Services.csproj.CopyComplete
 D:\AppCode\AllWork\AllWork.Services\obj\Debug\netcoreapp3.1\AllWork.Services.dll
 D:\AppCode\AllWork\AllWork.Services\obj\Debug\netcoreapp3.1\AllWork.Services.pdb
+D:\AppCode\AllWork\AllWork.Services\bin\Debug\netcoreapp3.1\AllWork.Model.xml

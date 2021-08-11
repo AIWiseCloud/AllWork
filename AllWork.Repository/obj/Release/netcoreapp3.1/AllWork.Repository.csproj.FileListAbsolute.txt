@@ -28,3 +28,4 @@ D:\AppCode\AllWork\AllWork.Repository\obj\Release\netcoreapp3.1\AllWork.Reposito
 D:\AppCode\AllWork\AllWork.Repository\obj\Release\netcoreapp3.1\AllWork.Repository.pdb
 D:\AppCode\AllWork\AllWork.Repository\bin\Release\netcoreapp3.1\AllWork.Common.dll
 D:\AppCode\AllWork\AllWork.Repository\bin\Release\netcoreapp3.1\AllWork.Common.pdb
+D:\AppCode\AllWork\AllWork.Repository\bin\Release\netcoreapp3.1\AllWork.Model.xml

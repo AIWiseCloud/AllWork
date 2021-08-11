@@ -15,15 +15,16 @@ namespace AllWork.Model.RequestParams
         public int QueryScheme { get; set; }
 
         /// <summary>
-        /// 隐藏下架商品
+        /// 隐藏下架商品(0显示，1隐藏)
         /// </summary>
         public int HideUnderGoods { get; set; }
 
         /// <summary>
-        /// 查询值
+        /// 查询值(与查询方案对应)
         /// </summary>
        　public string QueryValue { get; set; }
 
+        //分页参数实体
         public PageModel PageModel { get; set; }
     }
 }

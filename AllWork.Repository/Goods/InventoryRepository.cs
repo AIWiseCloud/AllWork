@@ -1,4 +1,5 @@
 ﻿using AllWork.IRepository.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
@@ -78,5 +79,47 @@ on e.CategoryId = b.CategoryId Where (1=1) ");
 
         }
 
+        /// <summary>
+        /// 比对商品需求数量与可用库存数量
+        /// </summary>
+        /// <param name="requireItems"></param>
+        /// <returns></returns>
+        public async Task<OperResult> ComparisonActiveQuantity(List<RequireItem> requireItems)
+        {
+            //将需求项拼成一个union连接的sql语句
+            var sb = new StringBuilder();
+            foreach (var item in requireItems)
+            {
+                sb.AppendFormat("{0} Select '{1}' as GoodsId,'{2}' as ColorId,'{3}' as SpecId, {4} as Quantity ",
+                     sb.Length > 0 ? " union " : string.Empty, item.GoodsId, item.ColorId, item.SpecId, item.Quantity);
+            }
+            //完整sql
+            var sql = string.Format(@"select t1.*, g.GoodsName , c.ColorName ,s.SpecName 
+from(
+select GoodsId, ColorId, SpecId ,sum(quantity) as Quantity
+from(
+{0}
+)t group by GoodsId, ColorId, SpecId
+)t1 left join Inventory t2
+on t1.GoodsId = t2.GoodsId  and t1.ColorId = t2.ColorId  and t1.SpecId = t2.SpecId 
+left join GoodsInfo g on g.GoodsId = t1.GoodsId
+left join colorinfo c on c.ColorId = t1.ColorId
+left join SpecInfo s on s.SpecId  = t1.SpecId
+where t1.Quantity - ifnull(t2.ActiveQuantity ,0) > 0 ", sb);
+            var res = await base.QueryList<RequireItemExt>(sql);
+            var msg = new StringBuilder("以下项目可用库存不足：");
+            foreach (var item in res)
+            {
+                msg.Append(item.ToString() + ",");
+            }
+            return new OperResult { Status = res.Count == 0, ErrorMsg = res.Count > 0 ? msg.ToString() : "ok" };
+        }
+        //获取sku商品可用库存
+        public async Task<decimal> GetSKUActiveQuantity(string goodsId, string colorId, string specId)
+        {
+            var sql = "Select ActiveQuantity from Inventory Where GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId";
+            var res = await base.ExecuteScalar<decimal>(sql, new { GoodsId = goodsId, ColorId = colorId, SpecId = specId });
+            return res;
+        }
     }
 }

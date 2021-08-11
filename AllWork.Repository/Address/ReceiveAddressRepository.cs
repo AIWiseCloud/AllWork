@@ -14,7 +14,7 @@ namespace AllWork.Repository.Address
 
         public async Task<OperResult> SaveReceiveAddress(ReceiveAddress receiveAddress)
         {
-            var instance = await base.QueryFirst("Select * from ReceiveAddress Where AddrId = @AddrId", new { AddrId = receiveAddress.AddrId });
+            var instance = await base.QueryFirst("Select * from ReceiveAddress Where AddrId = @AddrId", new { receiveAddress.AddrId });
             var tranitems = new List<Tuple<string, object>>();
             var insertsql = "Insert ReceiveAddress (AddrId,UnionId,Receiver,Label,PhoneNumber,Province,City,County,DetailsAddress,IsDefault)values(@AddrId,@UnionId,@Receiver,@Label,@PhoneNumber,@Province,@City,@County,@DetailsAddress,1)";
             var updatesql = "Update ReceiveAddress set Receiver = @Receiver,Label = @Label,PhoneNumber = @PhoneNumber,Province = @Province,City = @City,County = @County,DetailsAddress = @DetailsAddress,IsDefault = 1 Where AddrId = @AddrId";

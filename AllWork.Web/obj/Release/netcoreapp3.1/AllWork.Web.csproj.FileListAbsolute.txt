@@ -205,7 +205,6 @@ D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\runtimes\
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Common.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.IRepository.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.IServices.dll
-D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Model.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Nlog.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Repository.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Services.dll
@@ -241,3 +240,4 @@ D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Zstandard
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Model.xml

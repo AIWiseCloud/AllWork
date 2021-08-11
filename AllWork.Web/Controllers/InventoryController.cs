@@ -1,8 +1,10 @@
 ﻿using AllWork.IServices.Goods;
+using AllWork.IServices.Order;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
@@ -16,29 +18,16 @@ namespace AllWork.Web.Controllers
     {
         readonly IStockBillServices _stockBillServices;
         readonly IInventoryServices _inventoryServices;
-        readonly IGoodsInfoOverviewServices _goodsInfoOverviewServices;
+        readonly IOrderServices _orderServices;
         public InventoryController(
-         IGoodsInfoOverviewServices goodsInfoOverviewServices,
          IInventoryServices inventoryServices,
-         IStockBillServices stockBillServices
-
+         IStockBillServices stockBillServices,
+         IOrderServices orderServices
          )
         {
-            _goodsInfoOverviewServices = goodsInfoOverviewServices;
             _inventoryServices = inventoryServices;
             _stockBillServices = stockBillServices;
-        }
-
-        /// <summary>
-        /// 由商品最小分类获取商品列表(SPU列表)
-        /// </summary>
-        /// <param name="categoryId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetGoodsInfoOverviews(string categoryId)
-        {
-            var res = await _goodsInfoOverviewServices.GetGoodsInfoOverviews(categoryId);
-            return Ok(res);
+            _orderServices = orderServices;
         }
 
         /// <summary>
@@ -49,6 +38,48 @@ namespace AllWork.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SaveStockBill(StockBill stockBill)
         {
+            if (stockBill.StockBillDetail.Count == 0)
+            {
+                return BadRequest("未指定出入库明细");
+            }
+            //业务类型为销售出库时的验证
+            if(stockBill.TransTypeId== "transtype_sale")
+            {
+                if (stockBill.OrderId == 0)
+                {
+                    return BadRequest("订单号不正确!");
+                }
+                //同一订单是否生成过不同的销售出库单
+                var existOthBill = await _stockBillServices.IsCreateOthBill(stockBill.BillId, stockBill.OrderId);
+                if (existOthBill)
+                {
+                    return BadRequest("当前订单已生成过销售出库单！");
+                }
+               //订单实体
+                var orderModel = await _orderServices.GetOrderInfo(stockBill.OrderId);
+                if (orderModel == null)
+                {
+                    return BadRequest("订单不存在！");
+                }
+                if (orderModel.StatusId != 1)
+                {
+                    return BadRequest("只能针对待发货状态的订单拣货制作销售出库单");
+                }
+                //验证订单数量与出库数量是否一致
+                foreach(var item in orderModel.OrderList)
+                {
+                    decimal qty = 0;
+                    foreach(var detail in stockBill.StockBillDetail.FindAll(x => x.ColorId == item.ColorId && x.SpecId == item.SpecId))
+                    {
+                        qty = qty + detail.Quantity;
+                    }
+                    if (item.Quantity != qty)
+                    {
+                        return BadRequest($"{item.GoodsInfo.GoodsName}订单数量{item.Quantity},发货数量{qty},二者不一致");
+                    }
+                }
+
+            }
             var res = await _stockBillServices.SaveStockBill(stockBill);
             return Ok(res);
         }
@@ -138,6 +169,32 @@ namespace AllWork.Web.Controllers
         {
             var res = await _inventoryServices.SearchInventories(inventoryParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });
+        }
+
+        /// <summary>
+        /// 比对商品需求数量与可用库存数量
+        /// </summary>
+        /// <param name="reuireItems"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> ComparisonActiveQuantity(List<RequireItem> reuireItems)
+        {
+            var res = await _inventoryServices.ComparisonActiveQuantity(reuireItems);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取SKU商品的可用库存
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <param name="colorId"></param>
+        /// <param name="specId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSKUActiveQuantity(string goodsId, string colorId, string specId)
+        {
+            var res = await _inventoryServices.GetSKUActiveQuantity(goodsId, colorId, specId);
+            return Ok(res);
         }
     }
 }

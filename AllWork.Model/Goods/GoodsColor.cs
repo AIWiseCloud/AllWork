@@ -15,25 +15,40 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 颜色编号在辅助资料设置，在这里选取
+        /// 颜色编号: (在辅助资料设置，此处引用)
         /// </summary>
         [Required(ErrorMessage = "颜色编号不能为空")]
         public string ColorId
         { get; set; }
 
+        /// <summary>
+        /// 下面图片
+        /// </summary>
         [Required(ErrorMessage = "商品正面图片不能为空")]
         public string ImgFront
         { get; set; }
 
+        /// <summary>
+        /// 背面图片
+        /// </summary>
         public string ImgBack
         { get; set; }
 
+        /// <summary>
+        /// 右侧图
+        /// </summary>
         public string ImgRight
         { get; set; }
 
+        /// <summary>
+        /// 左侧图
+        /// </summary>
         public string ImgLeft
         { get; set; }
 
+        /// <summary>
+        /// 排序索引
+        /// </summary>
         public int Findex
         { get; set; }
 

@@ -1,11 +1,9 @@
 ﻿using AllWork.IServices.Sys;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
+using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using System;
-using AllWork.Web.Auth;
+using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
 {
@@ -17,114 +15,26 @@ namespace AllWork.Web.Controllers
     //[Authorize]
     public class SysController : BaseController
     {
-        readonly IUserServices _userServices;
-        readonly IUserCertificationServices _userCertificationServices;
-        readonly IAuthenticateService _authService;
-        readonly ISettingsServices _settingsServices;
-        readonly IShopServices _shopServices;
+        readonly ISettingsServices _settingsServices;//即将弃用
+        readonly IResourceSettingsServices _resourceSettingsServices;
         readonly ISubMesTypeServices _subMesTypeServices;
         readonly ISubMessageServices _subMessageServices;
-
         public SysController(
-            IUserServices userServices,
-            IUserCertificationServices userCertificationServices,
+            IResourceSettingsServices resourceSettingsServices,
             ISettingsServices settingsServices,
-            IAuthenticateService authService,
-            IShopServices shopServices,
-            IConfiguration configuration,
             ISubMesTypeServices subMesTypeServices,
             ISubMessageServices subMessageServices
             )
         {
-            _userServices = userServices;
-            _userCertificationServices = userCertificationServices;
+            _resourceSettingsServices = resourceSettingsServices;
             _settingsServices = settingsServices;
-            _authService = authService;
-            _shopServices = shopServices;
+            _settingsServices = settingsServices;
             _subMesTypeServices = subMesTypeServices;
             _subMessageServices = subMessageServices;
         }
 
         /// <summary>
-        /// 获取用户信息(需先token认证)
-        /// </summary>
-        /// <param name="unionId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        [Authorize]
-        public async Task<IActionResult> GetUserInfo(string unionId)
-        {
-            //var unionId = _authService.ParseToken(accessToken);
-            try
-            {
-                var res = await _userServices.GetUserInfo(unionId);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 通过Access_token获取用户信息(后端平台用)
-        /// </summary>
-        /// <param name="token"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetUserInfoByToken(string token)
-        {
-            var unionId = _authService.ParseToken(token);
-            try
-            {
-                var res = await _userServices.GetUserInfo(unionId);
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
-
-        /// <summary>
-        /// 提交用户认证
-        /// </summary>
-        /// <param name="userCertification"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> SaveUserCertification(UserCertification userCertification)
-        {
-            var res = await _userCertificationServices.SaveUserCertification(userCertification);
-            return Ok(res);
-        }
-
-        /// <summary>
-        /// 获取用户认证信息
-        /// </summary>
-        /// <param name="unionId"></param>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetUserCertification(string unionId)
-        {
-            var res = await _userCertificationServices.GetUserCertification(unionId);
-            return Ok(res);
-        }
-
-
-        /// <summary>
-        /// 保存用户信息
-        /// </summary>
-        /// <param name="userInfo"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> SaveUserInfo(UserInfo userInfo)
-        {
-            var res = await _userServices.SaveUserInfo(userInfo);
-            return Ok(res);
-        }
-
-        /// <summary>
-        /// 保存App配置及首页轮播图
+        /// 保存App配置及首页轮播图（既将弃用)
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
@@ -136,7 +46,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取App配置及首页轮播图等
+        /// 获取App配置及首页轮播图等（既将弃用)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -154,50 +64,74 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 保存店铺设置
+        /// 保存资源设置
         /// </summary>
-        /// <param name="shop"></param>
+        /// <param name="resourceSettings"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> SaveShop([FromBody] Shop shop)
+        public async Task<IActionResult> SaveResourceSettings(ResourceSettings resourceSettings)
         {
-            var res = await _shopServices.SaveShop(shop);
+            var res = await _resourceSettingsServices.SaveResourceSettings(resourceSettings);
             return Ok(res);
         }
 
         /// <summary>
-        /// 获取店铺设置
+        /// 获取单个资源配置
         /// </summary>
-        /// <param name="shopId"></param>
+        /// <param name="sourceId"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetShop(string shopId)
+        public async Task<IActionResult> GetResourceSettings(string sourceId)
         {
-            var res = await _shopServices.GetShop(shopId);
+            var res = await _resourceSettingsServices.GetResourceSettings(sourceId);
             return Ok(res);
         }
 
         /// <summary>
-        /// 获取所有店铺记录
+        /// 按分组获取资源配置
+        /// </summary>
+        /// <param name="groupNo">分组码</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetResourceSettingsByGroup(string groupNo)
+        {
+            var res = await _resourceSettingsServices.GetResourceSettingsByGroup(groupNo);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取资源所有分组码（用于资源调用参考)
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> GetShops()
+        public async Task<IActionResult> GetGroups()
         {
-            var res = await _shopServices.GetShops();
+            var res = await _resourceSettingsServices.GetGroups();
             return Ok(res);
         }
 
         /// <summary>
-        /// 删除店铺设置
+        /// 删除资源配置
         /// </summary>
-        /// <param name="shopId"></param>
+        /// <param name="sourceId"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IActionResult> DeleteShop(string shopId)
+        public async Task<IActionResult> DeleteResourceSettings(string sourceId)
         {
-            var res = await _shopServices.DeleteShop(shopId);
+            var res = await _resourceSettingsServices.DeleteResourceSettings(sourceId);
             return Ok(res);
+        }
+
+        /// <summary>
+        /// 查询资源配置
+        /// </summary>
+        /// <param name="resourceParams"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> QueryResourceSettings(ResourceParams resourceParams)
+        {
+            var res = await _resourceSettingsServices.QueryResourceSettings(resourceParams);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
         }
 
         /// <summary>

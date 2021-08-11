@@ -28,6 +28,12 @@ namespace AllWork.Services.Goods
             return res;
         }
 
+        public async Task<bool> ExistSKU(string goodsId)
+        {
+            var res = await _dal.ExistSKU(goodsId);
+            return res;
+        }
+
         /// <summary>
         /// 删除商品信息（包括颜色与规格设置）
         /// </summary>
@@ -39,7 +45,7 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
+        public async Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
             var res = await _dal.QueryGoods(goodsQueryParams);
             return res;

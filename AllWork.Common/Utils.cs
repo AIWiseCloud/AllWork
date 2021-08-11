@@ -45,7 +45,7 @@ namespace AllWork.Common
         /// <returns></returns>
         public static String FileToBase64(Stream fs)
         {
-            string strRet ;
+            string strRet;
             try
             {
                 if (fs == null) return null;
@@ -103,6 +103,20 @@ namespace AllWork.Common
             var prefix = GetTimeStamp();
             var postfix = GetRandomNum(100, 999);
             return long.Parse($"{prefix}{postfix}");
+        }
+
+        /// <summary>
+        /// 获取11位日期加随机数码（不保证绝对不重复)
+        /// </summary>
+        /// <returns></returns>
+        public static string CreateDigitSn()
+        {
+            var dt = DateTime.Now;
+            var y = dt.Year.ToString().Substring(2, 2);
+            var m = dt.Month.ToString().PadLeft(2, '0');
+            var d = dt.Day.ToString().PadLeft(2, '0');
+            var h = dt.Day.ToString().PadLeft(2, '0');
+            return y + m + d + h + GetRandomNum(100, 999);
         }
     }
 }

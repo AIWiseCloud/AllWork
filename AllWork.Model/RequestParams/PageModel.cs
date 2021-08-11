@@ -1,5 +1,8 @@
 ﻿namespace AllWork.Model
 {
+    /// <summary>
+    /// 分页参数实体
+    /// </summary>
     public class PageModel
     {
         private string _orderWay = "ASC";

@@ -6,9 +6,15 @@ namespace AllWork.Model.ShopCart
 {
     public class Cart
     {
+        /// <summary>
+        /// 主键
+        /// </summary>
         public string ID
         { get; set; }
 
+        /// <summary>
+        /// 用户ID
+        /// </summary>
         [Required(ErrorMessage = "unionId字段不能为空!")]
         public string UnionId
         { get; set; }
@@ -25,10 +31,16 @@ namespace AllWork.Model.ShopCart
         public string SpecId
         { get; set; }
 
+        /// <summary>
+        /// 购物车数量
+        /// </summary>
         [Range(1, 100000)]
         public int Quantity
         { get; set; }
 
+        /// <summary>
+        /// 是否选中
+        /// </summary>
         public byte Selected
         { get; set; }
 

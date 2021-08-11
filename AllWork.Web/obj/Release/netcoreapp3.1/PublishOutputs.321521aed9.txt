@@ -80,6 +80,7 @@ D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Comm
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.IRepository.pdb
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.IServices.pdb
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Model.pdb
+D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Model.xml
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Nlog.pdb
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Repository.pdb
 D:\AppCode\AllWork\AllWork.Web\obj\Release\netcoreapp3.1\PubTmp\Out\AllWork.Services.pdb

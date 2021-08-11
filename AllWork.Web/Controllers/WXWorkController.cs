@@ -7,10 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
 using System;
 using System.IO;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -29,10 +26,7 @@ namespace AllWork.Web.Controllers
         readonly string _agentid;//企业助手
         readonly string _secret;//企业助手的密钥
         readonly IHttpClientFactory _httpClientFactory;
-        readonly string _agentid_mpshop;//小程序应用(商城小程序）
-        readonly string _secret_mpshop;//小程序应用的密钥 (商城小程序密钥）
         readonly string _key_qyzs = "WX_QYZS_TOKEN";//企业助手token缓存key
-        readonly string _key_mpshop = "WX_MPSHOP_TOKEN";//商城小程序token缓存key
         public WXWorkController(IHttpClientFactory httpClientFactory, IConfiguration configuration, IWebHostEnvironment env)
         {
             _httpClientFactory = httpClientFactory;
@@ -41,8 +35,6 @@ namespace AllWork.Web.Controllers
             _corpId = _cofiguration["WXWork:corpid"];
             _secret = _cofiguration["WXWork:secret"];
             _agentid = _cofiguration["WXWork:agentid"];
-            _secret_mpshop = _cofiguration["WXWork:secret_mpshop"];
-            _agentid_mpshop = _cofiguration["WXWork:agentid_mpshop"];
         }
 
         /// <summary>
@@ -211,20 +203,13 @@ namespace AllWork.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> SendMessage(MsgEntity msgEntity)
         {
-            if (string.IsNullOrEmpty(msgEntity.ToUser) && string.IsNullOrEmpty(msgEntity.ToParty) && string.IsNullOrEmpty(msgEntity.ToTag))
+            if (string.IsNullOrEmpty(msgEntity.ToUser))
             {
-                return BadRequest(new { MessageProcessingHandler = "touser,toparty, totag不能同时为空！" });
+                return BadRequest(new { MessageProcessingHandler = "touser不能为空！" });
             }
 
-            dynamic result;
-            if (msgEntity.MsgType == "miniprogram_notice")
-            {
-                result = GetQYAccessToken(_key_mpshop, _secret_mpshop).Result as ObjectResult;
-            }
-            else
-            {
-                result = GetQYAccessToken(_key_qyzs, _secret).Result as ObjectResult;
-            }
+            dynamic result = GetQYAccessToken(_key_qyzs, _secret).Result as ObjectResult;
+
             if (result.StatusCode == 200)
             {
                 CorpSendBase paramData;
@@ -237,10 +222,6 @@ namespace AllWork.Web.Controllers
                 {
                     paramData = new CorpSendFile(msgEntity.Media_Id);
                 }
-                else if (msgEntity.MsgType == "miniprogram_notice")
-                {
-                    paramData = new CorpSendMiniprogram_notice(msgEntity.Miniprogram);
-                }
                 else
                 {
                     paramData = new CorpSendText(msgEntity.Content);//text
@@ -248,8 +229,8 @@ namespace AllWork.Web.Controllers
                 try
                 {
                     paramData.touser = msgEntity.ToUser;
-                    paramData.toparty = msgEntity.ToParty;
-                    paramData.totag = msgEntity.ToTag;
+                    //paramData.toparty = msgEntity.ToParty;
+                    //paramData.totag = msgEntity.ToTag;
                     paramData.agentid = _agentid;
                     var content = JsonConvert.SerializeObject(paramData);
 
@@ -317,7 +298,7 @@ namespace AllWork.Web.Controllers
             return Ok(res);
         }
 
-      
+
 
         /// <summary>
         /// 上传临时素材(以流的形式接收后上传)
@@ -345,7 +326,7 @@ namespace AllWork.Web.Controllers
                 //读取上载文件流
                 byte[] fileData = new byte[requestReader.BaseStream.Length];
                 requestReader.BaseStream.Read(fileData, 0, fileData.Length);
-               
+
                 var boundary = DateTime.Now.Ticks.ToString("X");// 随机分隔线
                 var content = new MultipartFormDataContent(boundary);
                 content.Headers.Remove("Content-Type");
@@ -365,13 +346,14 @@ namespace AllWork.Web.Controllers
                 var res = await response.Content.ReadAsStringAsync();
                 clearToken(res, _key_qyzs);//通过errcode判断token是否实际过期，若过期则清除
                 return Ok(res);
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 AllWork.Common.Mail.SendMail("上传临时素材出错", ex.Message);
                 return BadRequest();
             }
         }
 
-    
+
     }
 }

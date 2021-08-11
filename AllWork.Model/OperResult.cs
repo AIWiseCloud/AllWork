@@ -2,7 +2,7 @@
 namespace AllWork.Model
 {
     /// <summary>
-    /// 操作结果类（为异步调用服务Task<OperResult>
+    /// 操作结果类（为异步调用服务
     /// </summary>
     public class OperResult
     {

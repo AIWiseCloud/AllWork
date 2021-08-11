@@ -1,4 +1,5 @@
-﻿using AllWork.Model.Goods;
+﻿using AllWork.Model;
+using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using System;
 using System.Collections.Generic;
@@ -11,5 +12,9 @@ namespace AllWork.IServices.Goods
         Task<IEnumerable<Inventory>> GetInventories(string goodsId);
 
         Task<Tuple<IEnumerable<Inventory>, int>> SearchInventories(InventoryParams inventoryParams);
+
+        Task<OperResult> ComparisonActiveQuantity(List<RequireItem> requireItems);
+
+        Task<decimal> GetSKUActiveQuantity(string goodsId, string colorId, string specId);
     }
 }

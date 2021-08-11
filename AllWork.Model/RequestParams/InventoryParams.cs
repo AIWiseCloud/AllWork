@@ -6,8 +6,14 @@ namespace AllWork.Model.RequestParams
 {
     public class InventoryParams
     {
+        /// <summary>
+        /// 商品分类Id
+        /// </summary>
         public string CategoryId { get; set; }
 
+        /// <summary>
+        /// 商品名称
+        /// </summary>
         public string GoodsName { get; set; }
 
         /// <summary>
@@ -15,6 +21,9 @@ namespace AllWork.Model.RequestParams
         /// </summary>
         public int GoodsState { get; set; }
 
+        /// <summary>
+        /// 分页实体参数
+        /// </summary>
         public PageModel PageModel { get; set; }
     }
 }

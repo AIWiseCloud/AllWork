@@ -10,9 +10,9 @@ D:\Develop\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.pdb
 D:\AppCode\AllWork\AllWork.Nlog\bin\Debug\netcoreapp3.1\AllWork.Nlog.deps.json
 D:\AppCode\AllWork\AllWork.Nlog\bin\Debug\netcoreapp3.1\AllWork.Nlog.dll
 D:\AppCode\AllWork\AllWork.Nlog\bin\Debug\netcoreapp3.1\AllWork.Nlog.pdb
-D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.csproj.AssemblyReference.cache
 D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.AssemblyInfoInputs.cache
 D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.AssemblyInfo.cs
 D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.csproj.CoreCompileInputs.cache
 D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.dll
 D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.pdb
+D:\AppCode\AllWork\AllWork.Nlog\obj\Debug\netcoreapp3.1\AllWork.Nlog.csproj.AssemblyReference.cache

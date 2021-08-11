@@ -13,8 +13,10 @@ namespace AllWork.IServices.Goods
 
         Task<GoodsInfo> GetGoodsInfo(string goodsId);
 
+        Task<bool> ExistSKU(string goodsId);
+
         Task<bool> DeleteGoodsInfo(string goodsId);
 
-        Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
+        Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
     }
 }

@@ -1,0 +1,140 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AllWork.Model</name>
+    </assembly>
+    <members>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ColorId">
+            <summary>
+            颜色编号在辅助资料设置，在这里选取
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.IEntity`1">
+            <summary>
+            实体接口
+            </summary>
+            <typeparam name="TPrimarykey"></typeparam>
+        </member>
+        <!-- Badly formed XML comment ignored for member "T:AllWork.Model.OperResult" -->
+        <member name="P:AllWork.Model.OperResult.IdentityKey">
+            <summary>
+            返回主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.OperResult.ErrorMsg">
+            <summary>
+            异常输出
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.OperResult.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.GoodsQueryParams">
+            <summary>
+            商品查询参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.QueryScheme">
+            <summary>
+            查询方案：0关键字查询 1商品分类 2推荐商品 3最新商品
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.HideUnderGoods">
+            <summary>
+            隐藏下架商品(0显示，1隐藏)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.QueryValue">
+            <summary>
+            查询值(与查询方案对应)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.CategoryId">
+            <summary>
+            商品分类Id
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.GoodsState">
+            <summary>
+            商品状态（0全部，1销售中, 2 已下架
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.PageModel">
+            <summary>
+            分页实体参数
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.StockBillParams">
+            <summary>
+            出入库单据查询请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.BillId">
+            <summary>
+            出入库单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.TransTypeId">
+            <summary>
+            业务类型ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.PageModel">
+            <summary>
+            分页参数实体
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.PageNo">
+            <summary>
+            页号（1,2,3...)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.PageSize">
+            <summary>
+            每页记录数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.OrderField">
+            <summary>
+            排序栏位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.OrderWay">
+            <summary>
+            排序方法
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.Skip">
+            <summary>
+            Skip(mysql语句limit中第一个参数用
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.Quantity">
+            <summary>
+            购物车数量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.Selected">
+            <summary>
+            是否选中
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Settings.ImgUrl1">
+            <summary>
+            轮插图1
+            </summary>
+        </member>
+    </members>
+</doc>

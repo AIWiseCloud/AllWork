@@ -1,5 +1,4 @@
 ﻿using AllWork.IRepository.Goods;
-using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
@@ -32,25 +31,26 @@ namespace AllWork.Repository.Goods
             }
         }
 
-
-        public async Task<GoodsInfo> GetGoodsInfo(string goodsId)
+        /// <summary>
+        /// 商品详情
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <returns></returns>
+        public async Task<GoodsInfoExt> GetGoodsInfo(string goodsId)
         {
-            Dictionary<string, GoodsInfo> pairs = new Dictionary<string, GoodsInfo>();
-            var sql = @"Select a.*,'' as pid, b.*, '' as pid, c.* ,'' as pid, d.*, '' as pid, e.*
+            Dictionary<string, GoodsInfoExt> pairs = new Dictionary<string, GoodsInfoExt>();
+            var sql = @"Select a.*,'' as pid, b.*, '' as pid, c.* ,'' as pid, d.*, '' as pid, e.*, '' as id5, f.*
 from GoodsInfo a left join GoodsSpec b
 on a.GoodsId = b.GoodsId
-left join SpecInfo c
-on b.SpecId = c.SpecId
-left join GoodsColor d
-on d.GoodsId = a.GoodsId
-left join ColorInfo e
-on d.ColorId = e.ColorId
+left join SpecInfo c on b.SpecId = c.SpecId
+left join GoodsColor d on d.GoodsId = a.GoodsId
+left join ColorInfo e on d.ColorId = e.ColorId
+left join SpuImg f on a.GoodsId = f.GoodsId
 where a.GoodsId = @GoodsId";
 
-            var res = await base.QueryAsync<GoodsInfo, GoodsSpec, SpecInfo, GoodsColor, ColorInfo>(sql, (goodsInfo, goodsSpec, subMessage, goodsColor, subMessage2) =>
+            var res = await base.QueryAsync<GoodsInfoExt, GoodsSpec, SpecInfo, GoodsColor, ColorInfo, SpuImg>(sql, (goodsInfo, goodsSpec, si, goodsColor, ci, img) =>
              {
-                 GoodsInfo tempgoods;
-                 if (!pairs.TryGetValue(goodsInfo.GoodsId, out tempgoods))
+                 if (!pairs.TryGetValue(goodsInfo.GoodsId, out GoodsInfoExt tempgoods))
                  {
                      tempgoods = goodsInfo;
                      pairs.Add(tempgoods.GoodsId, tempgoods);
@@ -58,22 +58,28 @@ where a.GoodsId = @GoodsId";
                  GoodsSpec tempSpec = tempgoods.GoodsSpecs.Find(list => list.GoodsId == goodsSpec.GoodsId && list.SpecId == goodsSpec.SpecId);
                  if (tempSpec == null)
                  {
-                    //子表信息
-                    tempSpec = goodsSpec;
-                    //子表中的规格信息
-                    //goodsSpec.SpecId = subMessage.FNumber;//不能少
-                    goodsSpec.Spec = subMessage;
+                     //子表信息
+                     tempSpec = goodsSpec;
+                     //子表中的规格信息
+                     //goodsSpec.SpecId = subMessage.FNumber;//不能少
+                     goodsSpec.Spec = si;
                      tempgoods.GoodsSpecs.Add(tempSpec);
                  }
                  GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.GoodsId == goodsColor.GoodsId && x.ColorId == goodsColor.ColorId);
                  if (tempColor == null)
                  {
                      tempColor = goodsColor;
-                     goodsColor.ColorInfo = subMessage2;
+                     goodsColor.ColorInfo = ci;
                      tempgoods.GoodsColors.Add(tempColor);
                  }
+                 SpuImg tempImg = tempgoods.SpuImgs.Find(x => x.ID == img.ID);
+                 if (tempImg == null)
+                 {
+                     tempImg = img;
+                     tempgoods.SpuImgs.Add(tempImg);
+                 }
                  return goodsInfo;
-             }, new { GoodsId = goodsId }, "pid, pid, pid, pid");
+             }, new { GoodsId = goodsId }, "pid, pid, pid, pid, id5");
             return pairs.Values.Count > 0 ? pairs[goodsId] : null;
         }
 
@@ -91,8 +97,15 @@ where a.GoodsId = @GoodsId";
             return await base.Execute(sql.ToString(), new { GoodsId = goodsId }) > 0;
         }
 
+        public async Task<bool> ExistSKU(string goodsId)
+        {
+            var sql = "Select count(*) from Inventory Where GoodsId = @GoodsId";
+            var res = await base.ExecuteScalar<int>(sql, new { GoodsId = goodsId });
+            return res > 0;
+        }
+
         //商品分页查询  (查询方案queryScheme：0关键字查询 1商品分类 2推荐商品 3最新商品)
-        public async Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
+        public async Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
             //(1) sql公共部分
             var sqlpub = new StringBuilder();
@@ -154,14 +167,14 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             var sql2 = string.Format(sqlpub.ToString(), " a.*,'' as id1, t1.*,'' as id2, t2.* ") + sqlorder + " limit @Skip, @PageSize ";
             //完整sql
             var sql = sql1 + ";" + sql2;
-            var res = await base.QueryPagination<GoodsInfo, GoodsColor, GoodsSpec>(sql, (gi, gc, gs) =>
+            var res = await base.QueryPagination<GoodsInfoExt, GoodsColor, GoodsSpec>(sql, (gi, gc, gs) =>
             {
                 gi.GoodsColors.Add(gc);
                 gi.GoodsSpecs.Add(gs);
                 return gi;
             }, new
             {
-                CategoryId=goodsQueryParams.QueryValue,
+                CategoryId = goodsQueryParams.QueryValue,
                 GoodsId = goodsQueryParams.QueryValue,
                 ProdNumber = goodsQueryParams.QueryValue,
                 Skip = goodsQueryParams.PageModel.Skip,

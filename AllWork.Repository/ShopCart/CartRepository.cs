@@ -2,6 +2,7 @@
 using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.ShopCart;
+using AllWork.Model.Sys;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -21,7 +22,7 @@ namespace AllWork.Repository.ShopCart
         /// <returns></returns>
         public async Task<OperResult> SaveCart(Cart cart)
         {
-            var instance = await base.QueryFirst("Select * from Cart Where GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId", cart);
+            var instance = await base.QueryFirst("Select * from Cart Where UnionId = @UnionId and GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId", cart);
             var sql = string.Empty;
             if (instance == null)
             {
@@ -32,7 +33,7 @@ namespace AllWork.Repository.ShopCart
             else
             {
                 //若存在，则合并数量
-                sql = "Update Cart set Quantity = Quantity + @Quantity,Selected = 1 Where ID = @ID";
+                sql = "Update Cart set Quantity = Quantity + @Quantity, Selected = 1 Where UnionId = @UnionId and GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId";
             }
             var res = await base.Execute(sql, cart);
             return new OperResult { Status = res > 0, IdentityKey = cart.ID };
@@ -43,19 +44,25 @@ namespace AllWork.Repository.ShopCart
             var sql = @"Select a.*,
 '' as id1, b.*,
 '' as id2, c.*,
-'' as id3, d.*
+'' as id3, d.*,
+'' as id4, c2.*,
+'' as id5, d2.*
 from Cart a
 left join GoodsInfo b on a.GoodsId = b.GoodsId
 left join GoodsColor c on a.GoodsId = c.GoodsId and a.ColorId = c.ColorId
+left join ColorInfo c2 on c2.ColorId = c.ColorId
 left join GoodsSpec d on d.GoodsId = a.GoodsId and a.SpecId = d.SpecId
+left join SpecInfo d2 on d2.SpecId = d.SpecId
 Where UnionId = @UnionId";
-            var res = await base.QueryAsync<CartEx, GoodsInfo, GoodsColor, GoodsSpec>(sql, (cart, gi, ci, si) =>
+            var res = await base.QueryAsync<CartEx, GoodsInfo, GoodsColor, GoodsSpec, ColorInfo, SpecInfo>(sql, (cart, gi, ci, si,ci2,si2) =>
             {
                 cart.GoodsInfo = gi;
                 cart.GoodsColor = ci;
+                ci.ColorInfo = ci2;
                 cart.GoodsSpec = si;
+                cart.GoodsSpec.Spec = si2;
                 return cart;
-            }, new { unionId = unionId }, "id1,id2,id3");
+            }, new { unionId = unionId }, "id1,id2,id3,id4,id5");
             return res;
         }
 

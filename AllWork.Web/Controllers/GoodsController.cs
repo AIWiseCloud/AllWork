@@ -212,6 +212,18 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 判断商品是否有SKU记录
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> ExistSKU(string goodsId)
+        {
+            var res = await _goodsInfoServices.ExistSKU(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
         /// 删除一条商品颜色记录
         /// </summary>
         /// <param name="id"></param>

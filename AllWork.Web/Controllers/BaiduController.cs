@@ -1,14 +1,12 @@
-﻿using AllWork.Web.Helper.Redis;
+﻿using AllWork.Common;
+using AllWork.Web.Helper.Redis;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using AllWork.Common;
 using System.Net.Http;
 using System.Threading.Tasks;
-using System.Net.Http.Headers;
 using System.Web;
 
 namespace AllWork.Web.Controllers
@@ -217,7 +215,44 @@ namespace AllWork.Web.Controllers
                 var url = "https://aip.baidubce.com/rest/2.0/ocr/v1/driving_license?access_token=" + result.Value;
                 var stream = files[0].OpenReadStream();//将文件转为流
                 var str64 = Utils.FileToBase64(stream);//base64
-                //传front如果实际为back也可识别
+                var str = "image=" + HttpUtility.UrlEncode(str64);//对字符串进行编码，以便于可靠的http传输
+                var httpContent = new StringContent(str, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
+                try
+                {
+                    var client = _httpClientFactory.CreateClient();
+                    client.DefaultRequestHeaders.Add("Method", "POST");
+
+                    var response = await client.PostAsync(url, httpContent);
+                    response.EnsureSuccessStatusCode();
+                    var res = response.Content.ReadAsStringAsync().Result;
+                    return Ok(res);
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest(ex.Message);
+                }
+            }
+            else
+            {
+                return BadRequest(result.Value);
+            }
+        }
+
+        /// <summary>
+        /// 营业执照识别
+        /// </summary>
+        /// <param name="formCollection"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> BusinessLicenseRecognition(IFormCollection formCollection)
+        {
+            var result = getAccessToken(ocr_ApiKey, ocr_SecretKey, ocr_CacheKey).Result as ObjectResult;
+            if (result.StatusCode == 200)
+            {
+                IFormFileCollection files = (IFormFileCollection)formCollection.Files;
+                var url = "https://aip.baidubce.com/rest/2.0/ocr/v1/business_license?access_token=" + result.Value;
+                var stream = files[0].OpenReadStream();//将文件转为流
+                var str64 = Utils.FileToBase64(stream);//base64
                 var str = "image=" + HttpUtility.UrlEncode(str64);//对字符串进行编码，以便于可靠的http传输
                 var httpContent = new StringContent(str, System.Text.Encoding.UTF8, "application/x-www-form-urlencoded");
                 try

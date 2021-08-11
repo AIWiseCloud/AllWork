@@ -19,8 +19,6 @@ namespace AllWork.Web
 {
     public class Startup
     {
-        //readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
-
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -64,15 +62,6 @@ namespace AllWork.Web
                 options.Filters.Add(typeof(ModelValidateActionFilterAttribute));//模型验证
             });
 
-            //跨域问题
-            //services.AddCors(options =>
-            //{
-            //    options.AddPolicy(MyAllowSpecificOrigins,
-            //    builder => builder.AllowAnyOrigin()
-            //    .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS")
-            //    );
-            //});
-
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));//读取token配置信息
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
             services.AddAuthentication(x =>
@@ -113,8 +102,8 @@ namespace AllWork.Web
                 });
                 //配置XML文档的输出路径
                 var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录
-                var xmlPath = Path.Combine(basePath, "AllWork.Web.xml");
-                c.IncludeXmlComments(xmlPath, true);
+                c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Web.xml"), true);
+                c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Model.xml"), true); //实体注释文件也包括进来
 
                 #region JWT认证Swagger授权
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
@@ -156,9 +145,6 @@ namespace AllWork.Web
             app.UseRouting();
 
             app.UseAuthorization();//授权
-
-            //CORS 中间件必须配置为在对 UseRouting 和 UseEndpoints的调用之间执行。 配置不正确将导致中间件停止正常运行
-            //app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>

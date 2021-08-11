@@ -31,7 +31,7 @@ namespace AllWork.Web.Filter
             }
             else if (context.Result is EmptyResult)
             {
-                context.Result = new ObjectResult(new { code = 404,  msg = "未找到资源", returnStatus = 0 });
+                context.Result = new ObjectResult(new { code = 404, msg = "未找到资源", returnStatus = 0 });
             }
             else if (context.Result is ContentResult)
             {

@@ -11,10 +11,12 @@ namespace AllWork.IRepository.Goods
     {
         Task<bool> SaveGoodsInfo(GoodsInfo goodsInfo);
 
-        Task<GoodsInfo> GetGoodsInfo(string goodsId);
+        Task<GoodsInfoExt> GetGoodsInfo(string goodsId);
 
         Task<bool> DeleteGoodsInfo(string goodsId);
 
-        Task<Tuple<IEnumerable<GoodsInfo>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
+        Task<bool> ExistSKU(string goodsId);
+
+        Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
     }
 }

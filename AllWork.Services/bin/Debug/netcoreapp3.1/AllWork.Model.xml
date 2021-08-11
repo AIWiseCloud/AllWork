@@ -1,0 +1,1069 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>AllWork.Model</name>
+    </assembly>
+    <members>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.AddrId">
+            <summary>
+            主键（后台提供)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.Receiver">
+            <summary>
+            收货人姓名
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.Label">
+            <summary>
+            地址标签
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.PhoneNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.City">
+            <summary>
+            城市
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.County">
+            <summary>
+            区县
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.DetailsAddress">
+            <summary>
+            详细址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Address.ReceiveAddress.IsDefault">
+            <summary>
+            是否默认址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.CategoryId">
+            <summary>
+            商品分类ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.CategoryName">
+            <summary>
+            类别名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.ShopId">
+            <summary>
+            店铺ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.ImgUrl">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.ParentId">
+            <summary>
+            上级分类ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.Findex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.IsCancellation">
+            <summary>
+            作废
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ColorId">
+            <summary>
+            颜色编号: (在辅助资料设置，此处引用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ImgFront">
+            <summary>
+            下面图片
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ImgBack">
+            <summary>
+            背面图片
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ImgRight">
+            <summary>
+            右侧图
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.ImgLeft">
+            <summary>
+            左侧图
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsColor.Findex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Goods.GoodsColorSpec">
+            <summary>
+            此类基于视图，为减少多表查询时过多的表关联（如查询订单列表要显示颜色及规格名，分别要join两个表）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.GoodsId">
+            <summary>
+            商品ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.CategoryId">
+            <summary>
+            商品分类ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.ProdNumber">
+            <summary>
+            产品编号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.GoodsDesc">
+            <summary>
+            商品描述
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.UnitName">
+            <summary>
+            销售单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.SalesTimes">
+            <summary>
+            销量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.IsRecommend">
+            <summary>
+            是否推荐商品
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.IsNew">
+            <summary>
+            是否最新商品
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.IsUnder">
+            <summary>
+            是否下架
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.Creator">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.GoodsId">
+            <summary>
+            商品ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecId">
+            <summary>
+            规格编号（在辅助资料设置，此处选用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.Price">
+            <summary>
+            单价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.DiscountPrice">
+            <summary>
+            折扣价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.Findex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.Creator">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.SkuId">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.GoodsId">
+            <summary>
+            商品iD
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.ColorId">
+            <summary>
+            颜色ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.SpecId">
+            <summary>
+            规格ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.Quantity">
+            <summary>
+            实际库存
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.LockQuantity">
+            <summary>
+            锁定库存
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.TransitQuantity">
+            <summary>
+            在途库存
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.Inventory.ActiveQuantity">
+            <summary>
+            可用库存
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.SkuId">
+            <summary>
+            库存表ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.StockNumber">
+            <summary>
+            仓库代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.Quantity">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.InventoryDetail.Creator">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.SpuImg.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.SpuImg.GoodsId">
+            <summary>
+            商品iD
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.SpuImg.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.SpuImg.ImgUrl">
+            <summary>
+            图片地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.BillId">
+            <summary>
+            交易单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.TransTypeId">
+            <summary>
+            业务类型
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.BillState">
+            <summary>
+            单据状态(0待审, 1已审, -1作废)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBill.Creator">
+            <summary>
+            创建人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.BillId">
+            <summary>
+            交易单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.GoodsId">
+            <summary>
+            商品ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.StockNumber">
+            <summary>
+            仓库代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.ColorId">
+            <summary>
+            颜色ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.SpecId">
+            <summary>
+            规格ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.StockBillDetail.Quantity">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.IEntity`1">
+            <summary>
+            实体接口
+            </summary>
+            <typeparam name="TPrimarykey"></typeparam>
+        </member>
+        <member name="T:AllWork.Model.OperResult">
+            <summary>
+            操作结果类（为异步调用服务
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.OperResult.IdentityKey">
+            <summary>
+            返回主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.OperResult.ErrorMsg">
+            <summary>
+            异常输出
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.OperResult.Status">
+            <summary>
+            状态
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.LineId">
+            <summary>
+            行号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.GoodsId">
+            <summary>
+            商品ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.ColorId">
+            <summary>
+            颜色ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.SpecId">
+            <summary>
+            规格ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.Quantity">
+            <summary>
+            数量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.UnitPrice">
+             <summary>
+            单价
+             </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.Unit">
+            <summary>
+            单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.Amount">
+            <summary>
+            金额
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderList.Evaluate">
+            <summary>
+            是否评论
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.DistributionMethod">
+            <summary>
+            配送方式(1快递、2自提)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Receiver">
+            <summary>
+            收货人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.PhoneNumber">
+            <summary>
+            收货电话
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.DeliveryAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.StatusId">
+            <summary>
+            订单状态(取值：0待付款; 1待发货; 2待收货; 3已签收; -1已取消; -2已删除）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Amount">
+            <summary>
+            订单金额
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Freight">
+            <summary>
+            运费
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Discount">
+            <summary>
+            折扣额
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.RealPay">
+            <summary>
+            实际支付
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.LogisticsId">
+            <summary>
+            物流公司ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.ExpressId">
+            <summary>
+            物流单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.PaymentChannel">
+            <summary>
+            支付渠道(alipay, wechatpay,unionpay)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.PayTime">
+            <summary>
+            支付时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.TradeNo">
+            <summary>
+            交易单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Platform">
+            <summary>
+            下单平台(app,web,mp)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Words">
+            <summary>
+            买家留言
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.OrderTime">
+            <summary>
+            下单日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.DeliveryTime">
+            <summary>
+            发货日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.SigningTime">
+            <summary>
+            签收日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.CancelTime">
+            <summary>
+            取消日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.PostSaleId">
+            <summary>
+            售后服务单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.CurrentType">
+            <summary>
+            业务类型（1退货,2退款, 3换货
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.PaymentChannel">
+            <summary>
+            订单支付渠道
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.OrderLineId">
+            <summary>
+            订单行号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.ColorId">
+            <summary>
+            换货颜色ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.SpecId">
+            <summary>
+            换货规格ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundTo">
+            <summary>
+            管理员退款方向
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundResonId">
+            <summary>
+            售后原因ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.BackQty">
+            <summary>
+            售后数量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.BackMoney">
+            <summary>
+            售后金额
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.LogisticsId">
+            <summary>
+            承运商代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.ExpressId">
+            <summary>
+            用户退货物流单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.Images">
+            <summary>
+            图片凭证路径
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundUser">
+            <summary>
+            联系人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundUserPhone">
+            <summary>
+            电话
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundTradeNo">
+            <summary>
+            管理员退款流水号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundRemark">
+            <summary>
+            管理员备注
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundTime">
+            <summary>
+            结案时间（如退款、取消、关闭、完成时间）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.ShopIsReject">
+            <summary>
+            店铺拒绝(0接受，1拒绝)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.ShopRejectReason">
+            <summary>
+            拒绝理由
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.RefundStatus">
+            <summary>
+            售后服务状态(-1取消,0用户提交,1商家审核(完成)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.BackMode">
+            <summary>
+            退货方式(1上门取件，2快递至卖家)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.PickUpAddress">
+            <summary>
+            取件地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.IsClosed">
+            <summary>
+            关闭状态(0未关闭，1已关闭；变动规则：服务完成后自动关闭、或是申请不合理店铺主动关闭服务单)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.EvaluateState">
+            <summary>
+            服务单评价状态(0待评价，1已评价)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PostSale.OrderRefunds.CreateTime">
+            <summary>
+            申请时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.AppTransactionsParams.OrderId">
+            <summary>
+            商城订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.AppTransactionsParams.GoodsName">
+            <summary>
+            商品描述(127个字符以内)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.AppTransactionsParams.OrderAmount">
+            <summary>
+            订单金额(单位：分)
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.GoodsQueryParams">
+            <summary>
+            商品查询参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.QueryScheme">
+            <summary>
+            查询方案：0关键字查询 1商品分类 2推荐商品 3最新商品
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.HideUnderGoods">
+            <summary>
+            隐藏下架商品(0显示，1隐藏)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsQueryParams.QueryValue">
+            <summary>
+            查询值(与查询方案对应)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.CategoryId">
+            <summary>
+            商品分类Id
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.GoodsState">
+            <summary>
+            商品状态（0全部，1销售中, 2 已下架
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.InventoryParams.PageModel">
+            <summary>
+            分页实体参数
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.OrderQueryParams">
+            <summary>
+            订单查询参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.QueryScheme">
+            <summary>
+            查询方案(取值：0搜索订单 1全部订单 2待付款订单 3待收货订单 4待评价订单 5可售后订单
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.UnionId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.QueryValue">
+            <summary>
+            查询值(搜索时提供关键字）
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.RefundApplyParams">
+            <summary>
+            退款申请请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RefundApplyParams.OrderId">
+            <summary>
+            商户订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RefundApplyParams.RefundId">
+            <summary>
+            退款单号：商户系统内部唯一，只能是数字、大小写字母_-|*@ ，同一退款单号多次请求只退一笔。
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RefundApplyParams.TotalFee">
+            <summary>
+            订单总金额，单位为分，只能为整数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RefundApplyParams.RefundFee">
+            <summary>
+            退款总金额，订单总金额，单位为分，只能为整数
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.RequireItem">
+            <summary>
+            需求项（用于添加购物车、生成订单前比对可用库存）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RequireItem.Quantity">
+            <summary>
+            需求数量
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.ResourceParams">
+            <summary>
+            资源查询请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.ResourceParams.KeyWords">
+            <summary>
+            关键字
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.StockBillParams">
+            <summary>
+            出入库单据查询请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.BillId">
+            <summary>
+            出入库单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.TransTypeId">
+            <summary>
+            业务类型ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.StockBillParams.GoodsName">
+            <summary>
+            商品名称
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.UpdateOrderAddressParams">
+            <summary>
+            修改订单收货地址的请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.Receiver">
+            <summary>
+            收货人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.PhoneNumber">
+            <summary>
+            收货电话
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.DeliveryAddress">
+            <summary>
+            详细地址
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.PageModel">
+            <summary>
+            分页参数实体
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.PageNo">
+            <summary>
+            页号（1,2,3...)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.PageSize">
+            <summary>
+            每页记录数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.OrderField">
+            <summary>
+            排序栏位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.OrderWay">
+            <summary>
+            排序方法
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.PageModel.Skip">
+            <summary>
+            Skip(mysql语句limit中第一个参数用
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.UnionId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.Quantity">
+            <summary>
+            购物车数量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.ShopCart.Cart.Selected">
+            <summary>
+            是否选中
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.ResourceSettings">
+            <summary>
+            资源设定
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.SourceId">
+            <summary>
+            资源ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.Subject">
+            <summary>
+            资源主旨
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.GroupNo">
+            <summary>
+            分组码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.ImgUrl">
+            <summary>
+            图片地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.Navigator">
+            <summary>
+            导航地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.IsCancellation">
+            <summary>
+            作废
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ResourceSettings.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Settings.ImgUrl1">
+            <summary>
+            轮插图1
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.ShopId">
+            <summary>
+            店铺编号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.ShopName">
+            <summary>
+            店铺名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.ImgUrl">
+            <summary>
+            店铺图像
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.Contacter">
+            <summary>
+            联系人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.PhoneNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.ListBySpuShow">
+            <summary>
+            列表按SPU显示
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.Introduction">
+            <summary>
+            店铺简介
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.Announcement">
+            <summary>
+            店铺通知
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.SubMessage">
+            <summary>
+            辅助信息
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.ParentId">
+            <summary>
+            上级代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.FNumber">
+            <summary>
+            项目代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.FName">
+            <summary>
+            项目名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.IsCancellation">
+            <summary>
+            是否作废
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMessage.FNote">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.SubMesType">
+            <summary>
+            辅助信息分类
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMesType.ID">
+            <summary>
+            分类代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.SubMesType.FName">
+            <summary>
+            分类名称
+            </summary>
+        </member>
+    </members>
+</doc>

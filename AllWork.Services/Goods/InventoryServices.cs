@@ -1,5 +1,6 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using System;
@@ -25,6 +26,18 @@ namespace AllWork.Services.Goods
         public async Task<Tuple<IEnumerable<Inventory>, int>> SearchInventories(InventoryParams inventoryParams)
         {
             var res = await _dal.SearchInventories(inventoryParams);
+            return res;
+        }
+
+        public async Task<OperResult> ComparisonActiveQuantity(List<RequireItem> requireItems)
+        {
+            var res = await _dal.ComparisonActiveQuantity(requireItems);
+            return res;
+        }
+
+        public async Task<decimal> GetSKUActiveQuantity(string goodsId, string colorId, string specId)
+        {
+            var res = await _dal.GetSKUActiveQuantity(goodsId, colorId, specId);
             return res;
         }
     }

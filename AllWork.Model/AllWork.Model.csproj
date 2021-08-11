@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>D:\AppCode\AllWork\AllWork.Model\AllWork.Model.xml</DocumentationFile>
+    <OutputPath>D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\</OutputPath>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>bin\Release\netcoreapp3.1\AllWork.Model.xml</DocumentationFile>
+    <OutputPath>D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\</OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
