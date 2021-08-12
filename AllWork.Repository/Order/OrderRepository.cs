@@ -233,13 +233,13 @@ Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
                 return om;
             }, new
             {
-                UnionId = orderQueryParams.UnionId,
+                orderQueryParams.UnionId,
                 OrderId = orderQueryParams.QueryValue,
                 CategoryId = orderQueryParams.QueryValue,
                 GoodsId = orderQueryParams.QueryValue,
                 ProdNumber = orderQueryParams.QueryValue,
-                Skip = orderQueryParams.PageModel.Skip,
-                PageSize = orderQueryParams.PageModel.PageSize,
+                orderQueryParams.PageModel.Skip,
+                orderQueryParams.PageModel.PageSize,
             }, "id1, id2,id3,id4,id5");
             return new Tuple<IEnumerable<OrderMainExt>, int>(pairs.Values.ToList().AsEnumerable(), res.Item2);
         }

@@ -46,7 +46,20 @@ namespace AllWork.Web.Controllers
             //若是出库要检查是否会导致负结存
             if (_stockBillServices.IsOutStock(stockBill.TransTypeId))
             {
-                var operResult = await _stockBillServices.CheckNegativeBalance(stockBill);
+                StockBillExt instance = new StockBillExt { BillId = stockBill.BillId };
+                foreach(var item in stockBill.StockBillDetail)
+                {
+                    instance.StockBillDetail.Add(new StockBillDetailExt
+                    {
+                        ID = item.ID,
+                        GoodsId = item.GoodsId,
+                        ColorId = item.ColorId,
+                        SpecId = item.SpecId,
+                        StockNumber = item.StockNumber,
+                        Quantity = item.Quantity
+                    });
+                }
+                var operResult = await _stockBillServices.CheckNegativeBalance(instance);
                 if (!operResult.Status)
                 {
                     return Ok(operResult);
@@ -82,7 +95,7 @@ namespace AllWork.Web.Controllers
                     decimal qty = 0;
                     foreach (var detail in stockBill.StockBillDetail.FindAll(x => x.ColorId == item.ColorId && x.SpecId == item.SpecId))
                     {
-                        qty = qty + detail.Quantity;
+                        qty += detail.Quantity;
                     }
                     if (item.Quantity != qty)
                     {
@@ -151,7 +164,7 @@ namespace AllWork.Web.Controllers
         /// <param name="isAudit">审核标记(1审核,0反审)</param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize]
+        //[Authorize]
         public async Task<IActionResult> AuditStockBill(string billId, int isAudit)
         {
             var stockBill = await _stockBillServices.GetStockBill(billId);

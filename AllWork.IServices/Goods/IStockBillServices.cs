@@ -25,7 +25,7 @@ namespace AllWork.IServices.Goods
         Task<bool> IsCreateOthBill(string billId, long? orderId);
 
         //检查出库数量是否会导致负结存(保存出库单、审核出库单、反审核入库单时均可用此检查)
-        Task<OperResult> CheckNegativeBalance(StockBill stockBill);
+        Task<OperResult> CheckNegativeBalance(StockBillExt stockBill);
 
         //根据单据的业务类型判断是否为出库
         bool IsOutStock(string transTypeId);

@@ -18,7 +18,7 @@ namespace AllWork.Repository.Goods
 
         public async Task<bool> SaveGoodsInfo(GoodsInfo goodsInfo)
         {
-            var instance = await base.QueryFirst("Select * from GoodsInfo Where GoodsId = @GoodsId", new { GoodsId = goodsInfo.GoodsId });
+            var instance = await base.QueryFirst("Select * from GoodsInfo Where GoodsId = @GoodsId", new { goodsInfo.GoodsId });
             if (instance == null)
             {
                 var insertSql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName,GoodsDesc,UnitName,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName,@GoodsDesc,@UnitName,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
@@ -177,8 +177,8 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
                 CategoryId = goodsQueryParams.QueryValue,
                 GoodsId = goodsQueryParams.QueryValue,
                 ProdNumber = goodsQueryParams.QueryValue,
-                Skip = goodsQueryParams.PageModel.Skip,
-                PageSize = goodsQueryParams.PageModel.PageSize,
+                goodsQueryParams.PageModel.Skip,
+                goodsQueryParams.PageModel.PageSize,
             }, "id1, id2");
             return res;
         }

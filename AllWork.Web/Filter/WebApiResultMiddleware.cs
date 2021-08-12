@@ -11,9 +11,8 @@ namespace AllWork.Web.Filter
     {
         public override void OnResultExecuting(ResultExecutingContext context)
         {
-            if (context.Result is ObjectResult)
+            if (context.Result is ObjectResult objectResult)//写法：使用模式匹配来避免后跟强制转换的“is”检查
             {
-                var objectResult = (ObjectResult)context.Result;
                 if (objectResult.Value == null)
                 {
                     context.Result = new ObjectResult(new { code = 200, msg = "未找到资源", returnStatus = 0 });

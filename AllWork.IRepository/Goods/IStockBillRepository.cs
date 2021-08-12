@@ -27,7 +27,7 @@ namespace AllWork.IRepository.Goods
         Task<int> IsCreateOthBill(string billId, long? orderId);
 
         //检查出库数量是否会导致负结存(保存出库单、审核出库单、反审核入库单时均可用此检查)
-        Task<OperResult> CheckNegativeBalance(StockBill stockBill);
+        Task<OperResult> CheckNegativeBalance(StockBillExt stockBill);
 
         //获取商品实际库存信息
         Task<decimal> GetInventoryDetail(string goodsId, string colorId, string specId, string stockNumber);

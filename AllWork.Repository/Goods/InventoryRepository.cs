@@ -74,7 +74,7 @@ on e.CategoryId = b.CategoryId Where (1=1) ");
                   iv.ColorInfo = ci;
                   iv.SpecInfo = si;
                   return iv;
-              }, new { CategoryId = inventoryParams.CategoryId, Skip = inventoryParams.PageModel.Skip, PageSize = inventoryParams.PageModel.PageSize }, "id1,id2,id3,id4");
+              }, new {  inventoryParams.CategoryId, inventoryParams.PageModel.Skip, inventoryParams.PageModel.PageSize }, "id1,id2,id3,id4");
             return res;
 
         }

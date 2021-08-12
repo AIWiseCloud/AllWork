@@ -21,6 +21,7 @@ namespace AllWork.Repository.Goods
             var instance = await base.QueryFirst("Select * from StockBill Where BillId = @BillId", new { stockBill.BillId });
             List<Tuple<string, object>> tranitems = new List<Tuple<string, object>>();
             string msql = null;
+            //保存主表
             if (instance == null)
             {
                 msql = "Insert StockBill (BillId,TransTypeId,Remark,OrderId, Creator)values(@BillId,@TransTypeId,@Remark,@OrderId, @Creator)";
@@ -30,18 +31,22 @@ namespace AllWork.Repository.Goods
                 msql = "Update StockBill set OrderId = @OrderId,TransTypeId = @TransTypeId,Remark = @Remark,Creator = @Creator Where BillId = @BillId";
             }
             tranitems.Add(new Tuple<string, object>(msql, stockBill));
+            //保存子表
+            tranitems.Add(new Tuple<string ,object>("Delete from StockBillDetail Where BillId = @BillId", new { stockBill.BillId })); //先删除子表
             stockBill.StockBillDetail.ForEach(x =>
             {
-                if (x.IsNew == 1)
-                {
-                    var isql = "Insert StockBillDetail (ID,BillId,FIndex,GoodsId,StockNumber,ColorId,SpecId,Quantity)values(@ID,@BillId,@FIndex,@GoodsId,@StockNumber,@ColorId,@SpecId,@Quantity)";
-                    tranitems.Add(new Tuple<string, object>(isql, x));
-                }
-                else
-                {
-                    var usql = "Update StockBillDetail set FIndex = @FIndex,GoodsId = @GoodsId,StockNumber = @StockNumber,ColorId = @ColorId,SpecId = @SpecId,Quantity = @Quantity Where ID = @ID";
-                    tranitems.Add(new Tuple<string, object>(usql, x));
-                }
+                var isql = "Insert StockBillDetail (ID,BillId,FIndex,GoodsId,StockNumber,ColorId,SpecId,Quantity)values(@ID,@BillId,@FIndex,@GoodsId,@StockNumber,@ColorId,@SpecId,@Quantity)";
+                tranitems.Add(new Tuple<string, object>(isql, x));
+                //if (x.IsNew == 1)
+                //{
+                //    var isql = "Insert StockBillDetail (ID,BillId,FIndex,GoodsId,StockNumber,ColorId,SpecId,Quantity)values(@ID,@BillId,@FIndex,@GoodsId,@StockNumber,@ColorId,@SpecId,@Quantity)";
+                //    tranitems.Add(new Tuple<string, object>(isql, x));
+                //}
+                //else
+                //{
+                //    var usql = "Update StockBillDetail set FIndex = @FIndex,GoodsId = @GoodsId,StockNumber = @StockNumber,ColorId = @ColorId,SpecId = @SpecId,Quantity = @Quantity Where ID = @ID";
+                //    tranitems.Add(new Tuple<string, object>(usql, x));
+                //}
             });
             var res = await base.ExecuteTransaction(tranitems);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
@@ -179,9 +184,11 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
 
         public async Task<OperResult> DeleteStockBill(string billId)
         {
-            var items = new List<Tuple<string, object>>();
-            items.Add(new Tuple<string, object>("Delete from StockBillDetail Where BillId = @BillId", new { BillId = billId }));
-            items.Add(new Tuple<string, object>("Delete from StockBill Where BillId = @BillId", new { BillId = billId }));
+            var items = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>("Delete from StockBillDetail Where BillId = @BillId", new { BillId = billId }),
+                new Tuple<string, object>("Delete from StockBill Where BillId = @BillId", new { BillId = billId })
+            };
             var res = await base.ExecuteTransaction(items);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
 
@@ -189,9 +196,11 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
 
         public async Task<OperResult> AuditStockBill(string billId, int isAdit)
         {
-            var paris = new Dictionary<string, object>();
-            paris.Add("_billId", billId);
-            paris.Add("isAudit", isAdit);
+            var paris = new Dictionary<string, object>
+            {
+                { "_billId", billId},
+                {"isAudit", isAdit }
+            };
             var res = await base.Execute<string>("AuditStockBill", paris);
             return new OperResult { Status = res == "success" };
         }
@@ -204,7 +213,7 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
         }
 
         //检查出库数量是否会导致负结存(保存出库单、审核出库单、反审核入库单时均可用此检查)
-        public async Task<OperResult> CheckNegativeBalance(StockBill stockBill)
+        public async Task<OperResult> CheckNegativeBalance(StockBillExt stockBill)
         {
             //出入库明细转换成sql
             var strdetail = new StringBuilder();
@@ -216,9 +225,11 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
             //按仓库及颜色规格分组统计数量
             var strgroup = $" Select StockNumber, GoodsId, ColorId, SpecId, sum(Quantity) as Quantity from ({strdetail})g ";
             //关联库存明细比对库存
-            var sql = string.Format(@" Select count(1) as RecordCount from ({0})t1 left join InventoryDetailView t2 on t1.StockNumber = t2.StockNumber
- and t1.GoodsId = t2.GoodsId and t1.ColorId = t2.ColorId and t1.SpecId = t2.SpecId Where t1.Quantity > IFNull(t1.Quantity,0) ", strgroup);
+            var sql = string.Format(@" Select count(1) as RecordCount from ({0})t1 left join InventoryDetailView t2 on t1.StockNumber = t2.StockNumber 
+ and t1.GoodsId = t2.GoodsId and t1.ColorId = t2.ColorId and t1.SpecId = t2.SpecId Where t1.Quantity > IFNull(t2.Quantity,0) ", strgroup);
+
             var res = await base.ExecuteScalar<int>(sql, new { });
+
             return new OperResult { Status = res == 0, ErrorMsg = res > 0 ? "此操作将导致负结存" : string.Empty };
         }
 
@@ -236,7 +247,7 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
         {
             var str = @"Select a.OrderId,a.OrderTime ,a.DeliveryAddress ,a.Receiver
  from OrderMain a left join StockBill b on a.OrderId = b.OrderId where a.StatusId = 1 and isnull(b.BillId) ";
-;            var sql = new StringBuilder();
+            ; var sql = new StringBuilder();
             if (!string.IsNullOrEmpty(orderId))
             {
                 sql.AppendFormat(" Select * from ({0})t Where OrderId = {1} ", str, orderId);

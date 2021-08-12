@@ -61,7 +61,7 @@ namespace AllWork.Services.Goods
         }
 
         //检查出库数量是否会导致负结存(保存出库单、审核出库单、反审核入库单时均可用此检查)
-        public async Task<OperResult> CheckNegativeBalance(StockBill stockBill)
+        public async Task<OperResult> CheckNegativeBalance(StockBillExt stockBill)
         {
             var res = await _dal.CheckNegativeBalance(stockBill);
             return res;
