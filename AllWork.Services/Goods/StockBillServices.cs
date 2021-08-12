@@ -54,7 +54,7 @@ namespace AllWork.Services.Goods
         }
 
         //检查订单是否制作过不同交易单号的出库单
-        public async Task<bool> IsCreateOthBill(string billId, long orderId)
+        public async Task<bool> IsCreateOthBill(string billId, long? orderId)
         {
             var res = await _dal.IsCreateOthBill(billId, orderId);
             return res > 0;

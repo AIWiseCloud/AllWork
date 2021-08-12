@@ -14,4 +14,3 @@ D:\AppCode\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.Assembl
 D:\AppCode\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.csproj.CoreCompileInputs.cache
 D:\AppCode\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.dll
 D:\AppCode\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.pdb
-D:\AppCode\AllWork\AllWork.Common\obj\Debug\netcoreapp3.1\AllWork.Common.csproj.AssemblyReference.cache

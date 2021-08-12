@@ -1,5 +1,6 @@
 ﻿using AllWork.IServices.Goods;
 using AllWork.IServices.Order;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using Microsoft.AspNetCore.Authorization;
@@ -40,7 +41,7 @@ namespace AllWork.Web.Controllers
         {
             if (stockBill.StockBillDetail.Count == 0)
             {
-                return BadRequest("未指定出入库明细");
+                return Ok(new OperResult { ErrorMsg = "未指定出入库明细", Status = false });
             }
             //若是出库要检查是否会导致负结存
             if (_stockBillServices.IsOutStock(stockBill.TransTypeId))
@@ -48,7 +49,7 @@ namespace AllWork.Web.Controllers
                 var operResult = await _stockBillServices.CheckNegativeBalance(stockBill);
                 if (!operResult.Status)
                 {
-                    return BadRequest(operResult.ErrorMsg);
+                    return Ok(operResult);
                 }
             }
             //业务类型为销售出库时的验证
@@ -56,23 +57,24 @@ namespace AllWork.Web.Controllers
             {
                 if (stockBill.OrderId == 0)
                 {
-                    return BadRequest("订单号不正确!");
+                    return Ok(new OperResult { ErrorMsg = "订单号不正确", Status = false });
+
                 }
                 //同一订单是否生成过不同的销售出库单
                 var existOthBill = await _stockBillServices.IsCreateOthBill(stockBill.BillId, stockBill.OrderId);
                 if (existOthBill)
                 {
-                    return BadRequest("当前订单已生成过销售出库单！");
+                    return Ok(new OperResult { ErrorMsg = "当前订单已生成过销售出库单", Status = false });
                 }
                 //订单实体
-                var orderModel = await _orderServices.GetOrderInfo(stockBill.OrderId);
+                var orderModel = await _orderServices.GetOrderInfo(stockBill.OrderId==null?0:(long)stockBill.OrderId);
                 if (orderModel == null)
                 {
-                    return BadRequest("订单不存在！");
+                    return Ok(new OperResult { ErrorMsg = "订单不存在", Status = false });
                 }
                 if (orderModel.StatusId != 1)
                 {
-                    return BadRequest("只能针对待发货状态的订单拣货制作销售出库单");
+                    return Ok(new OperResult { ErrorMsg = "只能针对待发货状态的订单拣货制作销售出库单", Status = false });
                 }
                 //验证订单数量与出库数量是否一致
                 foreach (var item in orderModel.OrderList)
@@ -84,7 +86,7 @@ namespace AllWork.Web.Controllers
                     }
                     if (item.Quantity != qty)
                     {
-                        return BadRequest($"{item.GoodsInfo.GoodsName}订单数量{item.Quantity},发货数量{qty},二者不一致");
+                        return Ok(new OperResult { ErrorMsg = $"{item.GoodsInfo.GoodsName}订单数量{item.Quantity},发货数量{qty},二者不一致", Status = false });
                     }
                 }
 
@@ -160,7 +162,7 @@ namespace AllWork.Web.Controllers
                 var operResult = await _stockBillServices.CheckNegativeBalance(stockBill);
                 if (!operResult.Status)
                 {
-                    return BadRequest(operResult.ErrorMsg);
+                    return Ok(operResult);
                 }
             }
             var res = await _stockBillServices.AuditStockBill(billId, isAudit);

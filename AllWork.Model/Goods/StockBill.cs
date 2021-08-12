@@ -31,7 +31,7 @@ namespace AllWork.Model.Goods
         /// <summary>
         /// 订单号
         /// </summary>
-        public long OrderId { get; set; }
+        public long? OrderId { get; set; }
 
         /// <summary>
         /// 备注

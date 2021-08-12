@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AllWork.Model;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 
 namespace AllWork.Web.Filter
@@ -15,7 +16,7 @@ namespace AllWork.Web.Filter
                 var objectResult = (ObjectResult)context.Result;
                 if (objectResult.Value == null)
                 {
-                    context.Result = new ObjectResult(new { code = 400, msg = "未找到资源", returnStatus = 0 });
+                    context.Result = new ObjectResult(new { code = 200, msg = "未找到资源", returnStatus = 0 });
                 }
                 else
                 {
@@ -25,7 +26,18 @@ namespace AllWork.Web.Filter
                     }
                     else
                     {
-                        context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = "", result = objectResult.Value, returnStatus = 1 });
+                        if (objectResult.Value is OperResult)
+                        {
+                            var value = objectResult.Value as OperResult;
+                            if (value.Status)
+                                context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = "", result = value, returnStatus = 1 });
+                            else
+                                context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = value.ErrorMsg, result = false, returnStatus = 0 });
+                        }
+                        else
+                        {
+                            context.Result = new ObjectResult(new { code = objectResult.StatusCode, msg = "", result = objectResult.Value, returnStatus = 1 });
+                        }
                     }
                 }
             }

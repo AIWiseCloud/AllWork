@@ -91,9 +91,9 @@ where a.GoodsId = @GoodsId";
         public async Task<bool> DeleteGoodsInfo(string goodsId)
         {
             var sql = new StringBuilder("Delete from GoodsColor Where GoodsId = @GoodsId;");
-            sql.Append("Delete from GoodsSpec Where GoodsId = @GoodsId; ");
-            sql.Append("Delete from SpuImg Where GoodsId = @GoodsId");
-            sql.Append("Delete from GoodsInfo Where GoodsId = @GoodsId");
+            sql.Append(" Delete from GoodsSpec Where GoodsId = @GoodsId; ");
+            sql.Append(" Delete from SpuImg Where GoodsId = @GoodsId;");
+            sql.Append(" Delete from GoodsInfo Where GoodsId = @GoodsId");
             return await base.Execute(sql.ToString(), new { GoodsId = goodsId }) > 0;
         }
 
