@@ -127,7 +127,7 @@ namespace AllWork.Web.Controllers
         /// </summary>
         /// <param name="resourceParams"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public async Task<IActionResult> QueryResourceSettings(ResourceParams resourceParams)
         {
             var res = await _resourceSettingsServices.QueryResourceSettings(resourceParams);

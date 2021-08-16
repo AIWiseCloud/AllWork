@@ -42,9 +42,19 @@ namespace AllWork.Services.Order
         }
 
         //订单发货
-        public async Task<int> DeliveryOrder(long orderId)
+        public async Task<OperResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams)
         {
-            var res = await _dal.DeliveryOrder(orderId);
+            var orderStatus = await _dal.GetOrderStatusId(orderDeliveryParams.OrderId);
+            if ((orderDeliveryParams.IsDelivery == 1 && orderStatus != 1) || (orderDeliveryParams.IsDelivery == 0 && orderStatus != 2))
+            {
+                return new OperResult { Status = false, ErrorMsg = "当前订单状态不能执行此操作!" };
+            }
+            var billId = await _dal.GetBillId(orderDeliveryParams.OrderId);
+            if(string.IsNullOrEmpty(billId) || orderDeliveryParams.BillId.CompareTo(billId) != 0)
+            {
+                return new OperResult { Status = false, ErrorMsg = "销售出库单号不正确!" };
+            }
+            var res = await _dal.DeliveryOrder(orderDeliveryParams);
             return res;
         }
 
@@ -82,6 +92,13 @@ namespace AllWork.Services.Order
         public async Task<bool> UpdateOrderAddress(UpdateOrderAddressParams updateOrderAddressParams)
         {
             var res = await _dal.UpdateOrderAddress(updateOrderAddressParams);
+            return res;
+        }
+
+        //由订单号获取对应的销售出库单号
+        public async Task<string> GetBillId(long orderId)
+        {
+            var res = await _dal.GetBillId(orderId);
             return res;
         }
     }

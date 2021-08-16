@@ -760,6 +760,36 @@
             分页实体参数
             </summary>
         </member>
+        <member name="T:AllWork.Model.RequestParams.OrderDeliveryParams">
+            <summary>
+            订单发货参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderDeliveryParams.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderDeliveryParams.IsDelivery">
+            <summary>
+            发货动作（1发货,0取消发货)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderDeliveryParams.BillId">
+            <summary>
+            销售出库单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderDeliveryParams.LogisticsId">
+            <summary>
+            物流公司ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderDeliveryParams.ExpressId">
+            <summary>
+            物流单号
+            </summary>
+        </member>
         <member name="T:AllWork.Model.RequestParams.OrderQueryParams">
             <summary>
             订单查询参数
@@ -777,7 +807,22 @@
         </member>
         <member name="P:AllWork.Model.RequestParams.OrderQueryParams.QueryValue">
             <summary>
-            查询值(搜索时提供关键字）
+            查询关键字(QueryScheme = 0时用; 支持订单号、商品ID查询和产品编号、商品名称搜索)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.StatusId">
+            <summary>
+            订单状态(QueryScheme = 0时用; 9表示所有状态) 
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.StartDate">
+            <summary>
+            开始日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.OrderQueryParams.EndDate">
+            <summary>
+            截止日期(QueryScheme = 0时用)
             </summary>
         </member>
         <member name="T:AllWork.Model.RequestParams.RefundApplyParams">

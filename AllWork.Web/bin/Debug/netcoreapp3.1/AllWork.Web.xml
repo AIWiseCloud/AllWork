@@ -457,11 +457,11 @@
             <param name="orderId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.OrderController.DeliveryOrder(System.Int64)">
+        <member name="M:AllWork.Web.Controllers.OrderController.DeliveryOrder(AllWork.Model.RequestParams.OrderDeliveryParams)">
             <summary>
             订单发货
             </summary>
-            <param name="orderId">订单号</param>
+            <param name="orderDeliveryParams"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.OrderController.SignatureOrder(System.Int64)">
@@ -497,6 +497,13 @@
             修改订单收货地址信息 (未发货前）
             </summary>
             <param name="updateOrderAddressParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderController.GetBillId(System.Int64)">
+            <summary>
+            由订单号获取对应的销售出库单号
+            </summary>
+            <param name="orderId">订单号</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.PaymentController">

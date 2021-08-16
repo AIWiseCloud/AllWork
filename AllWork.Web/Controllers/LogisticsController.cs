@@ -75,8 +75,8 @@ namespace AllWork.Web.Controllers
             {
                 var client = _httpClientFactory.CreateClient();
                 var url = string.Format("https://api.weixin.qq.com/cgi-bin/express/business/delivery/getall?access_token={0}", result.Value);
-                var response = await client.GetStringAsync(url);
-                return Ok(response);
+                var res = await client.GetStringAsync(url);
+                return Ok(JsonConvert.DeserializeObject(res));
             }
             else
             {

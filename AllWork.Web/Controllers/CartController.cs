@@ -11,7 +11,8 @@ namespace AllWork.Web.Controllers
     /// 购物车
     /// </summary>
     [Route("api/[controller]/[action]")]
-    [ApiController][Authorize]
+    [ApiController]
+    //[Authorize]
     public class CartController : ControllerBase
     {
         readonly ICartServices _cartServices;

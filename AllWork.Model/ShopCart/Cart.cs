@@ -53,5 +53,6 @@ namespace AllWork.Model.ShopCart
         public GoodsInfo GoodsInfo { get; set; }
         public GoodsColor GoodsColor { get; set; }
         public GoodsSpec GoodsSpec { get; set; }
+        public Inventory Inventory { get; set; }
     }
 }

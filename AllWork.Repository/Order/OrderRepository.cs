@@ -121,9 +121,26 @@ Where a.OrderId = {0}", orderId);
         }
 
         //订单发货
-        public async Task<int> DeliveryOrder(long orderId)
+        public async Task<OperResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams)
         {
-            return await base.Execute("ddd");
+            var sql = new StringBuilder();
+            if (orderDeliveryParams.IsDelivery==1)
+            {
+                sql.Append(" Update OrderMain set StatusId = 2, LogisticsId = @LogisticsId, ExpressId = @ExpressId, DeliveryTime = current_timestamp() Where OrderId = @OrderId  ");
+            }
+            else
+            {
+                sql.Append(" Update OrderMain set StatusId = 1, LogisticsId = null, ExpressId = null, DeliveryTime = null Where OrderId = @OrderId ");
+            }
+
+            var tranItems = new List<Tuple<string, object>>
+            {
+                new Tuple<string,object>(sql.ToString(),orderDeliveryParams),
+                new Tuple<string,object>(string.Format("  CALL AuditStockBill('{0}',{1}) ", orderDeliveryParams.BillId, orderDeliveryParams.IsDelivery),new{})
+            };
+            var res = await base.ExecuteTransaction(tranItems);
+
+            return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
         }
 
         //签收订单
@@ -140,17 +157,26 @@ Where a.OrderId = {0}", orderId);
             return res;
         }
 
-        //支付成功后更新订单
+        //支付成功后更新订单、更新销量
         public async Task<bool> PaySuccess(long orderId, string tradeNo)
         {
+           
             var sql = @"update OrderMain set 
 TradeNo = @TradeNo ,
 PaymentChannel = 'wechat' , 
 StatusId = 1, 
 PayTime = current_timestamp() 
 where OrderId = @OrderId  and StatusId = 0 ";
-            var res = await base.Execute(sql, new { OrderId = orderId, TradeNo = tradeNo });
-            return res > 0;
+            var sql2 = @"update GoodsInfo a, OrderList b set 
+SalesTimes = SalesTimes + b.Quantity 
+where a.GoodsId = b.GoodsId and b.OrderId =@OrderId";
+            var tranItems = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>(sql,new { OrderId = orderId, TradeNo = tradeNo }),
+                new Tuple<string, object>(sql2,new { OrderId = orderId })
+            };
+            var res = await base.ExecuteTransaction(tranItems);
+            return res.Item1;
         }
 
         //查询订单
@@ -164,11 +190,23 @@ from OrderMain a left join OrderList b on a.OrderId = b.OrderId
 left join GoodsInfo c on b.GoodsId = c.GoodsId
 left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ColorId
 left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.SpecId
-left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId Where (UnionId = @UnionId)");
-            //查询方案为：按关键字搜索
+left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId Where (1 = 1)");
+            if (orderQueryParams.UnionId != "*")
+            {
+                sqlpub.Append(" and UnionId = @UnionId ");//*表示后端查询不用按用户ID过滤
+            }
+            //查询方案为0：按关键字搜索
             if (orderQueryParams.QueryScheme == 0)
             {
                 sqlpub.AppendFormat(" and (a.OrderId = @OrderId or b.GoodsId = @GoodsId or c.ProdNumber like @ProdNumber or c.GoodsName like '%{0}%')  ", orderQueryParams.QueryValue);
+                if (orderQueryParams.StatusId != 9)
+                {
+                    sqlpub.Append(" and a.StatusId = @StatusId "); //默认9表示所有状态
+                }
+                if (!string.IsNullOrEmpty(orderQueryParams.StartDate) && !string.IsNullOrEmpty(orderQueryParams.EndDate))
+                {
+                    sqlpub.Append(" and  a.OrderTime between @StartDate and @EndDate ");
+                }
             }
             //查询方案为：待付款订单
             if (orderQueryParams.QueryScheme == 2)
@@ -237,6 +275,9 @@ Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
                 OrderId = orderQueryParams.QueryValue,
                 CategoryId = orderQueryParams.QueryValue,
                 GoodsId = orderQueryParams.QueryValue,
+                orderQueryParams.StartDate,
+                orderQueryParams.EndDate,
+                orderQueryParams.StatusId,
                 ProdNumber = orderQueryParams.QueryValue,
                 orderQueryParams.PageModel.Skip,
                 orderQueryParams.PageModel.PageSize,
@@ -257,6 +298,13 @@ Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
             var sql = @"update OrderMain set Receiver = @Receiver,PhoneNumber = @PhoneNumber, DeliveryAddress = @DeliveryAddress  where OrderId = @OrderId and StatusId < 2";
             var res = await base.Execute(sql, updateOrderAddressParams) > 0;
             return res;
+        }
+
+        //由订单号获取对应的销售出库单号
+        public async Task<string> GetBillId(long orderId)
+        {
+            var sql = string.Format("Select BillId from StockBill Where OrderId = {0} ", orderId);
+            return await base.ExecuteScalar<string>(sql);
         }
     }
 

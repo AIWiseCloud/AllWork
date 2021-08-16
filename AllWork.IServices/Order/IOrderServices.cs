@@ -18,7 +18,7 @@ namespace AllWork.IServices.Order
         Task<OperResult> CancelOrder(long orderId);
 
         //订单发货
-        Task<int> DeliveryOrder(long orderId);
+        Task<OperResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams);
 
         //签收订单
         Task<int> SignatureOrder(long orderId);
@@ -32,5 +32,8 @@ namespace AllWork.IServices.Order
         Task<dynamic> GetMyTodoList(string unionId);
 
         Task<bool> UpdateOrderAddress(UpdateOrderAddressParams updateOrderAddressParams);
+
+        //由订单号获取对应的销售出库单号
+        Task<string> GetBillId(long orderId);
     }
 }

@@ -96,13 +96,13 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 订单发货
         /// </summary>
-        /// <param name="orderId">订单号</param>
+        /// <param name="orderDeliveryParams"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> DeliveryOrder(long orderId)
+        public async Task<IActionResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams)
         {
-            var res = await _orderServices.DeliveryOrder(orderId);
-            return Ok(res > 0);
+            var res = await _orderServices.DeliveryOrder(orderDeliveryParams);
+            return Ok(res);
         }
 
         /// <summary>
@@ -167,6 +167,18 @@ namespace AllWork.Web.Controllers
                 return BadRequest("只有未支发货前的订单才可以修改地址信息");
             }
             var res = await _orderServices.UpdateOrderAddress(updateOrderAddressParams);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 由订单号获取对应的销售出库单号
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBillId(long orderId)
+        {
+            var res = await _orderServices.GetBillId(orderId);
             return Ok(res);
         }
     }

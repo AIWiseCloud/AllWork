@@ -48,7 +48,7 @@ namespace AllWork.Repository.Sys
 
         public async Task<List<ResourceSettings>> GetResourceSettingsByGroup(string groupNo)
         {
-            var sql = "Select * from ResourceSettings Where GrupNo = @GroupNo order by FIndex";
+            var sql = "Select * from ResourceSettings Where GroupNo = @GroupNo order by FIndex";
             var res = await base.QueryList(sql, new { GroupNo = groupNo });
             return res;
         }
@@ -56,7 +56,7 @@ namespace AllWork.Repository.Sys
         public async Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(ResourceParams resourceParams)
         {
             //sql公共部分
-            var sqlpub = new StringBuilder(" from Settings ");
+            var sqlpub = new StringBuilder(" from ResourceSettings a ");
             if (!string.IsNullOrWhiteSpace(resourceParams.KeyWords))
             {
                 sqlpub.AppendFormat(" Where Subject = @Subject or GroupNo = @GroupNo or Remark = '%{0}%' ", resourceParams.KeyWords);

@@ -52,14 +52,20 @@ namespace AllWork.Web.Controllers
             {
                 return BadRequest(new { msg = "此服务单已关闭" });
             }
-            //订单状态
-            var orderStatus = await _orderServices.GetOrderStatusId(long.Parse(orderRefunds.OrderId));
+            var orderId = long.Parse(orderRefunds.OrderId);
+;            //订单状态
+            var orderStatus = await _orderServices.GetOrderStatusId(orderId) ;
             //申请退款
             if (orderRefunds.CurrentType == 2)
             {
                 if (orderStatus != 1)
                 {
                     return BadRequest(new { msg = "订单在已支付、未发货的状态才能申请退款" });
+                }
+                var billid = await _orderServices.GetBillId(orderId);
+                if (!string.IsNullOrEmpty(billid))
+                {
+                    return BadRequest(new { msg = $"订单{orderId}已拣货生成出库单{billid},不能申请退款，请联系客服处理" });
                 }
             }
             //退换货

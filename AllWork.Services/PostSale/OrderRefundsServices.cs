@@ -22,6 +22,11 @@ namespace AllWork.Services.PostSale
             return res;
         }
 
+        /// <summary>
+        /// 用户提交售后服务单
+        /// </summary>
+        /// <param name="orderRefunds"></param>
+        /// <returns></returns>
         public async Task<OperResult> SaveOrderRefunes(OrderRefunds orderRefunds)
         {
             var res = await _dal.SaveOrderRefunes(orderRefunds);

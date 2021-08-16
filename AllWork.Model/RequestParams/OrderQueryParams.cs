@@ -20,9 +20,24 @@ namespace AllWork.Model.RequestParams
         public string UnionId { get; set; }
 
         /// <summary>
-        /// 查询值(搜索时提供关键字）
+        /// 查询关键字(QueryScheme = 0时用; 支持订单号、商品ID查询和产品编号、商品名称搜索)
         /// </summary>
         public string QueryValue { get; set; }
+
+        /// <summary>
+        /// 订单状态(QueryScheme = 0时用; 9表示所有状态) 
+        /// </summary>
+        public int StatusId { get; set; }
+
+        /// <summary>
+        /// 开始日期(QueryScheme = 0时用)
+        /// </summary>
+        public string StartDate { get; set; }
+
+        /// <summary>
+        /// 截止日期(QueryScheme = 0时用)
+        /// </summary>
+        public string EndDate { get; set; }
 
         public PageModel PageModel { get; set; }
     }
