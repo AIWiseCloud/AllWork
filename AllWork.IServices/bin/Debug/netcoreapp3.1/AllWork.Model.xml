@@ -410,6 +410,91 @@
             状态
             </summary>
         </member>
+        <member name="T:AllWork.Model.Order.OrderEvaluate">
+            <summary>
+            订单评价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.ID">
+            <summary>
+            主键
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.LineId">
+            <summary>
+            订单行号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.GoodsId">
+            <summary>
+            商品ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.Content">
+            <summary>
+            评价内容
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.UnionId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.GoodsScore">
+            <summary>
+            商品评分
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.ServiceScore">
+            <summary>
+            服务评分
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.TimeScore">
+            <summary>
+            时效评分
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.ShopReply">
+            <summary>
+            店铺回复
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.ReplyTime">
+            <summary>
+            回复时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.Images">
+            <summary>
+            图片/视频地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluate.IsHide">
+            <summary>
+            隐藏(1隐藏，0显示)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluateExt.UserInfo">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderEvaluateExt.GoodsColorSpec">
+            <summary>
+            颜色规格
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Order.OrderList.OrderId">
             <summary>
             订单号
@@ -718,6 +803,11 @@
         <member name="P:AllWork.Model.RequestParams.AppTransactionsParams.OrderAmount">
             <summary>
             订单金额(单位：分)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.GoodsEvaluatePraams.GoodsId">
+            <summary>
+            商品ID
             </summary>
         </member>
         <member name="T:AllWork.Model.RequestParams.GoodsQueryParams">

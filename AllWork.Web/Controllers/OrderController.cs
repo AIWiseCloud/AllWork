@@ -3,6 +3,7 @@ using AllWork.IServices.Order;
 using AllWork.Model;
 using AllWork.Model.Order;
 using AllWork.Model.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,6 +15,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         readonly IOrderServices _orderServices;

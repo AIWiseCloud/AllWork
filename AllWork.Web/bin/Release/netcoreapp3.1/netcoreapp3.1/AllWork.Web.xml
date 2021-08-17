@@ -506,6 +506,48 @@
             <param name="orderId">订单号</param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.OrderEvaluateController">
+            <summary>
+            商品评价
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderEvaluateController.SubmitOrderEvaluate(AllWork.Model.Order.OrderEvaluate)">
+            <summary>
+            提交订单行的评价
+            </summary>
+            <param name="orderEvaluate"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderEvaluateController.ShopReply(System.String,System.String)">
+            <summary>
+            店铺回复
+            </summary>
+            <param name="id">评价ID</param>
+            <param name="reply">评论内容</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderEvaluateController.HideEvaluate(System.String,System.Int32)">
+            <summary>
+            隐藏评价
+            </summary>
+            <param name="id">评价ID</param>
+            <param name="isHide">是否隐藏(1隐藏,0显示)</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderEvaluateController.QueryGoodsEvaluates(AllWork.Model.RequestParams.GoodsEvaluatePraams)">
+            <summary>
+            分页获取商品评价
+            </summary>
+            <param name="goodsEvaluatePraams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderEvaluateController.GetOrderEvaluates(System.Int64)">
+            <summary>
+            获取订单评价
+            </summary>
+            <param name="orderId"></param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.PaymentController">
             <summary>
             微信APP支付(基于V2版)

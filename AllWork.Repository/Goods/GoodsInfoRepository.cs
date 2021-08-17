@@ -135,7 +135,7 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             {
                 sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber) ", goodsQueryParams.QueryValue);
             }
-            // 如果是方案1，要把上在with中查出的类别在条件中体现
+            // 如果是方案1，要把上面with中查出的类别在条件中体现
             if (goodsQueryParams.QueryScheme == 1)
             {
                 sqlpub.Append(" and CategoryId in (select * from tab2) ");

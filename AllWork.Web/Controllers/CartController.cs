@@ -12,7 +12,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class CartController : ControllerBase
     {
         readonly ICartServices _cartServices;
