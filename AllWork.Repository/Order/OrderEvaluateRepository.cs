@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace AllWork.Repository.Order
 {
-    public class OrderEvaluateRepository:Base.BaseRepository<OrderEvaluate>,IOrderEvaluateRepository
+    public class OrderEvaluateRepository : Base.BaseRepository<OrderEvaluate>, IOrderEvaluateRepository
     {
         public OrderEvaluateRepository(IConfiguration configuration) : base(configuration) { }
 
@@ -23,14 +23,14 @@ namespace AllWork.Repository.Order
             string sql;
             if (instance == null)
             {
-                sql = @"Insert OrderEvaluate (ID,OrderId,LineId,GoodsId,Content,UnionId,GoodsScore,ServiceScore,TimeScore,CreateTime,Images)
+                sql = @"Insert OrderEvaluate (ID,OrderId,LineId,GoodsId,Content,UnionId,GoodsScore,ServiceScore,TimeScore,Images)
 values
-(@ID,@OrderId,@LineId,@GoodsId,@Content,@UnionId,@GoodsScore,@ServiceScore,@TimeScore,@CreateTime@Images)";
+(@ID,@OrderId,@LineId,@GoodsId,@Content,@UnionId,@GoodsScore,@ServiceScore,@TimeScore,@Images)";
             }
             else
             {
                 sql = @"Update OrderEvaluate set Content = @Content,UnionId = @UnionId,
-GoodsScore = @GoodsScore,ServiceScore = @ServiceScore,TimeScore = @TimeScore,CreateTime = @CreateTime,
+GoodsScore = @GoodsScore,ServiceScore = @ServiceScore,TimeScore = @TimeScore,
 Images = @Images Where ID = @ID";
             }
             //更新订单已评价标记
@@ -43,7 +43,7 @@ Images = @Images Where ID = @ID";
 
 
             var res = await base.ExecuteTransaction(tranitems);
-            return new OperResult { Status = res.Item1,ErrorMsg=res.Item2 };
+            return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
         }
 
         //店铺回复

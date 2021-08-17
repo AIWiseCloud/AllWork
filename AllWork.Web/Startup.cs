@@ -1,6 +1,7 @@
 using AllWork.Nlog.Log;
 using AllWork.Web.Auth;
 using AllWork.Web.Filter;
+using AllWork.Web.Helper;
 using AllWork.Web.Helper.Redis;
 using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -62,6 +63,9 @@ namespace AllWork.Web
                 options.Filters.Add(typeof(ModelValidateActionFilterAttribute));//模型验证
             });
 
+            //将IConfiguration中的扩展方法，加载数据库连接（当前只加载了mysql的, roy 2021.08.17)
+            Configuration.LoadMySqlConnection();
+
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));//读取token配置信息
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();
             services.AddAuthentication(x =>
@@ -82,6 +86,8 @@ namespace AllWork.Web
                     ValidateAudience = false
                 };
             });
+
+           
 
             //安装Microsoft.AspNetCore.Mvc.NewtonsoftJson后添加（解决前端实体中数字字符串不能转换为int32之类的错误
             services.AddControllers().AddNewtonsoftJson();
@@ -104,6 +110,8 @@ namespace AllWork.Web
                 var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录
                 c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Web.xml"), true);
                 c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Model.xml"), true); //实体注释文件也包括进来
+
+                
 
                 #region JWT认证Swagger授权
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

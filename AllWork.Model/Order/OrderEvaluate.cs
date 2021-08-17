@@ -25,6 +25,7 @@ namespace AllWork.Model.Order
         /// <summary>
         /// 订单行号
         /// </summary>
+        [Range(1,100)]
         public int LineId
         { get; set; }
 

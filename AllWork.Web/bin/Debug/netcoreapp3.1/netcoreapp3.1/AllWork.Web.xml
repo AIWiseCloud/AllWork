@@ -657,19 +657,6 @@
             系统配置
             </summary>
         </member>
-        <member name="M:AllWork.Web.Controllers.SysController.SaveSettings(AllWork.Model.Sys.Settings)">
-            <summary>
-            保存App配置及首页轮播图（既将弃用)
-            </summary>
-            <param name="model"></param>
-            <returns></returns>
-        </member>
-        <member name="M:AllWork.Web.Controllers.SysController.GetSettings">
-            <summary>
-            获取App配置及首页轮播图等（既将弃用)
-            </summary>
-            <returns></returns>
-        </member>
         <member name="M:AllWork.Web.Controllers.SysController.SaveResourceSettings(AllWork.Model.Sys.ResourceSettings)">
             <summary>
             保存资源设置
@@ -764,6 +751,13 @@
             删除辅助资料项
             </summary>
             <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SysController.Encrypt(System.String)">
+            <summary>
+            加密字符串
+            </summary>
+            <param name="text"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.UploadController.UploadFiles(Microsoft.AspNetCore.Http.IFormCollection)">
@@ -990,6 +984,19 @@
             <summary>
             返回统一格式参数  (这里的返回格式要与全局异常过滤器中的格式结合起来考虑 roy注)
             </summary>
+        </member>
+        <member name="T:AllWork.Web.Helper.ConnectionHelper">
+            <summary>
+            从配置文件读取数据库连接信息到连接集合中 
+            说明：使用了C#的扩展方法，在方法参数中使用this, 这里扩展了IConfiguration, 然后要在startup中ConfigureServices
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Helper.ConnectionHelper.LoadMySqlConnection(Microsoft.Extensions.Configuration.IConfiguration)">
+            <summary>
+            MySql数据库连接
+            </summary>
+            <param name="configuration"></param>
+            <returns></returns>
         </member>
         <member name="T:AllWork.Web.Helper.PayHelper">
             <summary>

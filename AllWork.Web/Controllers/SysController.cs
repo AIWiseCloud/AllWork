@@ -1,4 +1,5 @@
-﻿using AllWork.IServices.Sys;
+﻿using AllWork.Common;
+using AllWork.IServices.Sys;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
 using Microsoft.AspNetCore.Mvc;
@@ -15,52 +16,18 @@ namespace AllWork.Web.Controllers
     //[Authorize]
     public class SysController : BaseController
     {
-        readonly ISettingsServices _settingsServices;//即将弃用
         readonly IResourceSettingsServices _resourceSettingsServices;
         readonly ISubMesTypeServices _subMesTypeServices;
         readonly ISubMessageServices _subMessageServices;
         public SysController(
             IResourceSettingsServices resourceSettingsServices,
-            ISettingsServices settingsServices,
             ISubMesTypeServices subMesTypeServices,
             ISubMessageServices subMessageServices
             )
         {
             _resourceSettingsServices = resourceSettingsServices;
-            _settingsServices = settingsServices;
-            _settingsServices = settingsServices;
             _subMesTypeServices = subMesTypeServices;
             _subMessageServices = subMessageServices;
-        }
-
-        /// <summary>
-        /// 保存App配置及首页轮播图（既将弃用)
-        /// </summary>
-        /// <param name="model"></param>
-        /// <returns></returns>
-        [HttpPost]
-        public async Task<IActionResult> SaveSettings([FromBody] Settings model)
-        {
-            var res = await _settingsServices.SaveSettings(model);
-            return Ok(res);
-        }
-
-        /// <summary>
-        /// 获取App配置及首页轮播图等（既将弃用)
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetSettings()
-        {
-            try
-            {
-                var res = await _settingsServices.GetSettings();
-                return Ok(res);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
         }
 
         /// <summary>
@@ -226,6 +193,18 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> DeleteSubMessage(string id)
         {
             var res = await _subMessageServices.DeleteSubMessage(id);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 加密字符串
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IActionResult Encrypt(string text)
+        {
+            var res= DesEncrypt.Encrypt(text);
             return Ok(res);
         }
 }

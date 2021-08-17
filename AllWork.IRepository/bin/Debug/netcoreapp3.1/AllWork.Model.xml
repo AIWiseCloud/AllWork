@@ -1100,11 +1100,6 @@
             排序索引
             </summary>
         </member>
-        <member name="P:AllWork.Model.Sys.Settings.ImgUrl1">
-            <summary>
-            轮插图1
-            </summary>
-        </member>
         <member name="P:AllWork.Model.Sys.Shop.ShopId">
             <summary>
             店铺编号

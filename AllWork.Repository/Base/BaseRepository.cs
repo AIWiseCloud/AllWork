@@ -1,6 +1,5 @@
 ﻿using Dapper;
 using Microsoft.Extensions.Configuration;
-using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -13,9 +12,9 @@ namespace AllWork.Repository.Base
 {
     public class BaseRepository<TEntity> : IRepository.Base.IBaseRepository<TEntity> where TEntity : class, new()
     {
-        private readonly IConfiguration _ccnfiguration;
+        readonly IConfiguration _ccnfiguration;
 
-        public BaseRepository(IConfiguration configuration) => this._ccnfiguration = configuration;
+        public BaseRepository(IConfiguration configuration) => _ccnfiguration = configuration;
 
         /// <summary>
         /// 数据库连接
@@ -23,12 +22,10 @@ namespace AllWork.Repository.Base
         /// <returns></returns>
         public IDbConnection GetOpenConn()
         {
-            IDbConnection con;
-            //string connectionString = _ccnfiguration["ConnectionStrings:SqlServerConn"]; //从appsettings.json读取连接配置
-            //con = new SqlConnection(connectionString);
+            IDbConnection con = DbConfig.GetDbConnection();
 
-            string connectionString = _ccnfiguration["ConnectionStrings:MySqlConn"]; //从appsettings.json读取连接配置
-            con = new MySqlConnection(connectionString);
+            //string connectionString = _ccnfiguration["ConnectionStrings:MySqlConn"]; //从appsettings.json读取连接配置
+            //con = new MySqlConnection(connectionString);
 
             try
             {
