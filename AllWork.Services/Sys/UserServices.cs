@@ -1,4 +1,5 @@
-﻿using AllWork.IRepository.Sys;
+﻿using AllWork.Common;
+using AllWork.IRepository.Sys;
 using AllWork.IServices.Sys;
 using AllWork.Model.Sys;
 using AllWork.Services.Base;
@@ -27,7 +28,14 @@ namespace AllWork.Services.Sys
         //验证是否为有效用户
         public async Task<bool> IsValidUser(LoginRequestDTO req)
         {
+            //前台输的明文加密后再与系统中的比对
+            if (req.Username.Length != 28 && !string.IsNullOrEmpty(req.Password))
+            {
+                req.Password = DesEncrypt.Encrypt(req.Password);
+            }
+
             var res = await _dal.IsValidUser(req);
+         
             return res;
         }
 
@@ -35,6 +43,12 @@ namespace AllWork.Services.Sys
         public async Task<bool> SaveUserInfo(UserInfo userInfo)
         {
             var res = await _dal.SaveUserInfo(userInfo);
+            return res;
+        }
+
+        public async Task<bool> Logout(string unionId)
+        {
+            var res = await _dal.Logout(unionId);
             return res;
         }
     }

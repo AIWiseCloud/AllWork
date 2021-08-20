@@ -12,5 +12,7 @@ namespace AllWork.IServices.Sys
 
         Task<bool> SaveUserInfo(UserInfo userInfo);
 
+        Task<bool> Logout(string unionId);
+
     }
 }

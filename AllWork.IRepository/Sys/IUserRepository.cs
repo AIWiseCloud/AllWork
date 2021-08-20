@@ -12,5 +12,7 @@ namespace AllWork.IRepository.Sys
         Task<bool> IsValidUser(LoginRequestDTO req);
 
         Task<bool> SaveUserInfo(UserInfo userInfo);
+
+        Task<bool> Logout(string unionId);
     }
 }

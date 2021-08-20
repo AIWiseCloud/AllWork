@@ -429,6 +429,9 @@
           "netcoreapp3.1": {
             "targetAlias": "netcoreapp3.1",
             "projectReferences": {
+              "D:\\AppCode\\AllWork\\AllWork.Common\\AllWork.Common.csproj": {
+                "projectPath": "D:\\AppCode\\AllWork\\AllWork.Common\\AllWork.Common.csproj"
+              },
               "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj": {
                 "projectPath": "D:\\AppCode\\AllWork\\AllWork.IRepository\\AllWork.IRepository.csproj"
               },

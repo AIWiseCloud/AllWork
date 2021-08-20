@@ -31,3 +31,5 @@ D:\AppCode\AllWork\AllWork.Services\obj\Release\netcoreapp3.1\AllWork.Services.c
 D:\AppCode\AllWork\AllWork.Services\obj\Release\netcoreapp3.1\AllWork.Services.dll
 D:\AppCode\AllWork\AllWork.Services\obj\Release\netcoreapp3.1\AllWork.Services.pdb
 D:\AppCode\AllWork\AllWork.Services\bin\Release\netcoreapp3.1\AllWork.Model.xml
+D:\AppCode\AllWork\AllWork.Services\bin\Release\netcoreapp3.1\AllWork.Common.dll
+D:\AppCode\AllWork\AllWork.Services\bin\Release\netcoreapp3.1\AllWork.Common.pdb

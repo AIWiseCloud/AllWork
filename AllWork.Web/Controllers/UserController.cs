@@ -74,6 +74,26 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 登出
+        /// </summary>
+        /// <param name="token">登录凭证</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> Logout(string token)
+        {
+            var unionId = _authService.ParseToken(token);
+            try
+            {
+                var res = await _userServices.Logout(unionId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// 提交用户认证
         /// </summary>
         /// <param name="userCertification"></param>
@@ -108,5 +128,7 @@ namespace AllWork.Web.Controllers
             var res = await _userServices.SaveUserInfo(userInfo);
             return Ok(res);
         }
+
+       
     }
 }

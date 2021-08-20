@@ -1,4 +1,5 @@
-﻿using AllWork.Model.Sys;
+﻿using AllWork.Model;
+using AllWork.Model.Sys;
 using AllWork.Web.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -25,20 +26,16 @@ namespace AllWork.Web.Controllers
         [HttpPost,Route("requestToken")]
         public async Task<ActionResult> RequestToken([FromBody] LoginRequestDTO request)
         {
-            //如果模型状态无效
-            if (!ModelState.IsValid)
-            {
-                return BadRequest("Invalid Request");
-            }
             //从数据库验证用户，结果返回为元组
             var res = await _authService.IsAuthenticated(request);//返回值用元组Tuple保存的，第一个为bool即是否为有效用户, 第二个为string即token
             if (res.Item1)
             {
                 return Ok(res.Item2);
             }
-        
-
-            return BadRequest("Invalid Request");
+            else
+            {
+                return BadRequest("Invalid request");
+            }
         }
 
         /// <summary>

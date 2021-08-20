@@ -15,15 +15,25 @@ namespace AllWork.Repository.Sys
         //获取用户信息
         public async Task<UserInfo> GetUserInfo(string unionId)
         {
-            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionId}'");
+            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionId}' OR UserName = '{unionId}' ");
             return res;
         }
 
         //验证是否为有效用户
         public async Task<bool> IsValidUser(LoginRequestDTO req)
         {
-            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{req.Username}'");
-            return res != null;
+            if (req.Username.Length == 28)
+            {
+                var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{req.Username}' and UserState != -1 ");
+                return res != null;
+            }
+            else
+            {
+                var res = await base.QueryFirst($"Select * from UserInfo Where UserName = '{req.Username}' and Password = '{req.Password}' and UserState != -1 ");
+                return res != null;
+            }
+            
+            
         }
 
         //保存用户信息
@@ -43,6 +53,14 @@ namespace AllWork.Repository.Sys
                 var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,Password = @Password,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
                 return await base.Execute(updateSql, userInfo) > 0;
             }
+        }
+
+        //登出
+        public async Task<bool> Logout(string unionId)
+        {
+            var sql = "Update UserInfo set UserState = 0 Where UnionId = @UnionId";
+            var res = await base.Execute(sql, new { UnionId = unionId });
+            return res > 0;
         }
 
     }

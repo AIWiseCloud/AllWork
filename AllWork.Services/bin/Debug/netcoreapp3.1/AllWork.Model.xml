@@ -1055,6 +1055,16 @@
             是否选中
             </summary>
         </member>
+        <member name="P:AllWork.Model.Sys.LoginRequestDTO.Username">
+            <summary>
+            用户名(userName或者unionId)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.LoginRequestDTO.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
         <member name="T:AllWork.Model.Sys.ResourceSettings">
             <summary>
             资源设定

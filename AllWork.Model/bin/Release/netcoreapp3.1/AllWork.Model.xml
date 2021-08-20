@@ -1055,6 +1055,16 @@
             是否选中
             </summary>
         </member>
+        <member name="P:AllWork.Model.Sys.LoginRequestDTO.Username">
+            <summary>
+            用户名(userName或者unionId)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.LoginRequestDTO.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
         <member name="T:AllWork.Model.Sys.ResourceSettings">
             <summary>
             资源设定
@@ -1098,11 +1108,6 @@
         <member name="P:AllWork.Model.Sys.ResourceSettings.FIndex">
             <summary>
             排序索引
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.Sys.Settings.ImgUrl1">
-            <summary>
-            轮插图1
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.Shop.ShopId">

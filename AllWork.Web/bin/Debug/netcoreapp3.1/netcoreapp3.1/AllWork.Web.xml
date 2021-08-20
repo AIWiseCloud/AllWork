@@ -786,6 +786,13 @@
             <param name="token"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.UserController.Logout(System.String)">
+            <summary>
+            登出
+            </summary>
+            <param name="token">登录凭证</param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.UserController.SaveUserCertification(AllWork.Model.Sys.UserCertification)">
             <summary>
             提交用户认证

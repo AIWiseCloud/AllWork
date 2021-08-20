@@ -1231,6 +1231,7 @@
       },
       "AllWork.Services/1.0.0": {
         "dependencies": {
+          "AllWork.Common": "1.0.0",
           "AllWork.IRepository": "1.0.0",
           "AllWork.IServices": "1.0.0"
         },

@@ -7,14 +7,17 @@ using Autofac;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace AllWork.Web
 {
@@ -85,9 +88,24 @@ namespace AllWork.Web
                     ValidateIssuer = false,
                     ValidateAudience = false
                 };
-            });
+                //以下为遇到401Error: Unauthorized时的处理，让客户端能获取到需要的信息（若不处理，则客户端不好捕获)
+                x.Events = new JwtBearerEvents
+                {
+                    //此处为权限验证失败后触发的事件
+                    OnChallenge = context =>
+                    {
+                        //此处代码为终止.Net Core默认的返回类型和数据结果，这个很重要哦，必须
+                        context.HandleResponse();
+                        var res = new { code = 401, msg = "401Error: Unauthorized 错误，未经授权", result=false, returnStatus = 0 };//与WebApiResultMiddleware中的返回格式保持一致
+                        context.Response.ContentType = "application/json";
+                        //自定义返回状态码，默认为401 这里改成 200
+                        context.Response.StatusCode = StatusCodes.Status200OK; //StatusCodes.Status401Unauthorized;
+                        context.Response.WriteAsync(JsonConvert.SerializeObject(res));
+                        return Task.FromResult(0);
+                    }
+                };
 
-           
+            });
 
             //安装Microsoft.AspNetCore.Mvc.NewtonsoftJson后添加（解决前端实体中数字字符串不能转换为int32之类的错误
             services.AddControllers().AddNewtonsoftJson();
@@ -110,8 +128,6 @@ namespace AllWork.Web
                 var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);//获取应用程序所在目录
                 c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Web.xml"), true);
                 c.IncludeXmlComments(Path.Combine(basePath, "AllWork.Model.xml"), true); //实体注释文件也包括进来
-
-                
 
                 #region JWT认证Swagger授权
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
