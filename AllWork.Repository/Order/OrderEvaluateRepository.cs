@@ -3,8 +3,7 @@ using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.Order;
 using AllWork.Model.RequestParams;
-using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
+using AllWork.Model.User;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,8 +13,6 @@ namespace AllWork.Repository.Order
 {
     public class OrderEvaluateRepository : Base.BaseRepository<OrderEvaluate>, IOrderEvaluateRepository
     {
-        public OrderEvaluateRepository(IConfiguration configuration) : base(configuration) { }
-
         //提交订单行的评价
         public async Task<OperResult> SubmitOrderEvaluate(OrderEvaluate orderEvaluate)
         {
@@ -89,7 +86,7 @@ left join GoodsColorSpec d on d.GoodsId = c.GoodsId and d.ColorId = c.ColorId an
                 return oe;
             }, new
             {
-                GoodsId = goodsEvaluatePraams.GoodsId,
+                goodsEvaluatePraams.GoodsId,
                 goodsEvaluatePraams.PageModel.Skip,
                 goodsEvaluatePraams.PageModel.PageSize,
             }, "id1, id2");

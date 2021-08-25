@@ -14,11 +14,6 @@ namespace AllWork.Repository.Order
 {
     public class OrderRepository : Base.BaseRepository<OrderMain>, IOrderRepository
     {
-        public OrderRepository(IConfiguration configuration) : base(configuration)
-        {
-
-        }
-
         /// <summary>
         /// 生成订单
         /// </summary>

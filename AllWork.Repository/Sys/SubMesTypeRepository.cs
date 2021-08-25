@@ -1,5 +1,4 @@
 ﻿using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -7,14 +6,9 @@ namespace AllWork.Repository.Sys
 {
     public class SubMesTypeRepository:Base.BaseRepository<SubMesType>, IRepository.Sys.ISubMesTypeRepository
     {
-        public SubMesTypeRepository(IConfiguration configuration):base(configuration)
-        {
-            
-        }
-
         public async Task<bool> SaveSubMesType(SubMesType subMesType)
         {
-            var instance = await base.QueryFirst("Select * from SubMesType Where ID = @ID", new { ID = subMesType.ID });
+            var instance = await base.QueryFirst("Select * from SubMesType Where ID = @ID", new { subMesType.ID });
             if (instance == null)
             {
                 var insertSql = "Insert SubMesType (ID,FName)values(@ID,@FName)";

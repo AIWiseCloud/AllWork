@@ -14,8 +14,6 @@ namespace AllWork.Repository.Goods
 {
     public class StockBillRepository : Base.BaseRepository<StockBill>, IStockBillRepository
     {
-        public StockBillRepository(IConfiguration configuration) : base(configuration) { }
-
         public async Task<OperResult> SaveStockBill(StockBill stockBill)
         {
             var instance = await base.QueryFirst("Select * from StockBill Where BillId = @BillId", new { stockBill.BillId });

@@ -12,10 +12,6 @@ namespace AllWork.Repository.Base
 {
     public class BaseRepository<TEntity> : IRepository.Base.IBaseRepository<TEntity> where TEntity : class, new()
     {
-        readonly IConfiguration _ccnfiguration;
-
-        public BaseRepository(IConfiguration configuration) => _ccnfiguration = configuration;
-
         /// <summary>
         /// 数据库连接
         /// </summary>
@@ -52,6 +48,13 @@ namespace AllWork.Repository.Base
             using var con = GetOpenConn();
             //以下开始用con.QueryFirstAsync 报错sequence containts no elements
             return await con.QueryFirstOrDefaultAsync<TEntity>(sql, param, transaction, commandTmeout, commandType);
+        }
+
+        public async Task<T> QueryFirst<T>(string sql, object param = null, IDbTransaction transaction = null, int? commandTmeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            //以下开始用con.QueryFirstAsync 报错sequence containts no elements
+            return await con.QueryFirstOrDefaultAsync<T>(sql, param, transaction, commandTmeout, commandType);
         }
 
         public async Task<DataSet> Query(string sql, object param = null, IDbTransaction transaction = null, int? commandTimeout = null, CommandType? commandType = null)

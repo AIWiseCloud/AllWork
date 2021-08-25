@@ -11,14 +11,10 @@ namespace AllWork.Repository.Goods
 {
     public class SpuImgRepository : Base.BaseRepository<SpuImg>, ISpuImgRepository
     {
-        public SpuImgRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<OperResult> SaveSpuImg(SpuImg spuImg)
         {
             var operResult = new OperResult();
-            var instance = await base.QueryFirst("Select * from SpuImg Where ID = @ID", new { ID = spuImg.ID });
+            var instance = await base.QueryFirst("Select * from SpuImg Where ID = @ID", new { spuImg.ID });
             if (instance==null)
             {
                 spuImg.ID = System.Guid.NewGuid().ToString();

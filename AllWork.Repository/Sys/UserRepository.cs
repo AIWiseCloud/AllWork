@@ -1,5 +1,6 @@
 ﻿using AllWork.IRepository.Sys;
 using AllWork.Model.Sys;
+using AllWork.Model.User;
 using AllWork.Repository.Base;
 using Microsoft.Extensions.Configuration;
 using System.Threading.Tasks;
@@ -8,10 +9,6 @@ namespace AllWork.Repository.Sys
 {
     public class UserRepository:BaseRepository<UserInfo>,IUserRepository
     {
-        public UserRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         //获取用户信息
         public async Task<UserInfo> GetUserInfo(string unionId)
         {
@@ -44,13 +41,13 @@ namespace AllWork.Repository.Sys
             userInfo.Roles = string.IsNullOrEmpty(userInfo.Roles) ? "ediror" : userInfo.Roles;
             if (model == null)
             {
-                var insertSql = @"Insert UserInfo (UnionId,OpenId,NickName,Password,PhoneNumber,Email,Avatar,Province,City,County,Gender,UserState,Roles)values
-(@UnionId,@OpenId, @NickName,@Password,@PhoneNumber,@Email,@Avatar,@Province,@City,@County,@Gender,@UserState,@Roles)";
+                var insertSql = @"Insert UserInfo (UnionId,OpenId,NickName,PhoneNumber,Email,Avatar,Province,City,County,Gender,UserState,Roles)values
+(@UnionId,@OpenId, @NickName,@PhoneNumber,@Email,@Avatar,@Province,@City,@County,@Gender,@UserState,@Roles)";
                 return await base.Execute(insertSql, userInfo) > 0;
             }
             else
             {
-                var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,Password = @Password,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
+                var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState,Roles = @Roles Where UnionId = @UnionId";
                 return await base.Execute(updateSql, userInfo) > 0;
             }
         }

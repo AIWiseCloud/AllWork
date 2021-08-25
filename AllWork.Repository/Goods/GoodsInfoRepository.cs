@@ -2,7 +2,6 @@
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,10 +11,6 @@ namespace AllWork.Repository.Goods
 {
     public class GoodsInfoRepository : Base.BaseRepository<GoodsInfo>, IGoodsInfoRepository
     {
-        public GoodsInfoRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<bool> SaveGoodsInfo(GoodsInfo goodsInfo)
         {
             var instance = await base.QueryFirst("Select * from GoodsInfo Where GoodsId = @GoodsId", new { goodsInfo.GoodsId });

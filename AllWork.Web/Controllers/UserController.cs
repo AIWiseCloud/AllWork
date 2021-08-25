@@ -1,5 +1,5 @@
 ﻿using AllWork.IServices.Sys;
-using AllWork.Model.Sys;
+using AllWork.Model.User;
 using AllWork.Web.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -99,6 +99,7 @@ namespace AllWork.Web.Controllers
         /// <param name="userCertification"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize]
         public async Task<IActionResult> SaveUserCertification(UserCertification userCertification)
         {
             var res = await _userCertificationServices.SaveUserCertification(userCertification);
@@ -111,9 +112,36 @@ namespace AllWork.Web.Controllers
         /// <param name="unionId"></param>
         /// <returns></returns>
         [HttpGet]
+        [Authorize]
         public async Task<IActionResult> GetUserCertification(string unionId)
         {
             var res = await _userCertificationServices.GetUserCertification(unionId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 提交企业认证
+        /// </summary>
+        /// <param name="corpCertification"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize]
+        public async Task<IActionResult> SaveCorpCertification(CorpCertification corpCertification)
+        {
+            var res = await _userCertificationServices.SaveCorpCertification(corpCertification);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取企业认证信息
+        /// </summary>
+        /// <param name="unionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize]
+        public async Task<IActionResult> GetCorpCertification(string unionId)
+        {
+            var res = await _userCertificationServices.GetCorpCertification(unionId);
             return Ok(res);
         }
 

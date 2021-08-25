@@ -1,7 +1,6 @@
 ﻿using AllWork.IRepository.Address;
 using AllWork.Model;
 using AllWork.Model.Address;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -10,8 +9,6 @@ namespace AllWork.Repository.Address
 {
     public class ReceiveAddressRepository : Base.BaseRepository<ReceiveAddress>, IReceiveAddressRepository
     {
-        public ReceiveAddressRepository(IConfiguration configuration) : base(configuration) { }
-
         public async Task<OperResult> SaveReceiveAddress(ReceiveAddress receiveAddress)
         {
             var instance = await base.QueryFirst("Select * from ReceiveAddress Where AddrId = @AddrId", new { receiveAddress.AddrId });
@@ -36,9 +33,11 @@ namespace AllWork.Repository.Address
         {
             var sql1 = "Update ReceiveAddress set IsDefault = 1 Where AddrId = @AddrId";
             var sql2 = "Update ReceiveAddress Set IsDefault = 0 Where UnionId = @UnionId and Addrid != @AddrId";
-            var tranitems = new List<Tuple<string, object>>();
-            tranitems.Add(new Tuple<string, object>(sql1, new { AddrId = addrId }));
-            tranitems.Add(new Tuple<string, object>(sql2, new { AddrId = addrId, UnionId = unionId }));
+            var tranitems = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>(sql1, new { AddrId = addrId }),
+                new Tuple<string, object>(sql2, new { AddrId = addrId, UnionId = unionId })
+            };
             var res = await base.ExecuteTransaction(tranitems);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
         }

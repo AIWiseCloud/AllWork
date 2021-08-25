@@ -9,18 +9,13 @@ namespace AllWork.Repository.Sys
 {
     public class SubMessageRepository:Base.BaseRepository<SubMessage>, ISubMessageRepository
     {
-        public SubMessageRepository(IConfiguration configuration):base(configuration)
-        {
-
-        }
-
         public async Task<OperResult> SaveSubmessage(SubMessage subMessage)
         {
             if (string.IsNullOrEmpty(subMessage.ID))
             {
                 subMessage.ID = System.Guid.NewGuid().ToString();
             }
-            var instance = await base.QueryFirst("Select * from SubMessage Where ID = @ID", new { ID = subMessage.ID });
+            var instance = await base.QueryFirst("Select * from SubMessage Where ID = @ID", new { subMessage.ID });
             if (instance == null)
             {
                 var insertSql = "Insert SubMessage (ID,ParentId,FNumber,FName,IsCancellation,FIndex,FNote)values(@ID,@ParentId,@FNumber,@FName,@IsCancellation,@FIndex,@FNote)";

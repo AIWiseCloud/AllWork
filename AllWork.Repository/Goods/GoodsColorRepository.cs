@@ -8,13 +8,9 @@ namespace AllWork.Repository.Goods
 {
     public class GoodsColorRepository : Base.BaseRepository<GoodsColor>, IGoodsColorRepository
     {
-        public GoodsColorRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<bool> SaveGoodsColor(GoodsColor goodsColor)
         {
-            var instance = await base.QueryFirst("Select * from GoodsColor Where ID = @ID", new { ID = goodsColor.ID });
+            var instance = await base.QueryFirst("Select * from GoodsColor Where ID = @ID", new { goodsColor.ID });
             if (instance == null)
             {
                 var insertSql = "Insert GoodsColor (ID,GoodsId,ColorId,ImgFront,ImgBack,ImgRight,ImgLeft,Findex,Creator)values(@ID,@GoodsId,@ColorId,@ImgFront,@ImgBack,@ImgRight,@ImgLeft,@Findex,@Creator)";

@@ -225,7 +225,6 @@ D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.csproj.Assemb
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.AssemblyInfoInputs.cache
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.AssemblyInfo.cs
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.csproj.CoreCompileInputs.cache
-D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.MvcApplicationPartsAssemblyInfo.cs
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.MvcApplicationPartsAssemblyInfo.cache
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\staticwebassets\AllWork.Web.StaticWebAssets.Manifest.cache
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\staticwebassets\AllWork.Web.StaticWebAssets.xml

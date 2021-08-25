@@ -10,10 +10,6 @@ namespace AllWork.Repository.PostSale
 {
     public class OrderRefundsRepository:Base.BaseRepository<OrderRefunds>,IOrderRefundsRepository
     {
-        public OrderRefundsRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<List<ReturnReason>> GetReturnReasons()
         {
             var res = await base.QueryList<ReturnReason>("Select * from ReturnReason order by FIndex");

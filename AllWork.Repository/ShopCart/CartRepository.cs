@@ -3,7 +3,6 @@ using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.ShopCart;
 using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,8 +12,6 @@ namespace AllWork.Repository.ShopCart
 {
     public class CartRepository : Base.BaseRepository<Cart>, ICartRepository
     {
-        public CartRepository(IConfiguration configuration) : base(configuration) { }
-
         /// <summary>
         /// 添加商品到购物车
         /// </summary>
@@ -23,7 +20,7 @@ namespace AllWork.Repository.ShopCart
         public async Task<OperResult> SaveCart(Cart cart)
         {
             var instance = await base.QueryFirst("Select * from Cart Where UnionId = @UnionId and GoodsId = @GoodsId and ColorId = @ColorId and SpecId = @SpecId", cart);
-            var sql = string.Empty;
+            string sql ;
             if (instance == null)
             {
                 //若不存在，则产生新的关键字段
@@ -65,7 +62,7 @@ Where UnionId = @UnionId";
                 cart.GoodsSpec.Spec = si2;
                 cart.Inventory = kc;
                 return cart;
-            }, new { unionId = unionId }, "id1,id2,id3,id4,id5,id6");
+            }, new { UnionId = unionId }, "id1,id2,id3,id4,id5,id6");
             return res;
         }
 

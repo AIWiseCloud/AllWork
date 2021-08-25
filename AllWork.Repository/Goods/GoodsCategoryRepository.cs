@@ -1,6 +1,5 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model.Goods;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,13 +8,9 @@ namespace AllWork.Repository.Goods
 {
     public class GoodsCategoryRepository : Base.BaseRepository<GoodsCategory>, IGoodsCategoryRepository
     {
-        public GoodsCategoryRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<bool> SaveGoodsCategory(GoodsCategory goodsCategory)
         {
-            var instance = await base.QueryFirst("Select * from GoodsCategory Where CategoryId = @CategoryId", new { CategoryId = goodsCategory.CategoryId });
+            var instance = await base.QueryFirst("Select * from GoodsCategory Where CategoryId = @CategoryId", new { goodsCategory.CategoryId });
             if (instance == null)
             {
                 var insertSql = "Insert GoodsCategory (CategoryId,CategoryName,ShopId,ImgUrl,ParentId,Findex,IsCancellation)values(@CategoryId,@CategoryName,@ShopId,@ImgUrl,@ParentId,@Findex,@IsCancellation)";

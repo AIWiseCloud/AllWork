@@ -2,6 +2,7 @@
 using AllWork.IRepository.Sys;
 using AllWork.IServices.Sys;
 using AllWork.Model.Sys;
+using AllWork.Model.User;
 using AllWork.Services.Base;
 using System.Threading.Tasks;
 

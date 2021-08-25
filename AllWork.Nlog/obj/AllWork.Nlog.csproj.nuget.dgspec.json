@@ -14,7 +14,8 @@
         "outputPath": "D:\\AppCode\\AllWork\\AllWork.Nlog\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
           "C:\\Users\\86134\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -26,6 +27,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "D:\\software\\stimulsoft\\Stimulsoft Reports Ultimate .NET v2020.2.2\\Stimulsoft Reports Ultimate .NET v2020.2.2\\CRACK\\Libs\\Reports.NetCore": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {

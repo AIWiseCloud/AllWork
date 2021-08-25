@@ -1,5 +1,5 @@
 ﻿using AllWork.IServices.Base;
-using AllWork.Model.Sys;
+using AllWork.Model.User;
 using System.Threading.Tasks;
 
 namespace AllWork.IServices.Sys
@@ -9,5 +9,9 @@ namespace AllWork.IServices.Sys
         Task<UserCertification> GetUserCertification(string unionId);
 
         Task<bool> SaveUserCertification(UserCertification userCertification);
+
+        Task<CorpCertification> GetCorpCertification(string unionId);
+
+        Task<bool> SaveCorpCertification(CorpCertification corpCertification);
     }
 }

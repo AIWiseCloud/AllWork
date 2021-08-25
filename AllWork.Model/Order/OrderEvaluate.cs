@@ -1,5 +1,6 @@
 ﻿using AllWork.Model.Goods;
 using AllWork.Model.Sys;
+using AllWork.Model.User;
 using System;
 using System.ComponentModel.DataAnnotations;
 

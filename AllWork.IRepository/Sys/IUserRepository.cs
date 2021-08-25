@@ -1,11 +1,12 @@
 ﻿
 
 using AllWork.Model.Sys;
+using AllWork.Model.User;
 using System.Threading.Tasks;
 
 namespace AllWork.IRepository.Sys
 {
-    public interface IUserRepository:Base.IBaseRepository<AllWork.Model.Sys.UserInfo>
+    public interface IUserRepository:Base.IBaseRepository<UserInfo>
     {
         Task<UserInfo> GetUserInfo(string unionId);
 

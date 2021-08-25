@@ -1210,5 +1210,175 @@
             分类名称
             </summary>
         </member>
+        <member name="T:AllWork.Model.User.CorpCertification">
+            <summary>
+            企业认证
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.UnionId">
+            <summary>
+            用户ID (不能重复）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.Name">
+            <summary>
+            联系人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.PhoneNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.AuthState">
+            <summary>
+            认证状态（0 提交申请，1认证通过）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.CertificateId">
+            <summary>
+            统一社会信用代码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.CertificateFront">
+            <summary>
+            营业执照
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.CorpName">
+            <summary>
+            单位名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.CorpAddress">
+            <summary>
+            单位地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.SalesMan">
+            <summary>
+            业务员
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.CorpCertification.CreateDate">
+            <summary>
+            提交日期
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.User.UserCertification">
+            <summary>
+            个人认证
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.UnionId">
+            <summary>
+            用户ID (不能重复）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.PhoneNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.AuthState">
+            <summary>
+            认证状态（0 提交申请，1认证通过）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CertificateId">
+            <summary>
+            身份证号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CertificateFront">
+            <summary>
+            证件照(头像面)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CertificateBack">
+            <summary>
+            证件照（国徽面）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CorpName">
+            <summary>
+            单位名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CorpAddress">
+            <summary>
+            单位地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.SalesMan">
+            <summary>
+            业务员
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.CreateDate">
+            <summary>
+            提交日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.UnionId">
+            <summary>
+            用户Id
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.PhoneNumber">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Email">
+            <summary>
+            邮件地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Avatar">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Province">
+            <summary>
+            省份
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.City">
+            <summary>
+            市
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.County">
+            <summary>
+            区/县
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Gender">
+            <summary>
+            性别
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.UserState">
+            <summary>
+            用户状态(0退出, 1登录, -1锁定)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Roles">
+            <summary>
+            用户角色
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
     </members>
 </doc>

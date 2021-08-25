@@ -10,17 +10,12 @@ namespace AllWork.Repository.Sys
 {
     public class ShopRepository:Base.BaseRepository<Shop>,IShopRepository
     {
-        public ShopRepository(IConfiguration configuration) : base(configuration)
-        {
-            
-        }
-
         public async Task<OperResult> SaveShop(Shop shop)
         {
             OperResult operResult = new OperResult();
             try
             {
-                var instance = await base.QueryFirst("Select * from Shop Where ShopId = @ShopId", new { ShopId = shop.ShopId });
+                var instance = await base.QueryFirst("Select * from Shop Where ShopId = @ShopId", new { shop.ShopId });
                 if (instance == null)
                 {
                     var insertSql = "Insert Shop (ShopId,ShopName,ImgUrl,Contacter,PhoneNumber,ListBySpuShow,Introduction,Announcement)values(@ShopId,@ShopName,@ImgUrl,@Contacter,@PhoneNumber,@ListBySpuShow,@Introduction,@Announcement)";

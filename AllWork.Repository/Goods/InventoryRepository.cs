@@ -13,10 +13,6 @@ namespace AllWork.Repository.Goods
 {
     public class InventoryRepository : Base.BaseRepository<Inventory>, IInventoryRepository
     {
-        public InventoryRepository(IConfiguration configuration) : base(configuration)
-        {
-        }
-
         public async Task<IEnumerable<Inventory>> GetInventories(string goodsId)
         {
             var sql = "Select * from Inventory Where GoodsId = @GoodsId";

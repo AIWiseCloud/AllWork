@@ -793,7 +793,7 @@
             <param name="token">登录凭证</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.UserController.SaveUserCertification(AllWork.Model.Sys.UserCertification)">
+        <member name="M:AllWork.Web.Controllers.UserController.SaveUserCertification(AllWork.Model.User.UserCertification)">
             <summary>
             提交用户认证
             </summary>
@@ -807,7 +807,21 @@
             <param name="unionId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.UserController.SaveUserInfo(AllWork.Model.Sys.UserInfo)">
+        <member name="M:AllWork.Web.Controllers.UserController.SaveCorpCertification(AllWork.Model.User.CorpCertification)">
+            <summary>
+            提交企业认证
+            </summary>
+            <param name="corpCertification"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.GetCorpCertification(System.String)">
+            <summary>
+            获取企业认证信息
+            </summary>
+            <param name="unionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.SaveUserInfo(AllWork.Model.User.UserInfo)">
             <summary>
             保存用户信息
             </summary>

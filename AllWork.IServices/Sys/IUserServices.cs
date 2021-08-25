@@ -1,5 +1,6 @@
 ﻿using AllWork.IServices.Base;
 using AllWork.Model.Sys;
+using AllWork.Model.User;
 using System.Threading.Tasks;
 
 namespace AllWork.IServices.Sys

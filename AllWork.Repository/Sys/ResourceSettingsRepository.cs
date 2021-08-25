@@ -11,8 +11,6 @@ namespace AllWork.Repository.Sys
 {
     public class ResourceSettingsRepository:Base.BaseRepository<ResourceSettings>, IResourceSettingsRepository
     {
-        public ResourceSettingsRepository(IConfiguration configuration) : base(configuration) { }
-
         public async Task<bool> SaveResourceSettings(ResourceSettings resourceSettings)
         {
             var instance = await base.QueryFirst("Select * from ResourceSettings Where SourceId = @SourceId", new {resourceSettings.SourceId });

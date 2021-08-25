@@ -8,11 +8,6 @@ namespace AllWork.Repository.Goods
 {
     public class GoodsSpecRepository:Base.BaseRepository<GoodsSpec>,IGoodsSpecRepository
     {
-        public GoodsSpecRepository(IConfiguration configuration) : base(configuration)
-        {
-
-        }
-
         public async Task<bool> SaveGoodsSpec(GoodsSpec goodsSpec)
         {
             var instance = await base.QueryFirst("Select * from GoodsSpec Where ID = @ID", goodsSpec);
