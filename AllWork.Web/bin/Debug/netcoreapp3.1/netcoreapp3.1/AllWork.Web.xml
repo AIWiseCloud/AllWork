@@ -620,6 +620,46 @@
             <param name="postSaleId"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.ReportController">
+            <summary>
+            报表项目
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ReportController.SaveReportItem(AllWork.Model.Sys.ReportItem)">
+            <summary>
+            保存报表项目
+            </summary>
+            <param name="reportItem"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ReportController.DeleteReportItem(System.String)">
+            <summary>
+            删除报表项目
+            </summary>
+            <param name="reportId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ReportController.GetReportItem(System.String)">
+            <summary>
+            获取报表项目
+            </summary>
+            <param name="reportId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ReportController.QueryReportItems(AllWork.Model.RequestParams.ReportItemParams)">
+            <summary>
+            查询报表项目
+            </summary>
+            <param name="reportItemParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ReportController.StringSaveAsJsonFile(AllWork.Web.Controllers.JsonInfo)">
+            <summary>
+            json字符串存成json文件
+            </summary>
+            <param name="jsonInfo"></param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.ShopController">
             <summary>
             店铺
@@ -760,6 +800,11 @@
             <param name="text"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.UploadController">
+            <summary>
+            文件上传
+            </summary>
+        </member>
         <member name="M:AllWork.Web.Controllers.UploadController.UploadFiles(Microsoft.AspNetCore.Http.IFormCollection)">
             <summary>
             文件上传
@@ -826,6 +871,45 @@
             保存用户信息
             </summary>
             <param name="userInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.VersionController">
+            <summary>
+            版本管理
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.VersionController.SaveVersionManagement(AllWork.Model.Sys.VersionManagement)">
+            <summary>
+            保存版本记录
+            </summary>
+            <param name="versionManagement"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.VersionController.DeleteVersonManagement(System.String)">
+            <summary>
+            删除版本记录
+            </summary>
+            <param name="versionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.VersionController.QueryVersionManagement(AllWork.Model.RequestParams.VersionParams)">
+            <summary>
+            查询版本记录
+            </summary>
+            <param name="versionParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.VersionController.GetNewestVersionManagement">
+            <summary>
+            获取最新版本记录
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.VersionController.UploadAppPackage(Microsoft.AspNetCore.Http.IFormCollection)">
+            <summary>
+            上传App打包文件
+            </summary>
+            <param name="formCollection"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.WXController">

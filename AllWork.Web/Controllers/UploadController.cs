@@ -1,8 +1,6 @@
-﻿using AllWork.Web.Filter;
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -11,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
 {
+    /// <summary>
+    /// 文件上传
+    /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class UploadController : ControllerBase
@@ -51,5 +52,7 @@ namespace AllWork.Web.Controllers
             }
             return Ok(new { count = filelist.Count, size, diclist });
         }
+
+        
     }
 }

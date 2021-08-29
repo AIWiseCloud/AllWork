@@ -1005,6 +1005,16 @@
             详细地址
             </summary>
         </member>
+        <member name="T:AllWork.Model.RequestParams.VersionParams">
+            <summary>
+            版本查询参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.VersionParams.Keywords">
+            <summary>
+            关键字
+            </summary>
+        </member>
         <member name="T:AllWork.Model.PageModel">
             <summary>
             分页参数实体
@@ -1063,6 +1073,66 @@
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Password">
             <summary>
             密码
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.ReportItem">
+            <summary>
+            报表项目
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.ReportId">
+            <summary>
+            报表ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.TemplateName">
+            <summary>
+            模板名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.GroupNo">
+            <summary>
+            分组码
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.Remark">
+            <summary>
+            备注
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.IsCancellation">
+            <summary>
+            作废(0有效,1作废)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.SourceType">
+            <summary>
+            数据来源(0: jsonFile, 1: database)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.DbConId">
+            <summary>
+            数据库连接
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.SourceSql">
+            <summary>
+            数据源SQL
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ReportItem.TestId">
+            <summary>
+            测试单号
             </summary>
         </member>
         <member name="T:AllWork.Model.Sys.ResourceSettings">
@@ -1208,6 +1278,36 @@
         <member name="P:AllWork.Model.Sys.SubMesType.FName">
             <summary>
             分类名称
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.VersionManagement">
+            <summary>
+            版本管理
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.VersionManagement.VersionId">
+            <summary>
+            版本号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.VersionManagement.PackageUrl">
+            <summary>
+            包文件Url
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.VersionManagement.FNote">
+            <summary>
+            版本说明
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.VersionManagement.Creator">
+            <summary>
+            发布人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.VersionManagement.CreateDate">
+            <summary>
+            发布日期
             </summary>
         </member>
         <member name="T:AllWork.Model.User.CorpCertification">

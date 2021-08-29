@@ -16,6 +16,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\UploadFiles\**" />
+    <Content Remove="wwwroot\UploadFiles\**" />
+    <EmbeddedResource Remove="wwwroot\UploadFiles\**" />
+    <None Remove="wwwroot\UploadFiles\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Autofac" Version="6.1.0" />
     <PackageReference Include="Autofac.Configuration" Version="6.0.0" />
     <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
@@ -39,7 +46,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\UploadFiles\SpeechRecognition\" />
+    <Folder Include="wwwroot\" />
   </ItemGroup>
 
 

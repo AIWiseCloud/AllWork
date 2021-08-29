@@ -211,7 +211,6 @@ D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.S
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Common.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.IRepository.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.IServices.pdb
-D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Model.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Nlog.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Repository.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Services.pdb
@@ -240,4 +239,5 @@ D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Zstandard
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Model.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Release\netcoreapp3.1\netcoreapp3.1\AllWork.Model.xml
