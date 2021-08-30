@@ -8,13 +8,17 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.IO;
+using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -96,7 +100,7 @@ namespace AllWork.Web
                     {
                         //此处代码为终止.Net Core默认的返回类型和数据结果，这个很重要哦，必须
                         context.HandleResponse();
-                        var res = new { code = 401, msg = "401Error: Unauthorized 错误，未经授权", result=false, returnStatus = 0 };//与WebApiResultMiddleware中的返回格式保持一致
+                        var res = new { code = 401, msg = "401Error: Unauthorized 错误，未经授权", result = false, returnStatus = 0 };//与WebApiResultMiddleware中的返回格式保持一致
                         context.Response.ContentType = "application/json";
                         //自定义返回状态码，默认为401 这里改成 200
                         context.Response.StatusCode = StatusCodes.Status200OK; //StatusCodes.Status401Unauthorized;
@@ -154,6 +158,12 @@ namespace AllWork.Web
                 });
                 #endregion
             });
+
+            services.Configure<FormOptions>(x =>
+            {
+                //最大200M  (上传app包文件出现Request body too large而设） 可以直接在接口那里取消限制[DisableRequestSizeLimit]
+                x.MultipartBodyLengthLimit = 209_715_200;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -176,7 +186,20 @@ namespace AllWork.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "AllWork API V1");
                 c.RoutePrefix = "api";// 如果设为空，访问路径就是根域名/index.html，设置为空，表示直接在根域名访问；想换一个路径，直接写名字即可，比如直接写c.RoutePrefix = "swagger"; 则访问路径为 根域名/swagger/index.html
             });
+
+
+          
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ContentTypeProvider = new FileExtensionContentTypeProvider(new Dictionary<string, string>
+{
+{ ".apk","application/vnd.android.package-archive"},
+{ ".nupkg","application/zip"}
+})
+            });
             app.UseStaticFiles();//访问wwwroot下的静态资源
+
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

@@ -1430,6 +1430,11 @@
             用户Id
             </summary>
         </member>
+        <member name="P:AllWork.Model.User.UserInfo.UserName">
+            <summary>
+            用户名
+            </summary>
+        </member>
         <member name="P:AllWork.Model.User.UserInfo.PhoneNumber">
             <summary>
             手机号

@@ -86,6 +86,7 @@ namespace AllWork.Web.Controllers
         /// <param name="formCollection"></param>
         /// <returns></returns>
         [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> UploadAppPackage(IFormCollection formCollection)
         {
             Dictionary<string, string> diclist = new Dictionary<string, string>();
@@ -101,10 +102,14 @@ namespace AllWork.Web.Controllers
             long size = filelist.Sum(f => f.Length);
             foreach (IFormFile file in filelist)
             {
-                using FileStream fs = System.IO.File.Create(savePath + file.FileName);
                 diclist.Add(file.FileName, subPath + file.FileName);
-                await file.CopyToAsync(fs);
-                fs.Flush();
+                //目标文件不存在，则上传（2021-8-30）
+                if (!System.IO.File.Exists(savePath + file.FileName))
+                {
+                    using FileStream fs = System.IO.File.Create(savePath + file.FileName);
+                    await file.CopyToAsync(fs);
+                    fs.Flush();
+                }
             }
             return Ok( new { count = filelist.Count, size, diclist });
         }

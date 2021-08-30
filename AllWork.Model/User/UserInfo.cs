@@ -15,6 +15,12 @@ namespace AllWork.Model.User
         public string OpenId
         { get; set; }
 
+        /// <summary>
+        /// 用户名
+        /// </summary>
+        public string UserName
+        { get; set; }
+
         [Required(ErrorMessage = "昵称不能为空")]
         public string NickName
         { get; set; }
