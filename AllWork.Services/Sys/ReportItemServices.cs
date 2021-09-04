@@ -34,7 +34,7 @@ namespace AllWork.Services.Sys
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(ReportItemParams reportItemParams)
+        public async Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(CommonParams reportItemParams)
         {
             var res = await _dal.QueryReportItems(reportItemParams);
             return res;

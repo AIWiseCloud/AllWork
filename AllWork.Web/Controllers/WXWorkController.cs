@@ -180,7 +180,7 @@ namespace AllWork.Web.Controllers
                 var url = string.Format("https://qyapi.weixin.qq.com/cgi-bin/user/getuserid?access_token={0}", result.Value);
                 var client = _httpClientFactory.CreateClient();
                 client.DefaultRequestHeaders.Add("method", "POST");
-                var str = JsonConvert.SerializeObject(new { mobile = mobile });
+                var str = JsonConvert.SerializeObject(new { mobile });
                 HttpContent httpContent = new StringContent(str, Encoding.UTF8);
                 httpContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
                 HttpResponseMessage response = await client.PostAsync(url, httpContent);

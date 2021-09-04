@@ -32,7 +32,7 @@ namespace AllWork.Repository.Sys
             return res > 0;
         }
 
-        public async Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(VersionParams versionParams)
+        public async Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(CommonParams versionParams)
         {
             //sql公共部分
             var sqlpub = new StringBuilder(" from VersionManagement a ");

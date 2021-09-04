@@ -13,14 +13,14 @@ namespace AllWork.Repository.Sys
             var instance = await base.QueryFirst("Select * from UserCertification Where UnionId = @UnionId", userCertification);
             if (instance == null)
             {
-                var insertSql = @"Insert UserCertification (UnionId,Name,AuthState, PhoneNumber, CertificateId,CertificateFront,CertificateBack,CorpName,CorpAddress,SalesMan)
+                var insertSql = @"Insert UserCertification (UnionId,Name,AuthState, PhoneNumber, CertificateId,CertificateFront,CertificateBack,CorpName,CorpAddress,OpenUserId, SalesMan)
 values
-(@UnionId,@Name,@AuthState,@PhoneNumber, @CertificateId,@CertificateFront,@CertificateBack,@CorpName,@CorpAddress,@SalesMan)";
+(@UnionId,@Name,@AuthState,@PhoneNumber, @CertificateId,@CertificateFront,@CertificateBack,@CorpName,@CorpAddress,@OpenUserId,@SalesMan)";
                 return await base.Execute(insertSql, userCertification) > 0;
             }
             else
             {
-                var updateSql = "Update UserCertification set Name = @Name,AuthState = @AuthState, PhoneNumber = @PhoneNumber,CertificateId = @CertificateId,CertificateFront = @CertificateFront,CertificateBack = @CertificateBack,CorpName = @CorpName,CorpAddress = @CorpAddress,SalesMan = @SalesMan Where UnionId = @UnionId";
+                var updateSql = "Update UserCertification set Name = @Name,AuthState = @AuthState, PhoneNumber = @PhoneNumber,CertificateId = @CertificateId,CertificateFront = @CertificateFront,CertificateBack = @CertificateBack,CorpName = @CorpName,CorpAddress = @CorpAddress, OpenUserId = @OpenUserId,SalesMan = @SalesMan Where UnionId = @UnionId";
                 return await base.Execute(updateSql, userCertification) > 0;
             }
         }
@@ -46,13 +46,13 @@ values
             string sql;
             if (instance == null)
             {
-                sql = @"Insert CorpCertification (UnionId,Name,AuthState,PhoneNumber, CertificateId,CertificateFront,CorpName,CorpAddress,SalesMan)
+                sql = @"Insert CorpCertification (UnionId,Name,AuthState,PhoneNumber, CertificateId,CertificateFront,CorpName,CorpAddress,OpenUserId, SalesMan)
 values
-(@UnionId,@Name,@AuthState,@PhoneNumber, @CertificateId,@CertificateFront,@CorpName,@CorpAddress,@SalesMan)";
+(@UnionId,@Name,@AuthState,@PhoneNumber, @CertificateId,@CertificateFront,@CorpName,@CorpAddress, @OpenUserId,@SalesMan)";
             }
             else
             {
-                sql = "Update CorpCertification set Name = @Name,AuthState = @AuthState,PhoneNumber = @PhoneNumber, CertificateId = @CertificateId,CertificateFront = @CertificateFront,CorpName = @CorpName,CorpAddress = @CorpAddress,SalesMan = @SalesMan Where UnionId = @UnionId";
+                sql = "Update CorpCertification set Name = @Name,AuthState = @AuthState,PhoneNumber = @PhoneNumber, CertificateId = @CertificateId,CertificateFront = @CertificateFront,CorpName = @CorpName,CorpAddress = @CorpAddress, OpenUserId,SalesMan = @SalesMan Where UnionId = @UnionId";
                 
             }
             return await base.Execute(sql, corpCertification) > 0;

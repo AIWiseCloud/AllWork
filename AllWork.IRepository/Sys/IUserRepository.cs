@@ -15,5 +15,7 @@ namespace AllWork.IRepository.Sys
         Task<bool> SaveUserInfo(UserInfo userInfo);
 
         Task<bool> Logout(string unionId);
+
+        Task<bool> Logoff(string unionId);
     }
 }

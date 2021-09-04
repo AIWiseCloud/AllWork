@@ -142,6 +142,55 @@
             <param name="cartIdList">购物车主键数组</param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.CompanyNewsController">
+            <summary>
+            新闻动态
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.SaveCompanyNews(AllWork.Model.Sys.CompanyNews)">
+            <summary>
+            保存新闻动态草稿
+            </summary>
+            <param name="companyNews"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.GetCompanyNews(System.String)">
+            <summary>
+            获取新闻动态详情
+            </summary>
+            <param name="newsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.DeleteCompanyNews(System.String)">
+            <summary>
+            删除动态
+            </summary>
+            <param name="newsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.SubmitAudit(System.String,System.Boolean)">
+            <summary>
+            提交审核
+            </summary>
+            <param name="newsId">动态ID</param>
+            <param name="isSubmit">true提交审核，false撤销提交</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.AuditNews(System.String,System.Boolean)">
+            <summary>
+            审核新闻动态
+            </summary>
+            <param name="newsId">动态ID</param>
+            <param name="isAudit">true通过审核，false撤销打回</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.QueryCompanyNews(AllWork.Model.RequestParams.CommonParams)">
+            <summary>
+            分页查询新闻动态
+            </summary>
+            <param name="commonParams"></param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.GoodsController">
             <summary>
             商品服务
@@ -646,7 +695,7 @@
             <param name="reportId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.ReportController.QueryReportItems(AllWork.Model.RequestParams.ReportItemParams)">
+        <member name="M:AllWork.Web.Controllers.ReportController.QueryReportItems(AllWork.Model.RequestParams.CommonParams)">
             <summary>
             查询报表项目
             </summary>
@@ -692,6 +741,26 @@
             <param name="shopId"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.SMSController">
+            <summary>
+            短信息服务
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SMSController.GetTemplates">
+            <summary>
+            获取所有短信模板
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.SMSController.SendSms(System.String,System.String,System.String)">
+            <summary>
+            发送短信
+            </summary>
+            <param name="phoneNumbers">接收短信的手机号码: 支持对多个手机号码发送短信，手机号码之间以英文逗号（,）分隔。上限为1000个手机号</param>
+            <param name="id">模板项Id （可在获取所有短信模板接口查看）</param>
+            <param name="templateParam">短信模板变量对应的实际值，JSON格式。示例值：{"code":"1111"}</param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.SysController">
             <summary>
             系统配置
@@ -731,7 +800,7 @@
             <param name="sourceId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.SysController.QueryResourceSettings(AllWork.Model.RequestParams.ResourceParams)">
+        <member name="M:AllWork.Web.Controllers.SysController.QueryResourceSettings(AllWork.Model.RequestParams.CommonParams)">
             <summary>
             查询资源配置
             </summary>
@@ -800,6 +869,16 @@
             <param name="text"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.UEditorController">
+            <summary>
+            百度编辑器
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UEditorController.Do">
+            <summary>
+            Do
+            </summary>
+        </member>
         <member name="T:AllWork.Web.Controllers.UploadController">
             <summary>
             文件上传
@@ -836,6 +915,13 @@
             登出
             </summary>
             <param name="token">登录凭证</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.Logoff(System.String)">
+            <summary>
+            账号注销
+            </summary>
+            <param name="token"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.UserController.SaveUserCertification(AllWork.Model.User.UserCertification)">
@@ -892,7 +978,7 @@
             <param name="versionId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.VersionController.QueryVersionManagement(AllWork.Model.RequestParams.VersionParams)">
+        <member name="M:AllWork.Web.Controllers.VersionController.QueryVersionManagement(AllWork.Model.RequestParams.CommonParams)">
             <summary>
             查询版本记录
             </summary>
@@ -1066,6 +1152,25 @@
             上传临时素材(以流的形式接收后上传)
             </summary>
             <param name="fileName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.XiaokeController">
+            <summary>
+            纷享销客
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.XiaokeController.GetDepts">
+            <summary>
+            获取部门列表
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.XiaokeController.GetEmps(System.Int32,System.Boolean)">
+            <summary>
+            获取销客部门下成员信息(详细)
+            </summary>
+            <param name="departmentId">部门ID, 为非负整数 </param>
+            <param name="fetchChild">获取子部门员工</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync">

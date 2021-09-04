@@ -1,4 +1,5 @@
 ﻿using AllWork.IServices.Sys;
+using AllWork.Model;
 using AllWork.Model.User;
 using AllWork.Web.Auth;
 using Microsoft.AspNetCore.Authorization;
@@ -85,6 +86,31 @@ namespace AllWork.Web.Controllers
             try
             {
                 var res = await _userServices.Logout(unionId);
+                return Ok(res);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 账号注销
+        /// </summary>
+        /// <param name="token"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize]
+        public async Task<IActionResult> Logoff(string token)
+        {
+            if(token==null || token.Length < 272)
+            {
+                return BadRequest("请传入正确的token");
+            }
+            var unionId = _authService.ParseToken(token);
+            try
+            {
+                var res = await _userServices.Logoff(unionId);
                 return Ok(res);
             }
             catch (Exception ex)

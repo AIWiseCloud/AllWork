@@ -66,7 +66,7 @@ namespace AllWork.Web.Controllers
         /// <param name="reportItemParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> QueryReportItems(ReportItemParams reportItemParams)
+        public async Task<IActionResult> QueryReportItems(CommonParams reportItemParams)
         {
             var res = await _reportItemServices.QueryReportItems(reportItemParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });

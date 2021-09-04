@@ -52,5 +52,11 @@ namespace AllWork.Services.Sys
             var res = await _dal.Logout(unionId);
             return res;
         }
+
+        public async Task<bool> Logoff(string unionId)
+        {
+            var res = await _dal.Logoff(unionId);
+            return res;
+        }
     }
 }

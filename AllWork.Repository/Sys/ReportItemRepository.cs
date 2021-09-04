@@ -39,11 +39,11 @@ namespace AllWork.Repository.Sys
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(ReportItemParams reportItemParams)
+        public async Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(CommonParams reportItemParams)
         {
             //sql公共部分
             var sqlpub = new StringBuilder(" from ReportItem a ");
-            if (!string.IsNullOrWhiteSpace(reportItemParams.QueryValue))
+            if (!string.IsNullOrWhiteSpace(reportItemParams.Keywords))
             {
                 sqlpub.Append(" Where Title = @Title or GroupNo = @GroupNo or TemplateName = @TemplateName ");
             }
@@ -59,9 +59,9 @@ namespace AllWork.Repository.Sys
             var res = await base.QueryPagination<ReportItem>(sql,
                 new
                 {
-                    Title = reportItemParams.QueryValue,
-                    GroupNo = reportItemParams.QueryValue,
-                    TemplateName = reportItemParams.QueryValue,
+                    Title = reportItemParams.Keywords,
+                    GroupNo = reportItemParams.Keywords,
+                    TemplateName = reportItemParams.Keywords,
                     reportItemParams.PageModel.Skip,
                     reportItemParams.PageModel.PageSize
                 });

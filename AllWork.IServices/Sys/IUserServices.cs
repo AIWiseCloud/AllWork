@@ -15,5 +15,7 @@ namespace AllWork.IServices.Sys
 
         Task<bool> Logout(string unionId);
 
+        Task<bool> Logoff(string unionId);
+
     }
 }

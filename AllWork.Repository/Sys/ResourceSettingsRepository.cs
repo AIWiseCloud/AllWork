@@ -51,13 +51,13 @@ namespace AllWork.Repository.Sys
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(ResourceParams resourceParams)
+        public async Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(CommonParams resourceParams)
         {
             //sql公共部分
             var sqlpub = new StringBuilder(" from ResourceSettings a ");
-            if (!string.IsNullOrWhiteSpace(resourceParams.KeyWords))
+            if (!string.IsNullOrWhiteSpace(resourceParams.Keywords))
             {
-                sqlpub.AppendFormat(" Where Subject = @Subject or GroupNo = @GroupNo or Remark = '%{0}%' ", resourceParams.KeyWords);
+                sqlpub.AppendFormat(" Where Subject = @Subject or GroupNo = @GroupNo or Remark = '%{0}%' ", resourceParams.Keywords);
             }
             //固定排序
             string sqlorder = " Order by GroupNo, FIndex desc ";
@@ -70,8 +70,8 @@ namespace AllWork.Repository.Sys
 
             var res = await base.QueryPagination<ResourceSettings>(sql, 
                 new {
-                    Subject = resourceParams.KeyWords,
-                    GroupNo = resourceParams.KeyWords,
+                    Subject = resourceParams.Keywords,
+                    GroupNo = resourceParams.Keywords,
                     resourceParams.PageModel.Skip,
                     resourceParams.PageModel.PageSize
                 });

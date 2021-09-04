@@ -22,6 +22,7 @@ using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using UEditorNetCore;
 
 namespace AllWork.Web
 {
@@ -72,6 +73,9 @@ namespace AllWork.Web
 
             //将IConfiguration中的扩展方法，加载数据库连接（当前只加载了mysql的, roy 2021.08.17)
             Configuration.LoadMySqlConnection();
+
+            //百度编辑器
+            services.AddUEditorService();
 
             services.Configure<TokenManagement>(Configuration.GetSection("tokenManagement"));//读取token配置信息
             var token = Configuration.GetSection("tokenManagement").Get<TokenManagement>();

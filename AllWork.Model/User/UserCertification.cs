@@ -68,6 +68,14 @@ namespace AllWork.Model.User
         { get; set; }
 
         /// <summary>
+        /// 销客职员ID
+        /// </summary>
+        public string OpenUserId
+        {
+            get;set;
+        }
+
+        /// <summary>
         /// 业务员
         /// </summary>
         [Required(ErrorMessage = "业务员不能为空")]

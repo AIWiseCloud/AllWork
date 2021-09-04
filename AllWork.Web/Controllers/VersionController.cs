@@ -62,7 +62,7 @@ namespace AllWork.Web.Controllers
         /// <returns></returns>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> QueryVersionManagement(VersionParams versionParams)
+        public async Task<IActionResult> QueryVersionManagement(CommonParams versionParams)
         {
             var res = await _versionManagementServices.QueryVersionManagerments(versionParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });

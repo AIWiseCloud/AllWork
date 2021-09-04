@@ -15,6 +15,6 @@ namespace AllWork.IRepository.Sys
 
         Task<ReportItem> GetReportItem(string reportId);
 
-        Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(ReportItemParams reportItemParams);
+        Task<Tuple<IEnumerable<ReportItem>, int>> QueryReportItems(CommonParams reportItemParams);
     }
 }

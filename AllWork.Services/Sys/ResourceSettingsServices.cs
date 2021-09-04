@@ -52,7 +52,7 @@ namespace AllWork.Services.Sys
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(ResourceParams resourceParams)
+        public async Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(CommonParams resourceParams)
         {
             var res = await _dal.QueryResourceSettings(resourceParams);
             return res;

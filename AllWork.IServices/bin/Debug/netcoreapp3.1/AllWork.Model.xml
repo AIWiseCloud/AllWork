@@ -805,6 +805,16 @@
             订单金额(单位：分)
             </summary>
         </member>
+        <member name="T:AllWork.Model.RequestParams.CommonParams">
+            <summary>
+            通用查询请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.CommonParams.Keywords">
+            <summary>
+            关键字
+            </summary>
+        </member>
         <member name="P:AllWork.Model.RequestParams.GoodsEvaluatePraams.GoodsId">
             <summary>
             商品ID
@@ -950,16 +960,6 @@
             需求数量
             </summary>
         </member>
-        <member name="T:AllWork.Model.RequestParams.ResourceParams">
-            <summary>
-            资源查询请求参数
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.RequestParams.ResourceParams.KeyWords">
-            <summary>
-            关键字
-            </summary>
-        </member>
         <member name="T:AllWork.Model.RequestParams.StockBillParams">
             <summary>
             出入库单据查询请求参数
@@ -1003,16 +1003,6 @@
         <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.DeliveryAddress">
             <summary>
             详细地址
-            </summary>
-        </member>
-        <member name="T:AllWork.Model.RequestParams.VersionParams">
-            <summary>
-            版本查询参数
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.RequestParams.VersionParams.Keywords">
-            <summary>
-            关键字
             </summary>
         </member>
         <member name="T:AllWork.Model.PageModel">
@@ -1063,6 +1053,61 @@
         <member name="P:AllWork.Model.ShopCart.Cart.Selected">
             <summary>
             是否选中
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.NewsId">
+            <summary>
+            新闻ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.ImgUrl">
+            <summary>
+            封面图片
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Body">
+            <summary>
+            正文
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Source">
+            <summary>
+            来源
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Author">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Creator">
+            <summary>
+            提交人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.CreateDate">
+            <summary>
+            提交日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.FIndex">
+            <summary>
+            排序索引
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.StatusId">
+            <summary>
+            状态(-1下架，0草稿, 1提交审核, 2审核通过）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.AmountReading">
+            <summary>
+            阅读量
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Username">
@@ -1355,6 +1400,11 @@
             单位地址
             </summary>
         </member>
+        <member name="P:AllWork.Model.User.CorpCertification.OpenUserId">
+            <summary>
+            销客职员ID
+            </summary>
+        </member>
         <member name="P:AllWork.Model.User.CorpCertification.SalesMan">
             <summary>
             业务员
@@ -1413,6 +1463,11 @@
         <member name="P:AllWork.Model.User.UserCertification.CorpAddress">
             <summary>
             单位地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserCertification.OpenUserId">
+            <summary>
+            销客职员ID
             </summary>
         </member>
         <member name="P:AllWork.Model.User.UserCertification.SalesMan">

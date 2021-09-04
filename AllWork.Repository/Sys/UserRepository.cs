@@ -60,5 +60,13 @@ namespace AllWork.Repository.Sys
             return res > 0;
         }
 
+        //账号注销
+        public async Task<bool> Logoff(string unionId)
+        {
+            var sql = "Delete from UserInfo  Where UnionId = @UnionId";
+            var res = await base.Execute(sql, new { UnionId = unionId });
+            return res > 0;
+        }
+
     }
 }

@@ -27,7 +27,7 @@ namespace AllWork.Services.Sys
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(VersionParams versionParams)
+        public async Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(CommonParams versionParams)
         {
             var res = await _dal.QueryVersionManagerments(versionParams);
             return res;

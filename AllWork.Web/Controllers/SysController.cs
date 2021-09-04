@@ -95,7 +95,7 @@ namespace AllWork.Web.Controllers
         /// <param name="resourceParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> QueryResourceSettings(ResourceParams resourceParams)
+        public async Task<IActionResult> QueryResourceSettings(CommonParams resourceParams)
         {
             var res = await _resourceSettingsServices.QueryResourceSettings(resourceParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });

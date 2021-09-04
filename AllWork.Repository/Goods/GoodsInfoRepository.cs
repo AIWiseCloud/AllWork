@@ -34,7 +34,7 @@ namespace AllWork.Repository.Goods
         public async Task<GoodsInfoExt> GetGoodsInfo(string goodsId)
         {
             Dictionary<string, GoodsInfoExt> pairs = new Dictionary<string, GoodsInfoExt>();
-            var sql = @"Select a.*,'' as pid, b.*, '' as pid, c.* ,'' as pid, d.*, '' as pid, e.*, '' as id5, f.*
+            var sql = @"Select a.*,'' as id1, b.*, '' as id2, c.* ,'' as id3, d.*, '' as id4, e.*, '' as id5, f.*
 from GoodsInfo a left join GoodsSpec b
 on a.GoodsId = b.GoodsId
 left join SpecInfo c on b.SpecId = c.SpecId
@@ -50,7 +50,7 @@ where a.GoodsId = @GoodsId";
                      tempgoods = goodsInfo;
                      pairs.Add(tempgoods.GoodsId, tempgoods);
                  }
-                 GoodsSpec tempSpec = tempgoods.GoodsSpecs.Find(list => list.GoodsId == goodsSpec.GoodsId && list.SpecId == goodsSpec.SpecId);
+                 GoodsSpec tempSpec = tempgoods.GoodsSpecs.Find(list => list.ID == goodsSpec.ID);
                  if (tempSpec == null)
                  {
                      //子表信息
@@ -60,7 +60,7 @@ where a.GoodsId = @GoodsId";
                      goodsSpec.Spec = si;
                      tempgoods.GoodsSpecs.Add(tempSpec);
                  }
-                 GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.GoodsId == goodsColor.GoodsId && x.ColorId == goodsColor.ColorId);
+                 GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.ID == goodsColor.ID);
                  if (tempColor == null)
                  {
                      tempColor = goodsColor;
@@ -74,7 +74,7 @@ where a.GoodsId = @GoodsId";
                      tempgoods.SpuImgs.Add(tempImg);
                  }
                  return goodsInfo;
-             }, new { GoodsId = goodsId }, "pid, pid, pid, pid, id5");
+             }, new { GoodsId = goodsId }, "id1, id2, id3, id4, id5");
             return pairs.Values.Count > 0 ? pairs[goodsId] : null;
         }
 

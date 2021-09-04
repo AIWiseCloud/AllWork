@@ -12,7 +12,7 @@ namespace AllWork.IRepository.Sys
 
         Task<bool> DeleteVersionManagement(string versionId);
 
-        Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(VersionParams versionParams);
+        Task<Tuple<IEnumerable<VersionManagement>, int>> QueryVersionManagerments(CommonParams versionParams);
 
         Task<VersionManagement> GetNewestVersionManagement();
     }

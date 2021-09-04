@@ -18,6 +18,6 @@ namespace AllWork.IRepository.Sys
 
         Task<List<ResourceSettings>> GetResourceSettingsByGroup(string groupNo);
 
-        Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(ResourceParams resourceParams);
+        Task<Tuple<IEnumerable<ResourceSettings>, int>> QueryResourceSettings(CommonParams resourceParams);
     }
 }
