@@ -62,8 +62,8 @@ values
 from OrderMain a
 left join OrderList b on a.OrderId = b.OrderId
 left join GoodsInfo g on g.GoodsId = b.GoodsId
-left join GoodsColor c on b.GoodsId = c.GoodsId and b.ColorId = c.ColorId
-left join GoodsSpec d on b.GoodsId = d.GoodsId and b.SpecId = d.SpecId
+left join GoodsColor c on b.GoodsId = c.GoodsId and b.ColorId = c.ID
+left join GoodsSpec d on b.GoodsId = d.GoodsId and b.SpecId = d.ID
 left join GoodsColorSpec e on b.GoodsId = e.GoodsId and b.ColorId = e.ColorId and b.SpecId = e.SpecId
 Where a.OrderId = {0}", orderId);
             var res = await base.QueryAsync<OrderMainExt, OrderListExt, GoodsInfo, GoodsColor, GoodsSpec, GoodsColorSpec>(sql, (om, ol, gi, gc, gs, cs) =>
@@ -183,8 +183,8 @@ where a.GoodsId = b.GoodsId and b.OrderId =@OrderId";
             sqlpub.Append(@" Select distinct a.OrderId
 from OrderMain a left join OrderList b on a.OrderId = b.OrderId
 left join GoodsInfo c on b.GoodsId = c.GoodsId
-left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ColorId
-left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.SpecId
+left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ID
+left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.ID
 left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId Where (1 = 1)");
             if (orderQueryParams.UnionId != "*")
             {
@@ -193,7 +193,12 @@ left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId an
             //查询方案为0：按关键字搜索
             if (orderQueryParams.QueryScheme == 0)
             {
-                sqlpub.AppendFormat(" and (a.OrderId = @OrderId or b.GoodsId = @GoodsId or c.ProdNumber like @ProdNumber or c.GoodsName like '%{0}%')  ", orderQueryParams.QueryValue);
+                if (!string.IsNullOrEmpty(orderQueryParams.QueryValue))
+                {
+                    sqlpub.AppendFormat(" and (a.OrderId = @OrderId or b.GoodsId = @GoodsId or c.ProdNumber like @ProdNumber or c.GoodsName like '%{0}%')  ", orderQueryParams.QueryValue);
+                }
+
+
                 if (orderQueryParams.StatusId != 9)
                 {
                     sqlpub.Append(" and a.StatusId = @StatusId "); //默认9表示所有状态
@@ -239,8 +244,8 @@ from OrderMain a,
 )idtab
 left join OrderList b on idtab.OrderId = b.OrderId
 left join GoodsInfo c on b.GoodsId = c.GoodsId
-left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ColorId
-left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.SpecId
+left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ID
+left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.ID
 left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId 
 Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
             //完整sql

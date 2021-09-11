@@ -55,13 +55,17 @@ Author = @Author,Creator = @Creator,FIndex = @FIndex Where NewsId = @NewsId ";
             return res;
         }
 
-        public async Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(CommonParams commonParams)
+        public async Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(NewsParams commonParams)
         {
             //sql公共部分
             var sqlpub = new StringBuilder(" from CompanyNews a ");
             if (!string.IsNullOrWhiteSpace(commonParams.Keywords))
             {
-                sqlpub.Append(" Where Title = @Title or Source = @Source or Author = @Author ");
+                sqlpub.Append(" Where (Title = @Title or Source = @Source or Author = @Author) ");
+            }
+            if (commonParams.OnlyShowSubmitStatus == 1)
+            {
+                sqlpub.Append(" and StatusId > 0");
             }
             //固定排序
             string sqlorder = " Order by CreateDate, FIndex desc ";

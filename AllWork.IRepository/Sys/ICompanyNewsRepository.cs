@@ -18,6 +18,6 @@ namespace AllWork.IRepository.Sys
 
         Task<int> AuditNews(string newsId, bool isAudit);
 
-        Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(CommonParams commonParams);
+        Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(NewsParams commonParams);
     }
 }

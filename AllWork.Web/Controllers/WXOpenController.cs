@@ -1,33 +1,33 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
-using System.Net;
-using System.Net.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Newtonsoft.Json;
-using AllWork.Web.Helper.Redis;
+using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
 {
     /// <summary>
-    /// 微信开放平台
+    /// 微信开放平台网站应用
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class WXOpenController : ControllerBase
     {
         //建议将secret、用户数据（如access_token）放在App云端服务器，由云端中转接口调用请求
+        //以下用于过网站应用的登录等
 
-        readonly string openPlatformAppId = "wxa4a2fb4b53a4597b";//应用唯一标识，在微信开放平台提交应用审核通过后获得
-        readonly string openPlatformAppSecret = "0dd0016757d1d7ebc0ced1e5bd239717";//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
+        readonly string openPlatformAppId;//应用唯一标识，在微信开放平台提交应用审核通过后获得
+        readonly string openPlatformAppSecret;//应用密钥AppSecret，在微信开放平台提交应用审核通过后获得
         readonly IHttpClientFactory _httpClientFactory;
+        readonly IConfiguration _configuration;
 
-        public WXOpenController(IHttpClientFactory clientFactory)
+        public WXOpenController(IHttpClientFactory clientFactory,IConfiguration configuration)
         {
             _httpClientFactory = clientFactory;
+            _configuration = configuration;
+            openPlatformAppId = _configuration.GetSection("MP:AppId").Value;
+            openPlatformAppSecret = _configuration.GetSection("MP:AppSecret").Value;
         }
 
         /// <summary>
@@ -42,14 +42,15 @@ namespace AllWork.Web.Controllers
             var url = string.Format("https://api.weixin.qq.com/sns/oauth2/access_token?appid={0}&secret={1}&code={2}&grant_type=authorization_code",
                 openPlatformAppId, openPlatformAppSecret, code);
             var result = await client.GetStringAsync(url);
-            dynamic resultObject = JsonConvert.DeserializeObject(result);
+            var res = JsonConvert.DeserializeObject(result);
+            dynamic resultObject = res;
             if (resultObject.errcode == 40029 || resultObject.errcode == 40163)
             {
-                return BadRequest(result);
+                return BadRequest(res);
             }
             else
             {
-                return Ok(result);
+                return Ok(res);
             }
         }
 
@@ -90,14 +91,15 @@ namespace AllWork.Web.Controllers
             var url = string.Format("https://api.weixin.qq.com/sns/userinfo?access_token={0}&openid={1}&lang={2}",
                 access_token, openid, lang);
             var result = await client.GetStringAsync(url);
-            dynamic resultObject = JsonConvert.DeserializeObject(result);
+            var res = JsonConvert.DeserializeObject(result);
+            dynamic resultObject = res;
             if (resultObject.errcode == 40003)
             {
-                return BadRequest(result);
+                return BadRequest(res);
             }
             else
             {
-                return Ok(result);
+                return Ok(res);
             }
         }
 
@@ -116,8 +118,8 @@ namespace AllWork.Web.Controllers
                 var url = string.Format("https://api.weixin.qq.com/sns/auth?access_token={0}&openid={1}",
                     access_token, openid);
                 var result = await client.GetStringAsync(url);
-                dynamic resultObject = JsonConvert.DeserializeObject(result);
-                return Ok(result);
+                var res = JsonConvert.DeserializeObject(result);
+                return Ok(res);
             }
             catch (Exception ex)
             {

@@ -11,16 +11,17 @@ namespace AllWork.Repository.Goods
         public async Task<bool> SaveGoodsSpec(GoodsSpec goodsSpec)
         {
             var instance = await base.QueryFirst("Select * from GoodsSpec Where ID = @ID", goodsSpec);
+            string sql;
             if (instance == null)
             {
-                var insertSql = "Insert GoodsSpec (ID,GoodsId,SpecId,Price,DiscountPrice,Findex,Creator)values(@ID,@GoodsId,@SpecId,@Price,@DiscountPrice,@Findex,@Creator)";
-                return await base.Execute(insertSql, goodsSpec) > 0;
+                sql = "Insert GoodsSpec (ID,GoodsId,SpecName,SaleUnit,UnitConverter,BaseUnitPrice,Price,DiscountPrice,Findex,Creator)values(@ID,@GoodsId,@SpecName,@SaleUnit,@UnitConverter,@BaseUnitPrice,@Price,@DiscountPrice,@Findex,@Creator)";
             }
             else
             {
-                var updateSql = "Update GoodsSpec set SpecId = @SpecId,Price = @Price,DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator Where ID = @ID";
-                return await base.Execute(updateSql, goodsSpec) > 0;
+                sql = "Update GoodsSpec set GoodsId = @GoodsId,SpecName = @SpecName,SaleUnit = @SaleUnit,UnitConverter = @UnitConverter,BaseUnitPrice = @BaseUnitPrice,Price = @Price,DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator Where ID = @ID";
             }
+            var res = await base.Execute(sql, goodsSpec);
+            return res > 0;
         }
 
         public async Task<GoodsSpec> GetGoodsSepc(string id)
@@ -39,6 +40,12 @@ namespace AllWork.Repository.Goods
         {
             var sql = "Delete from GoodsSpec Where ID = @ID";
             return await base.Execute(sql, new { ID = id })>0;
+        }
+
+        public async Task<bool> ExistInventory(string specId)
+        {
+            var res = await base.ExecuteScalar<int>("Select Count(*) from Inventory Where SpecId = @SpecId", new { SpecId = specId });
+            return res > 0;
         }
     }
 }

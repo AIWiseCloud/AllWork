@@ -1,4 +1,5 @@
-﻿using AllWork.Model.Goods;
+﻿using AllWork.Model;
+using AllWork.Model.Goods;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace AllWork.IServices.Goods
 
         Task<GoodsCategory> GetGoodsCategory(string categoryId);
 
-        Task<bool> DeleteGoodsCategory(string categoryId);
+        Task<OperResult> DeleteGoodsCategory(string categoryId);
 
         /// <summary>
         /// 获取商品下级分类
@@ -21,5 +22,8 @@ namespace AllWork.IServices.Goods
         /// <param name="onlyValidCategory">仅返回有效未作废的分类，默认不限制</param>
         /// <returns></returns>
         Task<IEnumerable<GoodsCategory>> GetGoodsCategories(string parentId, bool onlyValidCategory=false);
+
+        Task<IEnumerable<GoodsCategory>> GetSubcategories(string categoryId);
+
     }
 }

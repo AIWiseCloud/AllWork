@@ -65,6 +65,29 @@ namespace AllWork.Repository.Goods
             return res;
         }
 
+        //分类下是否存在商品
+        public async Task<bool> CategoryExistGoods(string categoryId)
+        {
+            var sql = "Select count(*) from GoodsInfo Where CategoryId = @CategoryId";
+            var res = await base.ExecuteScalar<int>(sql, new { CategoryId = categoryId });
+            return res > 0;
+        }
+
+        //获取下一级分类
+        public async Task<IEnumerable<GoodsCategory>> GetSubcategories(string categoryId)
+        {
+            string sql;
+            if (string.IsNullOrEmpty(categoryId))
+            {
+                sql = "Select * from GoodsCategory Where IFNULL(ParentId,'') = '' ";
+            }
+            else
+            {
+                sql = "Select * from GoodsCategory Where ParentId = @CategoryId";
+            }
+            var res = await base.QueryList(sql, new { CategoryId = categoryId });
+            return res;
+        }
 
     }
 }

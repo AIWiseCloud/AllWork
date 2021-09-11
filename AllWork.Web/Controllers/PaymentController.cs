@@ -147,7 +147,6 @@ namespace AllWork.Web.Controllers
                     request.Body.Position = 0;
                 }
 
-
                 //推荐的做法是，当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，如果没有处理过再进行处理，
                 //如果处理过直接返回结果成功。在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
                 //判断请求是否成功
@@ -157,6 +156,7 @@ namespace AllWork.Web.Controllers
                     if (PayHelper.GetXmlValue(strXML, "result_code") == "SUCCESS")
                     {
                         var dictData = PayHelper.GetFromXml(strXML);
+                        var appid = PayHelper.GetXmlValue(strXML, "appid");
                         var returnSign = PayHelper.GetXmlValue(strXML, "sign"); //取得签名
                         var sign = PayHelper.GetSignInfo(dictData);// PayHelper.MakeSign(dictData);这个签名也一样的状况
                         //未解之谜 ：微信服务器会连续发7个通知，只有最后一个通知的签名才对 
@@ -169,7 +169,7 @@ namespace AllWork.Web.Controllers
                             string orderTotal = PayHelper.GetXmlValue(strXML, "total_fee");
                             string openid = PayHelper.GetXmlValue(strXML, "openid");
                             //查询微信订单
-                            var resObj = await OrderQuery(wxOrderNum, "");
+                            var resObj = await OrderQuery(appid, wxOrderNum, "");
                             string resStr = JsonConvert.SerializeObject(resObj);
                             if (resStr.Contains("transaction_id"))
                             {
@@ -211,11 +211,12 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 查询订单（至少为其中一个参数提供值)
         /// </summary>
+        /// <param name="appId">appId</param>
         /// <param name="tranId">微信订单号</param>
         /// <param name="orderId">商户订单号</param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> OrderQuery(string tranId, string orderId)
+        public async Task<IActionResult> OrderQuery(string appId, string tranId, string orderId)
         {
             if (string.IsNullOrWhiteSpace(tranId) && string.IsNullOrWhiteSpace(orderId))
             {
@@ -237,7 +238,7 @@ namespace AllWork.Web.Controllers
             var strMD5 = PayHelper.MD5(str).ToUpper(); //得到签名(以上不包括sign)
 
             var formData = "<xml>";
-            formData += "<appid>" + PayHelper.AppId + "</appid>";
+            formData += "<appid>" + appId + "</appid>";
             formData += "<mch_id>" + PayHelper.MchId + "</mch_id>";
             if (!string.IsNullOrWhiteSpace(tranId))
                 formData += "<transaction_id>" + tranId + "</transaction_id>";
@@ -272,7 +273,7 @@ namespace AllWork.Web.Controllers
             //签名串：严格按官方要求（按照参数名ASCII码从小到大排序顺序、大小写、url键值对形式等）
             SortedDictionary<string, object> dictData = new SortedDictionary<string, object>
             {
-                { "appid",_appid},
+                { "appid",refundApplyParams.AppId},
                 {"mch_id", __mchid },
                 {"nonce_str", nonce_str },
                 {"out_refund_no", refundApplyParams.RefundId },
@@ -286,7 +287,7 @@ namespace AllWork.Web.Controllers
             var signValue = PayHelper.MD5(str).ToUpper();//获得签名值
             //要发送的数据
             var formData = "<xml>";
-            formData += "<appid>" + _appid + "</appid>";
+            formData += "<appid>" + refundApplyParams.AppId + "</appid>";
             formData += "<mch_id>" + __mchid + "</mch_id>";
             formData += "<nonce_str>" + nonce_str + "</nonce_str>";
             formData += "<sign>" + signValue + "</sign>";
@@ -377,12 +378,13 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 查询退款
         /// </summary>
+        /// <param name="appId">appId</param>
         /// <param name="refundId">商户退款单号(如果单个支付订单部分退款次数超过20次请使用退款单号查询)</param>
         /// <param name="orderId">商户订单号</param>
         /// <returns></returns>
         [HttpGet]
         [ApiExplorerSettings(IgnoreApi = false)]
-        public async Task<IActionResult> RefundQuery(string refundId, string orderId)
+        public async Task<IActionResult> RefundQuery(string appId, string refundId, string orderId)
         {
             if (string.IsNullOrWhiteSpace(refundId) && string.IsNullOrWhiteSpace(orderId))
             {
@@ -392,7 +394,7 @@ namespace AllWork.Web.Controllers
             var url = "https://api.mch.weixin.qq.com/pay/refundquery";
             var nonce_str = PayHelper.GetRandomString(30);
             SortedDictionary<string, object> dictData = new SortedDictionary<string, object> {
-                { "appid", _appid },
+                { "appid", appId },
                 { "mch_id", __mchid},
                 { "nonce_str", nonce_str } };
             if (!string.IsNullOrWhiteSpace(refundId))
@@ -404,7 +406,7 @@ namespace AllWork.Web.Controllers
             var strMD5 = PayHelper.MD5(str).ToUpper(); //得到签名(以上不包括sign)
 
             var formData = "<xml>";
-            formData += "<appid>" + _appid + "</appid>";
+            formData += "<appid>" + appId + "</appid>";
             formData += "<mch_id>" + __mchid + "</mch_id>";
             if (!string.IsNullOrWhiteSpace(refundId))
                 formData += "<refund_id>" + refundId + "</refund_id>";

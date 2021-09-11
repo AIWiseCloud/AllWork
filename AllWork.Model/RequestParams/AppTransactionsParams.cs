@@ -4,6 +4,7 @@ using System.Text;
 
 namespace AllWork.Model.RequestParams
 {
+    
     public class AppTransactionsParams
     {
         /// <summary>
@@ -23,5 +24,15 @@ namespace AllWork.Model.RequestParams
         /// </summary>
         [Required][Range(1,1000000000)]
         public int OrderAmount { get; set; }
+    }
+
+    public class MPTransactionsParams: AppTransactionsParams
+    {
+        /// <summary>
+        /// 用户标识(trade_type=JSAPI，此参数必传)
+        /// </summary>
+        [Required]
+        public string OpenId { get; set; }
+
     }
 }

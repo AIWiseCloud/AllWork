@@ -2,7 +2,6 @@
 using AllWork.Model;
 using AllWork.Model.PostSale;
 using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

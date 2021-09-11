@@ -36,7 +36,7 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 获取用户购物车列表
         /// </summary>
-        /// <param name="unionId"></param>
+        /// <param name="unionId">用户标识</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetCarts(string unionId)
@@ -48,13 +48,13 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 修改购物车数量
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="quantity"></param>
+        /// <param name="id">购物车项ID</param>
+        /// <param name="quantity">数量</param>
         /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> EditCartQuantity(string id,int quantity)
         {
-            if(quantity<1 || quantity > 999)
+            if(quantity<1 || quantity > 9999)
             {
                 return BadRequest("数量不合法!");
             }
@@ -65,8 +65,8 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 切换购物车项目选中状态
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="selected"></param>
+        /// <param name="id">购物车项ID</param>
+        /// <param name="selected">1选中,0取消选中</param>
         /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> ChangeCartItemSelected(string id,int selected)

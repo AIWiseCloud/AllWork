@@ -15,7 +15,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class OrderController : ControllerBase
     {
         readonly IOrderServices _orderServices;

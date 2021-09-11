@@ -34,6 +34,13 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
+        /// 品牌
+        /// </summary>
+        [Required(ErrorMessage ="品牌不能为空")]
+        public string Brand
+        { get; set; }
+
+        /// <summary>
         /// 商品描述
         /// </summary>
         public string GoodsDesc
@@ -65,7 +72,7 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 是否下架
+        /// 是否下架: 0发布，1下架
         /// </summary>
         public byte IsUnder
         { get; set; }

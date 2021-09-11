@@ -2,8 +2,6 @@
 using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
-using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -25,10 +23,10 @@ namespace AllWork.Repository.Goods
             //sql公共部分
             var sqlpub = new StringBuilder(@"from Inventory a left join GoodsInfo b
 on a.GoodsId = b.GoodsId
-left join ColorInfo c
-on a.ColorId = c.ColorId
-left join SpecInfo d
-on a.SpecId = d.SpecId
+left join GoodsColor c
+on a.ColorId = c.ID
+left join GoodsSpec d
+on a.SpecId = d.ID
 left join GoodsCategory e
 on e.CategoryId = b.CategoryId Where (1=1) ");
             if (!string.IsNullOrEmpty(inventoryParams.CategoryId))
@@ -63,12 +61,12 @@ on e.CategoryId = b.CategoryId Where (1=1) ");
             //sql语句合并
             var sqlfull = sql1 + ";" + sql2;
             //调用分页接口
-            var res = await base.QueryPagination<Inventory, GoodsInfo, ColorInfo, SpecInfo, GoodsCategory>(sqlfull, (iv, gi, ci, si, gc) =>
+            var res = await base.QueryPagination<Inventory, GoodsInfo, GoodsColor, GoodsSpec, GoodsCategory>(sqlfull, (iv, gi, ci, si, gc) =>
               {
                   iv.GoodsInfo = gi;
                   iv.GoodsCategory = gc;
-                  iv.ColorInfo = ci;
-                  iv.SpecInfo = si;
+                  iv.GoodsColor = ci;
+                  iv.GoodsSpec = si;
                   return iv;
               }, new {  inventoryParams.CategoryId, inventoryParams.PageModel.Skip, inventoryParams.PageModel.PageSize }, "id1,id2,id3,id4");
             return res;
@@ -99,8 +97,8 @@ from(
 )t1 left join Inventory t2
 on t1.GoodsId = t2.GoodsId  and t1.ColorId = t2.ColorId  and t1.SpecId = t2.SpecId 
 left join GoodsInfo g on g.GoodsId = t1.GoodsId
-left join colorinfo c on c.ColorId = t1.ColorId
-left join SpecInfo s on s.SpecId  = t1.SpecId
+left join GoodsColor c on c.ID = t1.ColorId
+left join GoodsSpec s on s.ID  = t1.SpecId
 where t1.Quantity - ifnull(t2.ActiveQuantity ,0) > 0 ", sb);
             var res = await base.QueryList<RequireItemExt>(sql);
             var msg = new StringBuilder("以下项目可用库存不足：");

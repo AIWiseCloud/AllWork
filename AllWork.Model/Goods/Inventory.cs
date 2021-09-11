@@ -60,8 +60,8 @@ namespace AllWork.Model.Goods
     public partial class Inventory
     {
         public GoodsInfo GoodsInfo { get; set; }
-        public ColorInfo ColorInfo { get; set; }
-        public SpecInfo SpecInfo { get; set; }
+        public GoodsColor GoodsColor { get; set; }
+        public GoodsSpec GoodsSpec { get; set; }
         public GoodsCategory GoodsCategory { get; set; }
     }
 

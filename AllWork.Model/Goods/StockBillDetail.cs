@@ -69,7 +69,7 @@ namespace AllWork.Model.Goods
     {
         public GoodsInfo GoodsInfo { get; set; }
         public StockInfo Stock { get; set; }
-        public ColorInfo ColorInfo { get; set; }
-        public SpecInfo Spec { get; set; }
+        public GoodsColor GoodsColor { get; set; }
+        public GoodsSpec GoodsSpec { get; set; }
     }
 }

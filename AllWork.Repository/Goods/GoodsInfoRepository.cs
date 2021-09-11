@@ -1,7 +1,6 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
-using AllWork.Model.Sys;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,16 +13,17 @@ namespace AllWork.Repository.Goods
         public async Task<bool> SaveGoodsInfo(GoodsInfo goodsInfo)
         {
             var instance = await base.QueryFirst("Select * from GoodsInfo Where GoodsId = @GoodsId", new { goodsInfo.GoodsId });
+            string sql;
             if (instance == null)
             {
-                var insertSql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName,GoodsDesc,UnitName,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName,@GoodsDesc,@UnitName,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
-                return await base.Execute(insertSql, goodsInfo) > 0;
+                goodsInfo.IsUnder = 1; //默认是下架 （要上架需要一个发布动作)
+                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,GoodsDesc,UnitName,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand, @GoodsDesc,@UnitName,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
             }
             else
             {
-                var updateSql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName,GoodsDesc = @GoodsDesc,UnitName=@UnitName,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator Where GoodsId = @GoodsId";
-                return await base.Execute(updateSql, goodsInfo) > 0;
+                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand,  GoodsDesc = @GoodsDesc,UnitName=@UnitName,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator Where GoodsId = @GoodsId";
             }
+            return await base.Execute(sql, goodsInfo) > 0;
         }
 
         /// <summary>
@@ -34,16 +34,14 @@ namespace AllWork.Repository.Goods
         public async Task<GoodsInfoExt> GetGoodsInfo(string goodsId)
         {
             Dictionary<string, GoodsInfoExt> pairs = new Dictionary<string, GoodsInfoExt>();
-            var sql = @"Select a.*,'' as id1, b.*, '' as id2, c.* ,'' as id3, d.*, '' as id4, e.*, '' as id5, f.*
+            var sql = @"Select a.*,'' as id1, b.*, '' as id2,  d.*, '' as id3,  f.*
 from GoodsInfo a left join GoodsSpec b
 on a.GoodsId = b.GoodsId
-left join SpecInfo c on b.SpecId = c.SpecId
 left join GoodsColor d on d.GoodsId = a.GoodsId
-left join ColorInfo e on d.ColorId = e.ColorId
 left join SpuImg f on a.GoodsId = f.GoodsId
 where a.GoodsId = @GoodsId";
 
-            var res = await base.QueryAsync<GoodsInfoExt, GoodsSpec, SpecInfo, GoodsColor, ColorInfo, SpuImg>(sql, (goodsInfo, goodsSpec, si, goodsColor, ci, img) =>
+            var res = await base.QueryAsync<GoodsInfoExt, GoodsSpec,  GoodsColor,  SpuImg>(sql, (goodsInfo, goodsSpec, goodsColor, img) =>
              {
                  if (!pairs.TryGetValue(goodsInfo.GoodsId, out GoodsInfoExt tempgoods))
                  {
@@ -57,14 +55,12 @@ where a.GoodsId = @GoodsId";
                      tempSpec = goodsSpec;
                      //子表中的规格信息
                      //goodsSpec.SpecId = subMessage.FNumber;//不能少
-                     goodsSpec.Spec = si;
                      tempgoods.GoodsSpecs.Add(tempSpec);
                  }
                  GoodsColor tempColor = tempgoods.GoodsColors.Find(x => x.ID == goodsColor.ID);
                  if (tempColor == null)
                  {
                      tempColor = goodsColor;
-                     goodsColor.ColorInfo = ci;
                      tempgoods.GoodsColors.Add(tempColor);
                  }
                  SpuImg tempImg = tempgoods.SpuImgs.Find(x => x.ID == img.ID);
@@ -74,7 +70,7 @@ where a.GoodsId = @GoodsId";
                      tempgoods.SpuImgs.Add(tempImg);
                  }
                  return goodsInfo;
-             }, new { GoodsId = goodsId }, "id1, id2, id3, id4, id5");
+             }, new { GoodsId = goodsId }, "id1, id2, id3");
             return pairs.Values.Count > 0 ? pairs[goodsId] : null;
         }
 
@@ -99,6 +95,21 @@ where a.GoodsId = @GoodsId";
             return res > 0;
         }
 
+        public async Task<bool> ExistOrders(string goodsId)
+        {
+            var sql = "select Count(*) from OrderList where GoodsId = @GoodsId";
+            var res = await base.ExecuteScalar<int>(sql, new { GoodsId = goodsId });
+            return res > 0;
+        }
+
+        //发布（上架）或取消发布（下架）商品
+        public async Task<bool> ReleaseGoods(bool isRelease, string goodsId)
+        {
+            var sql = "Update GoodsInfo set IsUnder = @IsUnder Where GoodsId = @GoodsId";
+            var res = await base.Execute(sql, new { GoodsId = goodsId, IsUnder = isRelease ? 0 : 1 });
+            return res > 0;
+        }
+
         //商品分页查询  (查询方案queryScheme：0关键字查询 1商品分类 2推荐商品 3最新商品)
         public async Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
@@ -109,7 +120,7 @@ where a.GoodsId = @GoodsId";
             {
                 sqlpub.Append(@"with tab as(
 select CategoryId 
-from goodscategory g 
+from goodsCategory g 
 where CategoryId  = @CategoryId or ParentId = @CategoryId
 )
 ,tab2 as(select CategoryId 
@@ -128,9 +139,12 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             //如果是按关键字搜索
             if (goodsQueryParams.QueryScheme == 0)
             {
-                sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber) ", goodsQueryParams.QueryValue);
+                if (!string.IsNullOrEmpty(goodsQueryParams.QueryValue))
+                {
+                    sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber or a.Brand like '%{0}%') ", goodsQueryParams.QueryValue);
+                }
             }
-            // 如果是方案1，要把上面with中查出的类别在条件中体现
+            // 如果是方案1，按商品分类查询，要把上面with中查出的类别在条件中体现
             if (goodsQueryParams.QueryScheme == 1)
             {
                 sqlpub.Append(" and CategoryId in (select * from tab2) ");

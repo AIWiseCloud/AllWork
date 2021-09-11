@@ -1,6 +1,7 @@
 ﻿using AlibabaCloud.OpenApiClient.Models;
 using AlibabaCloud.SDK.Dysmsapi20170525;
 using AlibabaCloud.SDK.Dysmsapi20170525.Models;
+using AllWork.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -23,9 +24,9 @@ namespace AllWork.Web.Controllers
 
         public SMSController(IConfiguration configuration)
         {
-            _configuration = configuration;
-            _accessKeyId = _configuration.GetSection("SMS:AccessKeyId").Value;
-            _accessKeySecret = _configuration.GetSection("SMS:AccessKeySecret").Value;
+            _configuration = configuration; 
+            _accessKeyId = DesEncrypt.Decrypt(_configuration.GetSection("SMS:AccessKeyId").Value);
+            _accessKeySecret = DesEncrypt.Decrypt(_configuration.GetSection("SMS:AccessKeySecret").Value);
 
             //使用AK&SK初始化账号Client
             Config config = new Config

@@ -15,7 +15,9 @@ namespace AllWork.IServices.Goods
 
         Task<bool> ExistSKU(string goodsId);
 
-        Task<bool> DeleteGoodsInfo(string goodsId);
+        Task<OperResult> DeleteGoodsInfo(string goodsId);
+
+        Task<OperResult> ReleaseGoods(bool isRelease, string goodsId);
 
         Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
     }

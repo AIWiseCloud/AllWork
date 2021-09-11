@@ -93,7 +93,7 @@ namespace AllWork.Web.Controllers
         /// <param name="commonParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> QueryCompanyNews(CommonParams commonParams)
+        public async Task<IActionResult> QueryCompanyNews(NewsParams commonParams)
         {
             var res = await _companyNewsServices.QueryCompanyNews(commonParams);
             return Ok(new { TotalCount = res.Item2, items = res.Item1 });

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
 {
-    public partial class GoodsSpec
+    public  class GoodsSpec
     {
         /// <summary>
         /// 主键
@@ -21,14 +21,33 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 规格编号（在辅助资料设置，此处选用)
+        /// 规格描述
         /// </summary>
-        [Required(ErrorMessage ="规格编号不能为空")]
-        public string SpecId
+        [Required(ErrorMessage ="规格描述不能为空")]
+        public string SpecName
         { get; set; }
 
         /// <summary>
-        /// 单价
+        /// 销售单位
+        /// </summary>
+        [Required(ErrorMessage = "销售单位不能为空")]
+        public string SaleUnit
+        { get; set; }
+
+        /// <summary>
+        /// 单位转换(1销售单位等于多少基本单位)
+        /// </summary>
+        public decimal UnitConverter
+        { get; set; }
+
+        /// <summary>
+        /// 基本单位单价
+        /// </summary>
+        public decimal BaseUnitPrice
+        { get; set; }
+
+        /// <summary>
+        /// 销售单价
         /// </summary>
         [Range(0.01, 10000)]
         public decimal Price
@@ -60,8 +79,4 @@ namespace AllWork.Model.Goods
         { get; set; }
     }
 
-    public partial class GoodsSpec
-    {
-        public SpecInfo Spec { get; set; }
-    }
 }

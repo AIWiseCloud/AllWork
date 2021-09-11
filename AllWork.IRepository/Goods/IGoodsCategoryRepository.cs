@@ -19,5 +19,11 @@ namespace AllWork.IRepository.Goods
         /// <param name="onlyValidCategory">仅返回有效未作废的分类，默认不限制</param>
         /// <returns></returns>
         Task<IEnumerable<GoodsCategory>> GetGoodsCategories(string parentId, bool onlyValidCategory = false);
+
+        //分类下是否存在商品
+        Task<bool> CategoryExistGoods(string categoryId);
+
+        //获取下一级分类
+        Task<IEnumerable<GoodsCategory>> GetSubcategories(string categoryId);
     }
 }

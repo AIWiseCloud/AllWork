@@ -15,10 +15,10 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 颜色编号: (在辅助资料设置，此处引用)
+        /// 颜色描述
         /// </summary>
-        [Required(ErrorMessage = "颜色编号不能为空")]
-        public string ColorId
+        [Required(ErrorMessage = "颜色描述不能为空")]
+        public string ColorName
         { get; set; }
 
         /// <summary>
@@ -57,11 +57,6 @@ namespace AllWork.Model.Goods
 
         public string Creator
         { get; set; }
-    }
-
-    public partial class GoodsColor
-    {
-        public ColorInfo ColorInfo { get; set; }
     }
 
 }

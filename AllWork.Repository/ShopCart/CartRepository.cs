@@ -42,34 +42,28 @@ namespace AllWork.Repository.ShopCart
 '' as id1, b.*,
 '' as id2, c.*,
 '' as id3, d.*,
-'' as id4, c2.*,
-'' as id5, d2.*,
-'' as id6, d3.*
+'' as id4, d3.*
 from Cart a
 left join GoodsInfo b on a.GoodsId = b.GoodsId
-left join GoodsColor c on a.GoodsId = c.GoodsId and a.ColorId = c.ColorId
-left join ColorInfo c2 on c2.ColorId = c.ColorId
-left join GoodsSpec d on d.GoodsId = a.GoodsId and a.SpecId = d.SpecId
-left join SpecInfo d2 on d2.SpecId = d.SpecId
+left join GoodsColor c on a.GoodsId = c.GoodsId and a.ColorId = c.ID
+left join GoodsSpec d on d.GoodsId = a.GoodsId and a.SpecId = d.ID
 left join Inventory d3 on d3.GoodsId = a.GoodsId and d3.ColorId = a.ColorId and d3.SpecId = a.SpecId
 Where UnionId = @UnionId";
-            var res = await base.QueryAsync<CartEx, GoodsInfo, GoodsColor, GoodsSpec, ColorInfo, SpecInfo, Inventory>(sql, (cart, gi, ci, si,ci2,si2,kc) =>
+            var res = await base.QueryAsync<CartEx, GoodsInfo, GoodsColor, GoodsSpec,  Inventory>(sql, (cart, gi, ci, si,kc) =>
             {
                 cart.GoodsInfo = gi;
                 cart.GoodsColor = ci;
-                ci.ColorInfo = ci2;
                 cart.GoodsSpec = si;
-                cart.GoodsSpec.Spec = si2;
                 cart.Inventory = kc;
                 return cart;
-            }, new { UnionId = unionId }, "id1,id2,id3,id4,id5,id6");
+            }, new { UnionId = unionId }, "id1,id2,id3,id4");
             return res;
         }
 
         public async Task<bool> EditCartQuantity(string id, int quantity)
         {
-            var sql = $"Update Cart set Quantity = {quantity} Where id = '{id}' ";
-            return await base.Execute(sql) > 0;
+            var sql = "Update Cart set Quantity = @Quantity Where ID = @ID ";
+            return await base.Execute(sql, new { ID = id, Quantity = quantity }) > 0;
         }
 
         public async Task<bool> ChangeCartItemSelected(string id, int selected)

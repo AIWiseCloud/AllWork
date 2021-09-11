@@ -46,7 +46,7 @@ namespace AllWork.Services.Sys
             return res > 0;
         }
 
-        public async Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(CommonParams commonParams)
+        public async Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(NewsParams commonParams)
         {
             var res = await _dal.QueryCompanyNews(commonParams);
             return res;

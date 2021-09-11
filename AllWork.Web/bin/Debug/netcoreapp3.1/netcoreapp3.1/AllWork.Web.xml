@@ -184,7 +184,7 @@
             <param name="isAudit">true通过审核，false撤销打回</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.CompanyNewsController.QueryCompanyNews(AllWork.Model.RequestParams.CommonParams)">
+        <member name="M:AllWork.Web.Controllers.CompanyNewsController.QueryCompanyNews(AllWork.Model.RequestParams.NewsParams)">
             <summary>
             分页查询新闻动态
             </summary>
@@ -205,7 +205,7 @@
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsCategory(System.String)">
             <summary>
-            获取商品分类记录
+            获取指定商品分类
             </summary>
             <param name="categoryId"></param>
             <returns></returns>
@@ -221,7 +221,7 @@
             <summary>
             获取商品分类列表
             </summary>
-            <param name="parentId">上级分类parentId为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
+            <param name="parentId">上级分类parentId为空时获取第1级分类，为*时所有分类, 其余情况为获取下级分类</param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.DeleteGoodsCategory(System.String)">
@@ -615,10 +615,11 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.PaymentController.OrderQuery(System.String,System.String)">
+        <member name="M:AllWork.Web.Controllers.PaymentController.OrderQuery(System.String,System.String,System.String)">
             <summary>
             查询订单（至少为其中一个参数提供值)
             </summary>
+            <param name="appId">appId</param>
             <param name="tranId">微信订单号</param>
             <param name="orderId">商户订单号</param>
             <returns></returns>
@@ -636,12 +637,25 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.PaymentController.RefundQuery(System.String,System.String)">
+        <member name="M:AllWork.Web.Controllers.PaymentController.RefundQuery(System.String,System.String,System.String)">
             <summary>
             查询退款
             </summary>
+            <param name="appId">appId</param>
             <param name="refundId">商户退款单号(如果单个支付订单部分退款次数超过20次请使用退款单号查询)</param>
             <param name="orderId">商户订单号</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.PaymentMPController">
+            <summary>
+            微信小程序支付(基于V2版)
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.PaymentMPController.UnifiedOrder(AllWork.Model.RequestParams.MPTransactionsParams)">
+            <summary>
+            统一下单(获取预支付交易会话标识)
+            </summary>
+            <param name="atp"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.PostSaleController">
@@ -1216,7 +1230,12 @@
         </member>
         <member name="F:AllWork.Web.Helper.PayHelper.AppId">
             <summary>
-            小程序唯一标识
+            APP应用唯一标识
+            </summary>
+        </member>
+        <member name="F:AllWork.Web.Helper.PayHelper.AppId_mp">
+            <summary>
+            小程序应用唯一标识
             </summary>
         </member>
         <member name="F:AllWork.Web.Helper.PayHelper.MchId">

@@ -17,6 +17,10 @@ namespace AllWork.IRepository.Goods
 
         Task<bool> ExistSKU(string goodsId);
 
+        Task<bool> ExistOrders(string goodsId);
+
+        Task<bool> ReleaseGoods(bool isRelease, string goodsId);
+
         Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
     }
 }

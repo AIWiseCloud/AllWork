@@ -1,4 +1,5 @@
-﻿using AllWork.Model.Goods;
+﻿using AllWork.Model;
+using AllWork.Model.Goods;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +13,6 @@ namespace AllWork.IServices.Goods
 
         Task<IEnumerable<GoodsColor>> GetGoodsColors(string goodsId);
 
-        Task<bool> DeleteGoodsColor(string id);
+        Task<OperResult> DeleteGoodsColor(string id);
     }
 }

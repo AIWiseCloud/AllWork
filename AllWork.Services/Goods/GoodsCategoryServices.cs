@@ -1,7 +1,9 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -28,10 +30,20 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        public async Task<bool> DeleteGoodsCategory(string categoryId)
+        public async Task<OperResult> DeleteGoodsCategory(string categoryId)
         {
+            var children = await _dal.GetSubcategories(categoryId);
+            if (children.ToList().Count > 0)
+            {
+                return new OperResult { Status = false, ErrorMsg = "当前分类存在子分类" };
+            }
+            var existGoods = await _dal.CategoryExistGoods(categoryId);
+            if (existGoods)
+            {
+                return new OperResult { Status = false, ErrorMsg = "当前分类下存在商品记录" };
+            }
             var res = await _dal.DeleteGoodsCategory(categoryId);
-            return res;
+            return new OperResult { Status = res };
         }
 
         /// <summary>
@@ -43,6 +55,12 @@ namespace AllWork.Services.Goods
         public async Task<IEnumerable<GoodsCategory>> GetGoodsCategories(string parentId, bool onlyValidCategory = false)
         {
             var res = await _dal.GetGoodsCategories(parentId, onlyValidCategory);
+            return res;
+        }
+
+        public async Task<IEnumerable<GoodsCategory>> GetSubcategories(string categoryId)
+        {
+            var res = await _dal.GetSubcategories(categoryId);
             return res;
         }
     }

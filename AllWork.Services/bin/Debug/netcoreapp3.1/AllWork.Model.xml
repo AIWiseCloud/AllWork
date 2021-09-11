@@ -84,9 +84,9 @@
             作废
             </summary>
         </member>
-        <member name="P:AllWork.Model.Goods.GoodsColor.ColorId">
+        <member name="P:AllWork.Model.Goods.GoodsColor.ColorName">
             <summary>
-            颜色编号: (在辅助资料设置，此处引用)
+            颜色描述
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsColor.ImgFront">
@@ -166,7 +166,7 @@
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.IsUnder">
             <summary>
-            是否下架
+            是否下架: 0发布，1下架
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.CreateDate">
@@ -189,14 +189,29 @@
             商品ID
             </summary>
         </member>
-        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecId">
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecName">
             <summary>
-            规格编号（在辅助资料设置，此处选用)
+            规格描述
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SaleUnit">
+            <summary>
+            销售单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.UnitConverter">
+            <summary>
+            单位转换(1销售单位等于多少基本单位)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.BaseUnitPrice">
+            <summary>
+            基本单位单价
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.Price">
             <summary>
-            单价
+            销售单价
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.DiscountPrice">
@@ -805,6 +820,11 @@
             订单金额(单位：分)
             </summary>
         </member>
+        <member name="P:AllWork.Model.RequestParams.MPTransactionsParams.OpenId">
+            <summary>
+            用户标识(trade_type=JSAPI，此参数必传)
+            </summary>
+        </member>
         <member name="T:AllWork.Model.RequestParams.CommonParams">
             <summary>
             通用查询请求参数
@@ -858,6 +878,11 @@
         <member name="P:AllWork.Model.RequestParams.InventoryParams.PageModel">
             <summary>
             分页实体参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.NewsParams.OnlyShowSubmitStatus">
+            <summary>
+            仅显示提交状态的记录(0不是，1是
             </summary>
         </member>
         <member name="T:AllWork.Model.RequestParams.OrderDeliveryParams">
@@ -928,6 +953,11 @@
         <member name="T:AllWork.Model.RequestParams.RefundApplyParams">
             <summary>
             退款申请请求参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.RefundApplyParams.AppId">
+            <summary>
+            AppId
             </summary>
         </member>
         <member name="P:AllWork.Model.RequestParams.RefundApplyParams.OrderId">
@@ -1108,6 +1138,11 @@
         <member name="P:AllWork.Model.Sys.CompanyNews.AmountReading">
             <summary>
             阅读量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.NumberLike">
+            <summary>
+            点赞数
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Username">

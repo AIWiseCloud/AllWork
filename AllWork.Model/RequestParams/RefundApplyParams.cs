@@ -8,6 +8,12 @@ namespace AllWork.Model.RequestParams
     public class RefundApplyParams
     {
         /// <summary>
+        /// AppId
+        /// </summary>
+        [Required(ErrorMessage = "AppId不能为空")]
+        public string AppId { get; set; }
+
+        /// <summary>
         /// 商户订单号
         /// </summary>
         [Required(ErrorMessage ="商户订单号不能为空")]

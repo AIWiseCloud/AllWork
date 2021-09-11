@@ -13,5 +13,7 @@ namespace AllWork.IRepository.Goods
         Task<bool> DeleteGoodsColor(string id);
 
         Task<IEnumerable<GoodsColor>> GetGoodsColors(string goodsId);
+
+        Task<bool> ExistInventory(string colorId);
     }
 }

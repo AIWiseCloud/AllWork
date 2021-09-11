@@ -1,5 +1,6 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AllWork.Services.Goods
 {
-    public class GoodsInfoServices:Base.BaseServices<GoodsInfo>,IGoodsInfoServices
+    public class GoodsInfoServices : Base.BaseServices<GoodsInfo>, IGoodsInfoServices
     {
         readonly IGoodsInfoRepository _dal;
         public GoodsInfoServices(IGoodsInfoRepository goodsInfoRepository)
@@ -34,15 +35,81 @@ namespace AllWork.Services.Goods
             return res;
         }
 
+        //发布（上架）或取消发布（下架）商品
+        public async Task<OperResult> ReleaseGoods(bool isRelease, string goodsId)
+        {
+            var operResult = new OperResult { Status = false, IdentityKey = goodsId };
+            if (isRelease)
+            {
+                var instance = await _dal.GetGoodsInfo(goodsId);
+                if (instance == null)
+                {
+                    operResult.ErrorMsg = $"{goodsId}的商品信息不存在";
+                    return operResult;
+                }
+                if (instance.GoodsColors.Count == 0)
+                {
+                    operResult.ErrorMsg = "未设定“颜色及图片”";
+                    return operResult;
+                }
+                if (instance.GoodsColors.FindAll(x => String.IsNullOrEmpty(x.ImgFront)).Count > 0)
+                {
+                    operResult.ErrorMsg = "颜色项的正面图片必须设置";
+                    return operResult;
+                }
+                if (instance.GoodsSpecs.Count == 0)
+                {
+                    operResult.ErrorMsg = "必须设定规格及价格信息";
+                    return operResult;
+                }
+                foreach(var item in instance.GoodsSpecs)
+                {
+                    if(instance.UnitName!=item.SaleUnit && item.UnitConverter == 1)
+                    {
+                        operResult.ErrorMsg = "销售单位与表头的基本单位不相同时，请设定单位转换系数（即1销售单位等于多少基本单位），此时转换系数不能为1";
+                        return operResult;
+                    }
+                    if(instance.UnitName==item.SaleUnit && item.UnitConverter != 1)
+                    {
+                        operResult.ErrorMsg = "销售单位与表头的基本单位相同，但二者的转换系数不为1，请检查是否正确！";
+                        return operResult;
+                    }
+                    if (item.BaseUnitPrice == 0)
+                    {
+                        operResult.ErrorMsg = "基本单位单价不能为0";
+                        return operResult;
+                    }
+                    if(item.DiscountPrice > item.Price)
+                    {
+                        operResult.ErrorMsg = "折扣价不能大于销售单价";
+                        return operResult;
+                    }
+                }
+            }
+            var res = await _dal.ReleaseGoods(isRelease, goodsId);
+            operResult.Status = res;
+            return operResult;
+        }
+
         /// <summary>
         /// 删除商品信息（包括颜色与规格设置）
         /// </summary>
         /// <param name="goodsId"></param>
         /// <returns></returns>
-        public async Task<bool> DeleteGoodsInfo(string goodsId)
+        public async Task<OperResult> DeleteGoodsInfo(string goodsId)
         {
+            var happenBS = await _dal.ExistSKU(goodsId);
+            if (happenBS)
+            {
+                return new OperResult { Status = false, ErrorMsg = "此商品存在库存记录!" };
+            }
+            happenBS = await _dal.ExistOrders(goodsId);
+            if (happenBS)
+            {
+                return new OperResult { Status = false, ErrorMsg = "此商品存已有订单记录!" };
+            }
             var res = await _dal.DeleteGoodsInfo(goodsId);
-            return res;
+            return new OperResult { Status = res };
         }
 
         public async Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)

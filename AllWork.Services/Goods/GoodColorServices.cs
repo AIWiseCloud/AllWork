@@ -1,5 +1,6 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.IServices.Goods;
+using AllWork.Model;
 using AllWork.Model.Goods;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -33,10 +34,15 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        public async Task<bool> DeleteGoodsColor(string id)
+        public async Task<OperResult> DeleteGoodsColor(string id)
         {
+            var hasData = await _dal.ExistInventory(id);
+            if (hasData)
+            {
+                return new OperResult { Status = false, ErrorMsg = "已存在库存记录" };
+            }
             var res = await _dal.DeleteGoodsColor(id);
-            return res;
+            return new OperResult { Status = res };
         }
 
     }

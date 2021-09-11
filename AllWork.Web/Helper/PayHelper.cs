@@ -14,9 +14,14 @@ namespace AllWork.Web.Helper
     public class PayHelper
     {
         /// <summary>
-        /// 小程序唯一标识
+        /// APP应用唯一标识
         /// </summary>
         public static string AppId = AppSettingsHelper.Configuration.GetValue<string>("App:AppId");
+
+        /// <summary>
+        /// 小程序应用唯一标识
+        /// </summary>
+        public static string AppId_mp = AppSettingsHelper.Configuration.GetValue<string>("MP:AppId");
 
         /// <summary>
         /// 商户号(微信支付分配的商户号)
@@ -158,7 +163,7 @@ namespace AllWork.Web.Helper
         public static string GetSignInfo(SortedDictionary<string, object> strParam)
         {
             int i = 0;
-            var sign = string.Empty;
+            string sign;
             StringBuilder sb = new StringBuilder();
             foreach (KeyValuePair<string, object> temp in strParam)
             {
@@ -196,14 +201,16 @@ namespace AllWork.Web.Helper
         public static string DecodeAES256ECB(string str, string key)
         {
             //加密和解密必须采用相同的key，具体值自己填，但是必须为32
-            string r = string.Empty;
+            string r;
             byte[] keyArray = UTF8Encoding.UTF8.GetBytes(key);
             //byte[] toEncryptArray = Encoding.UTF8.GetBytes(str);
             byte[] toEncryptArray = Convert.FromBase64String(str); //(1) 对加密串A做base64解码，得到加密串B
-            RijndaelManaged rDel = new RijndaelManaged();
-            rDel.Key = keyArray;
-            rDel.Mode = CipherMode.ECB;
-            rDel.Padding = PaddingMode.PKCS7;
+            RijndaelManaged rDel = new RijndaelManaged
+            {
+                Key = keyArray,
+                Mode = CipherMode.ECB,
+                Padding = PaddingMode.PKCS7
+            };
             ICryptoTransform cTransform = rDel.CreateDecryptor();
             byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
             r = UTF8Encoding.UTF8.GetString(resultArray);

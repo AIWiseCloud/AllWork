@@ -48,7 +48,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取商品分类记录
+        /// 获取指定商品分类
         /// </summary>
         /// <param name="categoryId"></param>
         /// <returns></returns>
@@ -97,7 +97,7 @@ namespace AllWork.Web.Controllers
         /// <summary>
         /// 获取商品分类列表
         /// </summary>
-        /// <param name="parentId">上级分类parentId为空时获取1级分类，为*时所有分类, 其余情况为获取下级分类</param>
+        /// <param name="parentId">上级分类parentId为空时获取第1级分类，为*时所有分类, 其余情况为获取下级分类</param>
         /// <returns></returns>
         [HttpGet]
         public async Task<IActionResult> GetGoodsCategories(string parentId)
@@ -172,6 +172,19 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> DeleteGoodsInfo(string goodsId)
         {
             var res = await _goodsInfoServices.DeleteGoodsInfo(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 发布(上架)商品
+        /// </summary>
+        /// <param name="isRelease">true发布,false取消发布</param>
+        /// <param name="goodsId">商品ID</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> ReleaseGoods(bool isRelease, string goodsId)
+        {
+            var res = await _goodsInfoServices.ReleaseGoods(isRelease, goodsId);
             return Ok(res);
         }
 

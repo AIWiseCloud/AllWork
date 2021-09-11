@@ -66,14 +66,14 @@ left join GoodsInfo c
 on c.GoodsId = b.GoodsId
 left join TransTypeInfo j
 on j.TransTypeId = a.TransTypeId
-left join ColorInfo d
-on d.ColorId = b.ColorId
-left join SpecInfo e
-on e.SpecId = b.SpecId
+left join GoodsColor d
+on d.ID = b.ColorId
+left join GoodsSpec e
+on e.ID = b.SpecId
 left join StockInfo f
 on f.StockNumber = b.StockNumber
 Where a.BillId = @BillId   order by b.FIndex ";
-            var res = await base.QueryAsync<StockBillExt, StockBillDetailExt, GoodsInfo, TransTypeInfo, ColorInfo, SpecInfo, StockInfo>(sql,
+            var res = await base.QueryAsync<StockBillExt, StockBillDetailExt, GoodsInfo, TransTypeInfo, GoodsColor, GoodsSpec, StockInfo>(sql,
                 (sb, sbdetail, gi, trans, color, spec, stock) =>
                 {
                     if (!pairs.TryGetValue(sb.BillId, out StockBillExt tempbill)) //内联变量声明的写法
@@ -87,8 +87,8 @@ Where a.BillId = @BillId   order by b.FIndex ";
                     {
                         tempitem = sbdetail;
                         sbdetail.GoodsInfo = gi;
-                        sbdetail.ColorInfo = color;
-                        sbdetail.Spec = spec;
+                        sbdetail.GoodsColor = color;
+                        sbdetail.GoodsSpec = spec;
                         sbdetail.Stock = stock;
                         tempbill.StockBillDetail.Add(tempitem);
                     }
@@ -106,8 +106,8 @@ Where a.BillId = @BillId   order by b.FIndex ";
             var sqlpub = new StringBuilder(string.Format(@"from StockBill a left join StockBillDetail b on a.BillId = b.BillId 
 left join TransTypeInfo c on c.TransTypeId = a.TransTypeId
 left join GoodsInfo d on b.GoodsId = d.GoodsId
-left join ColorInfo e on e.ColorId = b.ColorId
-left join SpecInfo f on f.SpecId = b.SpecId
+left join GoodsColor e on e.ID = b.ColorId
+left join GoodsSpec f on f.ID = b.SpecId
 left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
             if (!string.IsNullOrEmpty(stockBillParams.BillId))
             {
@@ -144,7 +144,7 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
             //完整sql
             var sql = sql1 + ";" + sql2;
             //执行查询
-            var res = await base.QueryPagination<StockBillExt, StockBillDetailExt, TransTypeInfo, GoodsInfo, ColorInfo, SpecInfo, StockInfo>(sql, (sb, sbd, ti, gi, ci, si, sk) =>
+            var res = await base.QueryPagination<StockBillExt, StockBillDetailExt, TransTypeInfo, GoodsInfo, GoodsColor, GoodsSpec, StockInfo>(sql, (sb, sbd, ti, gi, ci, si, sk) =>
             {
                 if (!pairs.TryGetValue(sb.BillId, out StockBillExt tempBill))
                 {
@@ -157,8 +157,8 @@ left join StockInfo g on g.StockNumber = b.StockNumber Where 1 = 1 "));
                 {
                     tempItem = sbd;
                     sbd.GoodsInfo = gi;
-                    sbd.Spec = si;
-                    sbd.ColorInfo = ci;
+                    sbd.GoodsSpec = si;
+                    sbd.GoodsColor = ci;
                     sbd.Stock = sk;
                     tempBill.StockBillDetail.Add(tempItem);
                 }
