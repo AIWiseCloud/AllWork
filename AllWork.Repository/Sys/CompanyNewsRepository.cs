@@ -58,10 +58,10 @@ Author = @Author,Creator = @Creator,FIndex = @FIndex Where NewsId = @NewsId ";
         public async Task<Tuple<IEnumerable<CompanyNews>, int>> QueryCompanyNews(NewsParams commonParams)
         {
             //sql公共部分
-            var sqlpub = new StringBuilder(" from CompanyNews a ");
+            var sqlpub = new StringBuilder(" from CompanyNews a Where (1=1)");
             if (!string.IsNullOrWhiteSpace(commonParams.Keywords))
             {
-                sqlpub.Append(" Where (Title = @Title or Source = @Source or Author = @Author) ");
+                sqlpub.Append(" and (Title = @Title or Source = @Source or Author = @Author) ");
             }
             if (commonParams.OnlyShowSubmitStatus == 1)
             {

@@ -20,15 +20,14 @@ namespace AllWork.Nlog.Log
 
         public void LogError(Exception ex)
         {
-            LogMessage logMessage = new LogMessage();
-            logMessage.IpAddress = _httpContextAccessor.HttpContext.Request.Host.Host;
-            if (ex.InnerException != null)
-                logMessage.LogInfo = ex.InnerException.Message;
-            else
-                logMessage.LogInfo = ex.Message;
-            logMessage.StackTrace = ex.StackTrace;
-            logMessage.OperationTime = DateTime.Now;
-            logMessage.OperationName = "admin";
+            LogMessage logMessage = new LogMessage
+            {
+                IpAddress = _httpContextAccessor.HttpContext.Request.Host.Host,
+                LogInfo = ex.InnerException != null ? ex.InnerException.Message : ex.Message,
+                StackTrace = ex.StackTrace,
+                OperationTime = DateTime.Now,
+                OperationName = "admin"
+            };
             _logger.LogError(LogFormat.ErrorFormat(logMessage));
         }
     }

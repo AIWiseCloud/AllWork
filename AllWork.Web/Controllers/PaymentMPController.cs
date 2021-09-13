@@ -93,14 +93,20 @@ namespace AllWork.Web.Controllers
             string json = Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);
 
             JObject jo = (JObject)JsonConvert.DeserializeObject(json);
+            //若失败，返回错误描述
+            if(jo["xml"]["result_code"]["#cdata-section"].ToString() == "FAIL")
+            {
+                return BadRequest(jo["xml"]["err_code_des"]["#cdata-section"].ToString());
+            }
+
             string prepay_id = jo["xml"]["prepay_id"]["#cdata-section"].ToString();
             string _time = PayHelper.GetTime().ToString(); //时间戳
-            //再次签名返回数据至客户端
+            //再次签名返回数据至客户端  (这里一定要注意大小写，与官方的一致，而且小程序与app中的大小写不一致，导致签名无效）
             SortedDictionary<string, object> dictB = new SortedDictionary<string, object> {
                 {"appId", _appid },
                 {"nonceStr", nonce_str},//参数名
-                {"package=prepay_id",prepay_id},
-                {"signType", "MD5" },
+                {"package=prepay_id",prepay_id}, //与app不同
+                {"signType", "MD5" },//与app不同
                 {"timeStamp", _time }
             };
             string strB = PayHelper.ToUrl(dictB);

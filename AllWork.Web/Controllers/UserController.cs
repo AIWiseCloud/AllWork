@@ -1,5 +1,6 @@
 ﻿using AllWork.IServices.Sys;
 using AllWork.Model;
+using AllWork.Model.RequestParams;
 using AllWork.Model.User;
 using AllWork.Web.Auth;
 using Microsoft.AspNetCore.Authorization;
@@ -120,6 +121,18 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 分页查询用户
+        /// </summary>
+        /// <param name="userParams"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> QueryUsers(UserParams userParams)
+        {
+            var res = await _userServices.QueryUsers(userParams);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
+        }
+
+        /// <summary>
         /// 提交用户认证
         /// </summary>
         /// <param name="userCertification"></param>
@@ -183,6 +196,6 @@ namespace AllWork.Web.Controllers
             return Ok(res);
         }
 
-       
+      
     }
 }

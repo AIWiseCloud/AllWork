@@ -1040,6 +1040,16 @@
             详细地址
             </summary>
         </member>
+        <member name="P:AllWork.Model.RequestParams.UserParams.StartDate">
+            <summary>
+            开始日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserParams.EndDate">
+            <summary>
+            截止日期(QueryScheme = 0时用)
+            </summary>
+        </member>
         <member name="T:AllWork.Model.PageModel">
             <summary>
             分页参数实体

@@ -1,9 +1,12 @@
 ﻿using AllWork.Common;
 using AllWork.IRepository.Sys;
 using AllWork.IServices.Sys;
+using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
 using AllWork.Model.User;
 using AllWork.Services.Base;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Services.Sys
@@ -56,6 +59,12 @@ namespace AllWork.Services.Sys
         public async Task<bool> Logoff(string unionId)
         {
             var res = await _dal.Logoff(unionId);
+            return res;
+        }
+
+        public async Task<Tuple<IEnumerable<UserInfo>, int>> QueryUsers(UserParams userParams)
+        {
+            var res = await _dal.QueryUsers(userParams);
             return res;
         }
     }

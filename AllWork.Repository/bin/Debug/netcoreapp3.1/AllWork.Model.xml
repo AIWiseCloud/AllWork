@@ -139,6 +139,11 @@
             商品名称
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.Brand">
+            <summary>
+            品牌
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.GoodsDesc">
             <summary>
             商品描述
@@ -166,7 +171,7 @@
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.IsUnder">
             <summary>
-            是否下架
+            是否下架: 0发布，1下架
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.CreateDate">
@@ -1033,6 +1038,16 @@
         <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.DeliveryAddress">
             <summary>
             详细地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserParams.StartDate">
+            <summary>
+            开始日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserParams.EndDate">
+            <summary>
+            截止日期(QueryScheme = 0时用)
             </summary>
         </member>
         <member name="T:AllWork.Model.PageModel">

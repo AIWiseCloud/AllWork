@@ -3,6 +3,7 @@ using AllWork.Model.RequestParams;
 using AllWork.Web.Helper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -34,11 +35,13 @@ namespace AllWork.Web.Controllers
 
         readonly IHttpClientFactory _httpClientFactory;
         readonly IOrderServices _orderServices;
+        readonly ILogger<PaymentController> _logger; //日志
 
-        public PaymentController(IHttpClientFactory httpClientFactory, IOrderServices orderServices)
+        public PaymentController(IHttpClientFactory httpClientFactory, IOrderServices orderServices, ILogger<PaymentController> logger)
         {
             _httpClientFactory = httpClientFactory;
             _orderServices = orderServices;
+            _logger = logger;
         }
 
         /// <summary>
@@ -101,15 +104,20 @@ namespace AllWork.Web.Controllers
             string json = Newtonsoft.Json.JsonConvert.SerializeXmlNode(doc);
 
             JObject jo = (JObject)JsonConvert.DeserializeObject(json);
+            //若失败，返回错误描述
+            if (jo["xml"]["result_code"]["#cdata-section"].ToString() == "FAIL")
+            {
+                return BadRequest(jo["xml"]["err_code_des"]["#cdata-section"].ToString());
+            }
             string prepay_id = jo["xml"]["prepay_id"]["#cdata-section"].ToString();
             string _time = PayHelper.GetTime().ToString(); //时间戳
-            //再次签名返回数据至客户端
+            //再次签名返回数据至客户端  (这里一定要注意大小写，与官方的一致，而且小程序与app中的大小写不一致，导致签名无效）
             SortedDictionary<string, object> dictB = new SortedDictionary<string, object> {
-                {"appid", _appid },
+                {"appid", _appid },  //小程序是appId
                 {"partnerid",__mchid },
                 {"noncestr", nonce_str},//参数名
-                {"prepayid",prepay_id},
-                {"package", "Sign=WXPay"},
+                {"prepayid",prepay_id}, //与小程序不同
+                {"package", "Sign=WXPay"},//与小程序不同
                 {"timestamp", _time }
             };
             string strB = PayHelper.ToUrl(dictB);
@@ -132,7 +140,7 @@ namespace AllWork.Web.Controllers
         [HttpPost]
         public async Task<string> OrderNotify()
         {
-
+            _logger.LogError("收到支付结果通知");
             string strResult;
             var strXML = string.Empty;
             try
@@ -146,20 +154,22 @@ namespace AllWork.Web.Controllers
                     strXML = reader.ReadToEndAsync().Result;
                     request.Body.Position = 0;
                 }
-
                 //推荐的做法是，当收到通知进行处理时，首先检查对应业务数据的状态，判断该通知是否已经处理过，如果没有处理过再进行处理，
                 //如果处理过直接返回结果成功。在对业务数据进行状态检查和处理之前，要采用数据锁进行并发控制，以避免函数重入造成的数据混乱。
                 //判断请求是否成功
                 if (PayHelper.GetXmlValue(strXML, "return_code") == "SUCCESS")
                 {
+                    _logger.LogError("支付结果通知：请求成功");
                     //判断支付是否成功
                     if (PayHelper.GetXmlValue(strXML, "result_code") == "SUCCESS")
                     {
+                        _logger.LogError("支付结果通知：支付成功");
                         var dictData = PayHelper.GetFromXml(strXML);
                         var appid = PayHelper.GetXmlValue(strXML, "appid");
                         var returnSign = PayHelper.GetXmlValue(strXML, "sign"); //取得签名
                         var sign = PayHelper.GetSignInfo(dictData);// PayHelper.MakeSign(dictData);这个签名也一样的状况
                         //未解之谜 ：微信服务器会连续发7个通知，只有最后一个通知的签名才对 
+                        _logger.LogError("支付结果通知：开始比对签名");
                         //对比签名
                         if (sign == returnSign)
                         {
@@ -171,37 +181,42 @@ namespace AllWork.Web.Controllers
                             //查询微信订单
                             var resObj = await OrderQuery(appid, wxOrderNum, "");
                             string resStr = JsonConvert.SerializeObject(resObj);
+
                             if (resStr.Contains("transaction_id"))
                             {
                                 strResult = PayHelper.GetReturnXml("SUCCESS", "OK");
                                 //2.更新商户订单的相关状态
                                 await _orderServices.PaySuccess(orderNum, wxOrderNum);
-                                Common.Mail.SendMail("Pay Success", $"支付成功！订单号：{orderNum} 微信订单号：{wxOrderNum} 金额：{orderTotal}");
+                                _logger.LogError($"支付结果通知：{orderNum}支付成功");
                             }
                             else
                             {
                                 strResult = PayHelper.GetReturnXml("FAIL", "支付结果中微信订单号数据不存在！");
+                                _logger.LogError($"支付结果通知用商户订单{wxOrderNum}查询微信订单异常：" + resStr);
                             }
                         }
                         else
                         {
+                            _logger.LogError("支付结果通知异常，签名不一致: 新签名" + sign + " 原签名：" + returnSign);
                             strResult = PayHelper.GetReturnXml("FAIL", "签名不一致: 新签名" + sign + " 原签名：" + returnSign);
                         }
                     }
                     else
                     {
+                        _logger.LogError("支付通知: 支付失败, result_code值不为SUCCESS！");
                         strResult = PayHelper.GetReturnXml("FAIL", "支付通知失败!");
                     }
                 }
                 else
                 {
+                    _logger.LogError("支付通知：请求失败,return_code值不为SUCCESS");
                     strResult = PayHelper.GetReturnXml("FAIL", "支付通知失败!");
                 }
             }
             catch (WebException ex)
             {
                 strResult = ex.Message;
-                Common.Mail.SendMail("Pay Notifier", ex.Message);
+                _logger.LogError(ex, "支付通知失败!");
             }
             //最终回应给微信服务器
             return strResult;
@@ -226,7 +241,7 @@ namespace AllWork.Web.Controllers
             var nonce_str = PayHelper.GetRandomString(30);
             SortedDictionary<string, object> dictData = new SortedDictionary<string, object>
             {
-                { "appid", _appid},{ "mch_id", __mchid},{"nonce_str", nonce_str}
+                { "appid", appId},{ "mch_id", __mchid},{"nonce_str", nonce_str}
             };
             //优先微信订单号
             if (!string.IsNullOrWhiteSpace(tranId))
@@ -284,6 +299,7 @@ namespace AllWork.Web.Controllers
             };
             var str = PayHelper.ToUrl(dictData);
             str += "&key=" + PayHelper.Key;
+            _logger.LogError("申请退款：" + str);
             var signValue = PayHelper.MD5(str).ToUpper();//获得签名值
             //要发送的数据
             var formData = "<xml>";
@@ -305,14 +321,35 @@ namespace AllWork.Web.Controllers
                 SslProtocols = SslProtocols.Tls12,
                 ServerCertificateCustomValidationCallback = (x, y, z, m) => true,
             };
-            handler.ClientCertificates.Add(new X509Certificate2(PayHelper.CertPath, PayHelper.CertPassword));//安全证书绝对路径，密码（默认为商户密钥）
+            //以下加第3个参数就正常了。否则移置到阿里云后出现The SSL connection could not be established
+            X509Certificate2 cert = new X509Certificate2(PayHelper.CertPath, PayHelper.CertPassword, X509KeyStorageFlags.MachineKeySet);
+            handler.ClientCertificates.Add(cert);//安全证书绝对路径，密码（默认为商户密钥）
             var client = new HttpClient(handler);
+            _logger.LogError("申请退款：安全证书加载完成");
             var content = new StringContent(formData);
             content.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
             var response = await client.PostAsync(url, content);
             response.EnsureSuccessStatusCode();
             var res = await response.Content.ReadAsStringAsync();
-            return Ok(res);
+            //将xml字符串转为对象（方便前端)
+            var resobj = new
+            {
+                return_code = PayHelper.GetXmlValue(res, "return_code"),
+                return_msg = PayHelper.GetXmlValue(res, "return_msg"),
+                appid = PayHelper.GetXmlValue(res, "appid"),
+                mch_id = PayHelper.GetXmlValue(res, "mch_id"),
+                nonce_str = PayHelper.GetXmlValue(res, "nonce_str"),
+                sign = PayHelper.GetXmlValue(res, "sign"),
+                result_code = PayHelper.GetXmlValue(res, "result_code"),
+                transaction_id = PayHelper.GetXmlValue(res, "transaction_id"),
+                out_trade_no = PayHelper.GetXmlValue(res, "out_trade_no"),
+                out_refund_no = PayHelper.GetXmlValue(res, "out_refund_no"),
+                refund_id = PayHelper.GetXmlValue(res, "refund_id"),
+                refund_channel = PayHelper.GetXmlValue(res, "refund_channel"),
+                refund_fee = PayHelper.GetXmlValue(res, "refund_fee"),
+                total_fee = PayHelper.GetXmlValue(res, "total_fee"),
+            };
+            return Ok(resobj);
         }
         #endregion
 
@@ -326,7 +363,8 @@ namespace AllWork.Web.Controllers
         {
             var strResult = string.Empty;
             var sourceStr = string.Empty;
-            var strXml = string.Empty;
+            string strXml;
+            _logger.LogError("收到退款结果通知");
             try
             {
                 //接收从微信后台POST过来的数据
@@ -356,11 +394,11 @@ namespace AllWork.Web.Controllers
                     if (!string.IsNullOrEmpty(orderId))
                     {
                         var res = await _orderServices.CancelOrder(long.Parse(orderId));
+                        _logger.LogError($"退款结果通知：执行取消订单{res.Status}");
                         if (res.Status)
                         {
                             //此处给微信服务器应答(应答后微信将不再送消息)
                             strResult = PayHelper.GetReturnXml("SUCCESS", "OK");
-                            Common.Mail.SendMail($"{orderId}退款通知", strXml);
                         }
                     }
                 }
@@ -368,7 +406,7 @@ namespace AllWork.Web.Controllers
             catch (Exception ex)
             {
                 strResult = PayHelper.GetReturnXml("FAIL", "退款通知失败!" + ex.Message);
-                Common.Mail.SendMail("退款异常", strXml);
+                _logger.LogError(ex, "退款通知失败");
             }
             return strResult;
         }

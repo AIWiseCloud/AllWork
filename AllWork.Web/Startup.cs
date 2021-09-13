@@ -74,6 +74,16 @@ namespace AllWork.Web
             //将IConfiguration中的扩展方法，加载数据库连接（当前只加载了mysql的, roy 2021.08.17)
             Configuration.LoadMySqlConnection();
 
+            //配置允许跨域
+            services.AddCors(options =>
+            {
+                options.AddPolicy("any",
+                    builder => builder.AllowAnyOrigin()
+                    .WithMethods("GET", "POST", "HEAD", "PUT", "DELETE", "OPTIONS")
+                    );
+            });
+
+
             //百度编辑器
             services.AddUEditorService();
 
@@ -177,12 +187,13 @@ namespace AllWork.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection(); 这句加上会出现http自动切换为https的情况
 
             app.UseAuthentication();//增加认证(jwt)
             app.UseRouting();
 
             app.UseAuthorization();//授权
+            app.UseCors("any"); // 跨域请求（放在app.UseAuthorization()后, 且在UseRouting后，UseEndpoints前)
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -192,7 +203,7 @@ namespace AllWork.Web
             });
 
 
-          
+
             app.UseStaticFiles(new StaticFileOptions
             {
                 ContentTypeProvider = new FileExtensionContentTypeProvider(new Dictionary<string, string>
