@@ -104,7 +104,7 @@ namespace AllWork.Web.Controllers
         [Authorize]
         public async Task<IActionResult> Logoff(string token)
         {
-            if(token==null || token.Length < 272)
+            if (token == null || token.Length < 272)
             {
                 return BadRequest("请传入正确的token");
             }
@@ -196,6 +196,31 @@ namespace AllWork.Web.Controllers
             return Ok(res);
         }
 
-      
+        /// <summary>
+        /// 查询认证信息
+        /// </summary>
+        /// <param name="userCertificationParams"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> QueryCertification(UserCertificationParams userCertificationParams)
+        {
+            var res = await _userCertificationServices.QueryCertification(userCertificationParams);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
+        }
+
+        /// <summary>
+        /// 审核认证信息
+        /// </summary>
+        /// <param name="unionId">用户标识</param>
+        /// <param name="certificateType">认证类型:0个人认证 1企业认证</param>
+        /// <param name="authState">状态:0反审、驳回 1审核</param>
+        /// <param name="reason">审核不通过理由</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> AuditCertificationInfo(string unionId, int certificateType, int authState, string reason = "")
+        {
+            var res = await _userCertificationServices.AuditCertificationInfo(unionId, certificateType,authState, reason);
+            return Ok(res);
+        }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using AllWork.IRepository.Goods;
 using AllWork.Model.Goods;
-using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,11 +13,14 @@ namespace AllWork.Repository.Goods
             string sql;
             if (instance == null)
             {
-                sql = "Insert GoodsSpec (ID,GoodsId,SpecName,SaleUnit,UnitConverter,BaseUnitPrice,Price,DiscountPrice,Findex,Creator)values(@ID,@GoodsId,@SpecName,@SaleUnit,@UnitConverter,@BaseUnitPrice,@Price,@DiscountPrice,@Findex,@Creator)";
+                sql = @"Insert GoodsSpec (ID,GoodsId,SpecName,SaleUnit,UnitConverter,BaseUnitPrice,Price,DiscountPrice,Findex,Creator, SpecDes1, SpecDes2, SpecDes3)
+values(@ID,@GoodsId,@SpecName,@SaleUnit,@UnitConverter,@BaseUnitPrice,@Price,@DiscountPrice,@Findex,@Creator, @SpecDes1, @SpecDes2, @SpecDes3)";
             }
             else
             {
-                sql = "Update GoodsSpec set GoodsId = @GoodsId,SpecName = @SpecName,SaleUnit = @SaleUnit,UnitConverter = @UnitConverter,BaseUnitPrice = @BaseUnitPrice,Price = @Price,DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator Where ID = @ID";
+                sql = @"Update GoodsSpec set GoodsId = @GoodsId,SpecName = @SpecName,SaleUnit = @SaleUnit,UnitConverter = @UnitConverter,BaseUnitPrice = @BaseUnitPrice,Price = @Price,
+DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator , SpecDes1 = @SpecDes1, SpecDes2 = @SpecDes2, SpecDes3 = @SpecDes3
+Where ID = @ID";
             }
             var res = await base.Execute(sql, goodsSpec);
             return res > 0;

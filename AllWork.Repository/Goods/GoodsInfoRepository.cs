@@ -141,7 +141,7 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             {
                 if (!string.IsNullOrEmpty(goodsQueryParams.QueryValue))
                 {
-                    sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber or a.Brand like '%{0}%') ", goodsQueryParams.QueryValue);
+                    sqlpub.AppendFormat(" and (a.GoodsName like '%{0}%' or a.GoodsId = @GoodsId or GoodsDesc like '%{0}%' or ProdNumber = @ProdNumber or a.Brand like '%{0}%') or CategoryId = @CategoryId", goodsQueryParams.QueryValue);
                 }
             }
             // 如果是方案1，按商品分类查询，要把上面with中查出的类别在条件中体现
@@ -192,5 +192,39 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             return res;
         }
 
+        public async Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId)
+        {
+            var sql = $"select GoodsId, GoodsName from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
+            var res = await base.QueryList(sql);
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetSpecList(string goodsId)
+        {
+            var sql = "Select DISTINCT SpecName from GoodsSpec Where GoodsId = @GoodsId";
+            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId });
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetGoodsBrands(string goodsId, string specName)
+        {
+            var sql = "Select DISTINCT SpecDes1 from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName";
+            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId, SpecName=specName });
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName)
+        {
+            var sql = "Select DISTINCT SpecDes3 from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName and SpecDes1 = @Brand";
+            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId, SpecName = specName , Brand = brandName});
+            return res;
+        }
+
+        public async Task<GoodsSpec> GetGoodsSpec(string goodsId, string specName, string brandName, string match)
+        {
+            var sql = "Select * from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName and SpecDes1 = @Brand and SpecDes3 = @Match";
+            var res = await base.QueryFirst<GoodsSpec>(sql, new { GoodsId = goodsId, SpecName = specName, Brand = brandName, Match = match });
+            return res;
+        }
     }
 }

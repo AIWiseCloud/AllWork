@@ -199,6 +199,21 @@
             规格描述
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes1">
+            <summary>
+            自定规格1(品牌)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes2">
+            <summary>
+            自定规格2
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes3">
+            <summary>
+            自定规格3(配比)
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.SaleUnit">
             <summary>
             销售单位
@@ -1038,6 +1053,21 @@
         <member name="P:AllWork.Model.RequestParams.UpdateOrderAddressParams.DeliveryAddress">
             <summary>
             详细地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserCertificationParams.StartDate">
+            <summary>
+            开始日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserCertificationParams.EndDate">
+            <summary>
+            截止日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.UserCertificationParams.CertificateType">
+            <summary>
+            认证类型(-1全部,0个人认证，1企业认证）
             </summary>
         </member>
         <member name="P:AllWork.Model.RequestParams.UserParams.StartDate">

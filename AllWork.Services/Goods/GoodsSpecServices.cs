@@ -16,6 +16,7 @@ namespace AllWork.Services.Goods
         }
         public async Task<bool> SaveGoodsSpec(GoodsSpec goodsSpec)
         {
+            goodsSpec.DiscountPrice = goodsSpec.Price;
             var res = await _dal.SaveGoodsSpec(goodsSpec);
             return res;
         }

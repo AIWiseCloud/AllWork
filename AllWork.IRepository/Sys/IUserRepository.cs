@@ -20,5 +20,7 @@ namespace AllWork.IRepository.Sys
         Task<bool> Logoff(string unionId);
 
         Task<Tuple<IEnumerable<UserInfo>, int>> QueryUsers(UserParams userParams);
+
+     
     }
 }

@@ -52,11 +52,12 @@ namespace AllWork.Services.Goods
                     operResult.ErrorMsg = "未设定“颜色及图片”";
                     return operResult;
                 }
-                if (instance.GoodsColors.FindAll(x => String.IsNullOrEmpty(x.ImgFront)).Count > 0)
-                {
-                    operResult.ErrorMsg = "颜色项的正面图片必须设置";
-                    return operResult;
-                }
+                //因盛天商品不用传图片，所以目前注销(roy 2021-9-17)
+                //if (instance.GoodsColors.FindAll(x => String.IsNullOrEmpty(x.ImgFront)).Count > 0)
+                //{
+                //    operResult.ErrorMsg = "颜色项的正面图片必须设置";
+                //    return operResult;
+                //}
                 if (instance.GoodsSpecs.Count == 0)
                 {
                     operResult.ErrorMsg = "必须设定规格及价格信息";
@@ -115,6 +116,36 @@ namespace AllWork.Services.Goods
         public async Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams)
         {
             var res = await _dal.QueryGoods(goodsQueryParams);
+            return res;
+        }
+
+        public async Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId)
+        {
+            var res = await _dal.GetGoodsList(categoryId);
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetSpecList(string goodsId)
+        {
+            var res = await _dal.GetSpecList(goodsId);
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetGoodsBrands(string goodsId, string specName)
+        {
+            var res = await _dal.GetGoodsBrands(goodsId, specName);
+            return res;
+        }
+
+        public async Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName)
+        {
+            var res = await _dal.GetGoodsMatchs(goodsId, specName, brandName);
+            return res;
+        }
+
+        public async Task<GoodsSpec> GetGoodsSpec(string goodsId, string specName, string brandName, string match)
+        {
+            var res = await _dal.GetGoodsSpec(goodsId, specName, brandName, match);
             return res;
         }
     }

@@ -3,7 +3,6 @@ using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
 using AllWork.Model.User;
 using AllWork.Repository.Base;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -33,8 +32,6 @@ namespace AllWork.Repository.Sys
                 var res = await base.QueryFirst($"Select * from UserInfo Where UserName = '{req.Username}' and Password = '{req.Password}' and UserState != -1 ");
                 return res != null;
             }
-
-
         }
 
         //保存用户信息
@@ -97,6 +94,8 @@ namespace AllWork.Repository.Sys
             var res = await base.QueryPagination(sql, new
             {
                 UnionId = userParams.Keywords,
+                userParams.StartDate,
+                userParams.EndDate,
                 userParams.PageModel.Skip,
                 userParams.PageModel.PageSize
             });
@@ -104,6 +103,8 @@ namespace AllWork.Repository.Sys
 
             return res;
         }
+
+        
 
     }
 }

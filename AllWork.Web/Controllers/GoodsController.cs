@@ -356,5 +356,70 @@ namespace AllWork.Web.Controllers
             return Ok(res);
         }
 
+        /// <summary>
+        /// 获取分类下的商品列表（商品ID,商品名称）
+        /// </summary>
+        /// <param name="categoryId">商品分类ＩＤ</param>
+        /// <returns></returns>
+       [HttpGet]
+        public async Task<IActionResult> GetGoodsList(string categoryId)
+        {
+            var res = await _goodsInfoServices.GetGoodsList(categoryId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品规格中定义的包装列表
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSpecList(string goodsId)
+        {
+            var res = await _goodsInfoServices.GetSpecList(goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品某规格下的品牌列表
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="specName">包装规格</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsBrands(string goodsId, string specName)
+        {
+            var res = await _goodsInfoServices.GetGoodsBrands(goodsId, specName);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品在指定规格、品牌下的配比列表
+        /// </summary>
+        /// <param name="goodsId"></param>
+        /// <param name="specName"></param>
+        /// <param name="brandName"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsMatchs(string goodsId, string specName, string brandName)
+        {
+            var res = await _goodsInfoServices.GetGoodsMatchs(goodsId, specName, brandName);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品定价信息
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="specName">包装规格</param>
+        /// <param name="brandName">品牌</param>
+        /// <param name="match">配比</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetGoodsSpecInfo(string goodsId, string specName, string brandName, string match)
+        {
+            var res = await _goodsInfoServices.GetGoodsSpec(goodsId, specName, brandName, match);
+            return Ok(res);
+        }
     }
 }

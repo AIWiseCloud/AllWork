@@ -20,5 +20,15 @@ namespace AllWork.IServices.Goods
         Task<OperResult> ReleaseGoods(bool isRelease, string goodsId);
 
         Task<Tuple<IEnumerable<GoodsInfoExt>, int>> QueryGoods(GoodsQueryParams goodsQueryParams);
+
+        Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId);
+
+        Task<IEnumerable<string>> GetSpecList(string goodsId);
+
+        Task<IEnumerable<string>> GetGoodsBrands(string goodsId, string specName);
+
+        Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName);
+
+        Task<GoodsSpec> GetGoodsSpec(string goodsId, string sepcName, string brandName, string match);
     }
 }

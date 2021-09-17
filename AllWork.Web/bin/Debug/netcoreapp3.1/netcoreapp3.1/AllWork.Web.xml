@@ -358,6 +358,47 @@
             <param name="id"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsList(System.String)">
+            <summary>
+            获取分类下的商品列表（商品ID,商品名称）
+            </summary>
+            <param name="categoryId">商品分类ＩＤ</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetSpecList(System.String)">
+            <summary>
+            获取商品规格中定义的包装列表
+            </summary>
+            <param name="goodsId">商品ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsBrands(System.String,System.String)">
+            <summary>
+            获取商品某规格下的品牌列表
+            </summary>
+            <param name="goodsId">商品ID</param>
+            <param name="specName">包装规格</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsMatchs(System.String,System.String,System.String)">
+            <summary>
+            获取商品在指定规格、品牌下的配比列表
+            </summary>
+            <param name="goodsId"></param>
+            <param name="specName"></param>
+            <param name="brandName"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsSpecInfo(System.String,System.String,System.String,System.String)">
+            <summary>
+            获取商品定价信息
+            </summary>
+            <param name="goodsId">商品ID</param>
+            <param name="specName">包装规格</param>
+            <param name="brandName">品牌</param>
+            <param name="match">配比</param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.InventoryController">
             <summary>
             库存
@@ -986,6 +1027,23 @@
             保存用户信息
             </summary>
             <param name="userInfo"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.QueryCertification(AllWork.Model.RequestParams.UserCertificationParams)">
+            <summary>
+            查询认证信息
+            </summary>
+            <param name="userCertificationParams"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.AuditCertificationInfo(System.String,System.Int32,System.Int32,System.String)">
+            <summary>
+            审核认证信息
+            </summary>
+            <param name="unionId">用户标识</param>
+            <param name="certificateType">认证类型:0个人认证 1企业认证</param>
+            <param name="authState">状态:0反审、驳回 1审核</param>
+            <param name="reason">审核不通过理由</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.VersionController">
