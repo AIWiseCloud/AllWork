@@ -13,13 +13,13 @@ namespace AllWork.Repository.Goods
             string sql;
             if (instance == null)
             {
-                sql = @"Insert GoodsSpec (ID,GoodsId,SpecName,SaleUnit,UnitConverter,BaseUnitPrice,Price,DiscountPrice,Findex,Creator, SpecDes1, SpecDes2, SpecDes3)
-values(@ID,@GoodsId,@SpecName,@SaleUnit,@UnitConverter,@BaseUnitPrice,@Price,@DiscountPrice,@Findex,@Creator, @SpecDes1, @SpecDes2, @SpecDes3)";
+                sql = @"Insert GoodsSpec (ID,GoodsId,SpecName,SaleUnit,UnitConverter,Price,DiscountPrice,Findex,Creator)
+values(@ID,@GoodsId,@SpecName,@SaleUnit,@UnitConverter,@Price,@DiscountPrice,@Findex,@Creator)";
             }
             else
             {
-                sql = @"Update GoodsSpec set GoodsId = @GoodsId,SpecName = @SpecName,SaleUnit = @SaleUnit,UnitConverter = @UnitConverter,BaseUnitPrice = @BaseUnitPrice,Price = @Price,
-DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator , SpecDes1 = @SpecDes1, SpecDes2 = @SpecDes2, SpecDes3 = @SpecDes3
+                sql = @"Update GoodsSpec set GoodsId = @GoodsId,SpecName = @SpecName,SaleUnit = @SaleUnit,UnitConverter = @UnitConverter,Price = @Price,
+DiscountPrice = @DiscountPrice,Findex = @Findex,Creator = @Creator
 Where ID = @ID";
             }
             var res = await base.Execute(sql, goodsSpec);

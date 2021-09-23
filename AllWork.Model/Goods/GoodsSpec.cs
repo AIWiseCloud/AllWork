@@ -1,5 +1,4 @@
-﻿using AllWork.Model.Sys;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Goods
@@ -28,28 +27,6 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 自定规格1(品牌)
-        /// </summary>
-        [Required(ErrorMessage = "自定规格(品牌)不能为空")]
-        public string SpecDes1
-        { get; set; }
-
-        /// <summary>
-        /// 自定规格2
-        /// </summary>
-        //[Required(ErrorMessage = "自定规格2(颜色)不能为空")]
-        public string SpecDes2
-        { get; set; }
-
-
-        /// <summary>
-        /// 自定规格3(配比)
-        /// </summary>
-        [Required(ErrorMessage = "自定规格(配比)不能为空")]
-        public string SpecDes3
-        { get; set; }
-
-        /// <summary>
         /// 销售单位
         /// </summary>
         [Required(ErrorMessage = "销售单位不能为空")]
@@ -63,22 +40,16 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
-        /// 基本单位单价
-        /// </summary>
-        public decimal BaseUnitPrice
-        { get; set; }
-
-        /// <summary>
         /// 销售单价
         /// </summary>
-        [Range(0.01, 10000)]
+        [Range(0.01, 20000)]
         public decimal Price
         { get; set; }
 
         /// <summary>
         /// 折扣价
         /// </summary>
-        [Range(0.01, 10000)]
+        [Range(0.01, 20000)]
         public decimal DiscountPrice
         { get; set; }
 

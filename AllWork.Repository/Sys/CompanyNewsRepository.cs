@@ -16,13 +16,13 @@ namespace AllWork.Repository.Sys
             string sql;
             if (instance == null)
             {
-                sql = @"Insert CompanyNews (NewsId,Title,ImgUrl,Body,Source,Author,Creator,FIndex)"+
-"values(@NewsId,@Title,@ImgUrl,@Body,@Source,@Author,@Creator,@FIndex)";
+                sql = @"Insert CompanyNews (NewsId,Title,ImgUrl,Body,Source,Author,Creator,FIndex, Summary)"+
+"values(@NewsId,@Title,@ImgUrl,@Body,@Source,@Author,@Creator,@FIndex, @Summary)";
             }
             else
             {
                 sql = @"Update CompanyNews set Title = @Title,ImgUrl = @ImgUrl,Body = @Body,Source = @Source,
-Author = @Author,Creator = @Creator,FIndex = @FIndex Where NewsId = @NewsId ";
+Author = @Author,Creator = @Creator,FIndex = @FIndex, Summary = @Summary Where NewsId = @NewsId ";
             }
             return await base.Execute(sql, companyNews);
         }
@@ -61,7 +61,7 @@ Author = @Author,Creator = @Creator,FIndex = @FIndex Where NewsId = @NewsId ";
             var sqlpub = new StringBuilder(" from CompanyNews a Where (1=1)");
             if (!string.IsNullOrWhiteSpace(commonParams.Keywords))
             {
-                sqlpub.Append(" and (Title = @Title or Source = @Source or Author = @Author) ");
+                sqlpub.AppendFormat(" and (Title like '%{0}%' or Source like '%{0}%' or Author = @Author or Summary like '%{0}%' ) ",commonParams.Keywords);
             }
             if (commonParams.OnlyShowSubmitStatus == 1)
             {
@@ -72,15 +72,15 @@ Author = @Author,Creator = @Creator,FIndex = @FIndex Where NewsId = @NewsId ";
             //求记录数
             var sql1 = "Select Count(a.NewsId) as totalCount " + sqlpub.ToString();
             //获取分页数据(不带正文)
-            var sql2 = "Select NewsId, Title, ImgUrl, Source, Author, Creator, CreateDate, FIndex,StatusId, AmountReading, NumberLike " + sqlpub.ToString() + sqlorder + " limit @Skip, @PageSize ";
+            var sql2 = "Select NewsId, Title, Summary, ImgUrl, Source, Author, Creator, CreateDate, FIndex,StatusId, AmountReading, NumberLike " + sqlpub.ToString() + sqlorder + " limit @Skip, @PageSize ";
             //完整sql
             var sql = sql1 + " ; " + sql2;
 
             var res = await base.QueryPagination<CompanyNews>(sql,
                 new
                 {
-                    Title = commonParams.Keywords,
-                    Source = commonParams.Keywords,
+                    //Title = commonParams.Keywords,
+                    //Source = commonParams.Keywords,
                     Author = commonParams.Keywords,
                     commonParams.PageModel.Skip,
                     commonParams.PageModel.PageSize

@@ -25,12 +25,10 @@ namespace AllWork.IRepository.Goods
 
         Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId);
 
-        Task<IEnumerable<string>> GetSpecList(string goodsId);
-
-        Task<IEnumerable<string>> GetGoodsBrands(string goodsId,string specName);
-
-        Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName);
-
-        Task<GoodsSpec> GetGoodsSpec(string goodsId, string specName, string brandName, string match);
+        /// <summary>
+        /// 材料价格表
+        /// </summary>
+        /// <returns></returns>
+        Task<List<GoodsQuote>> GetGoodsQuotes();
     }
 }

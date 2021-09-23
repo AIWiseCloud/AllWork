@@ -1,7 +1,6 @@
 ﻿using AllWork.IRepository.Sys;
 using AllWork.Model;
 using AllWork.Model.Sys;
-using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -12,26 +11,21 @@ namespace AllWork.Repository.Sys
     {
         public async Task<OperResult> SaveShop(Shop shop)
         {
-            OperResult operResult = new OperResult();
-            try
+            var instance = await base.QueryFirst("Select * from Shop Where ShopId = @ShopId", new { shop.ShopId });
+            string sql;
+            if (instance == null)
             {
-                var instance = await base.QueryFirst("Select * from Shop Where ShopId = @ShopId", new { shop.ShopId });
-                if (instance == null)
-                {
-                    var insertSql = "Insert Shop (ShopId,ShopName,ImgUrl,Contacter,PhoneNumber,ListBySpuShow,Introduction,Announcement)values(@ShopId,@ShopName,@ImgUrl,@Contacter,@PhoneNumber,@ListBySpuShow,@Introduction,@Announcement)";
-                    operResult.Status = await base.Execute(insertSql, shop) > 0;
-                }
-                else
-                {
-                    var updateSql = "Update Shop set ShopId = @ShopId,ShopName = @ShopName,ImgUrl = @ImgUrl,Contacter = @Contacter,PhoneNumber = @PhoneNumber,ListBySpuShow = @ListBySpuShow,Introduction = @Introduction,Announcement = @Announcement Where ShopId = @ShopId";
-                    operResult.Status = await base.Execute(updateSql, shop) > 0;
-                }
+                sql = @"Insert Shop (ShopId,ShopName,ImgUrl,Contacter,PhoneNumber,ListBySpuShow,Introduction,Announcement,AccountName,BankCardNo,DepositBank,CnapsCode)values
+(@ShopId,@ShopName,@ImgUrl,@Contacter,@PhoneNumber,@ListBySpuShow,@Introduction,@Announcement,@AccountName,@BankCardNo,@DepositBank,@CnapsCode)";
             }
-            catch (Exception ex)
+            else
             {
-                operResult.ErrorMsg = ex.Message;
+                sql = @"Update Shop set ShopId = @ShopId,ShopName = @ShopName,ImgUrl = @ImgUrl,Contacter = @Contacter,PhoneNumber = @PhoneNumber,ListBySpuShow = @ListBySpuShow,
+AccountName=@AccountName,BankCardNo=@BankCardNo,DepositBank=@DepositBank,CnapsCode=@CnapsCode,
+Introduction = @Introduction,Announcement = @Announcement Where ShopId = @ShopId";
             }
-            return operResult; ;
+            var res = await base.Execute(sql, shop);
+            return new OperResult { Status = res > 0 };
         }
 
         public async Task<IEnumerable<Shop>> GetShops()

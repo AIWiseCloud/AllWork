@@ -3,7 +3,6 @@ using AllWork.IServices.Order;
 using AllWork.Model;
 using AllWork.Model.Order;
 using AllWork.Model.RequestParams;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -35,16 +34,16 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> GenerateOrder(OrderMain orderMain)
         {
             //比对可用库存
-            var reqitems = new List<RequireItem>();
-            foreach(var item in orderMain.OrderList)
-            {
-                reqitems.Add(new RequireItem { GoodsId = item.GoodsId, ColorId = item.ColorId, SpecId = item.SpecId, Quantity = item.Quantity });
-            }
-            var checkresult = await _inventoryServices.ComparisonActiveQuantity(reqitems);
-            if (!checkresult.Status)
-            {
-                return BadRequest(new { msg = checkresult.ErrorMsg });
-            }
+            //var reqitems = new List<RequireItem>();
+            //foreach(var item in orderMain.OrderList)
+            //{
+            //    reqitems.Add(new RequireItem { GoodsId = item.GoodsId, ColorId = item.ColorId, SpecId = item.SpecId, Quantity = item.Quantity });
+            //}
+            //var checkresult = await _inventoryServices.ComparisonActiveQuantity(reqitems);
+            //if (!checkresult.Status)
+            //{
+            //    return BadRequest(new { msg = checkresult.ErrorMsg });
+            //}
             var res = await _orderServices.GenerateOrder(orderMain);
             return Ok(res);
         }

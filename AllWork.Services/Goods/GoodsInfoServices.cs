@@ -47,6 +47,11 @@ namespace AllWork.Services.Goods
                     operResult.ErrorMsg = $"{goodsId}的商品信息不存在";
                     return operResult;
                 }
+                if (instance.BaseUnitPrice == 0)
+                {
+                    operResult.ErrorMsg = "基本单位单价不能为0";
+                    return operResult;
+                }
                 if (instance.GoodsColors.Count == 0)
                 {
                     operResult.ErrorMsg = "未设定“颜色及图片”";
@@ -75,11 +80,7 @@ namespace AllWork.Services.Goods
                         operResult.ErrorMsg = "销售单位与表头的基本单位相同，但二者的转换系数不为1，请检查是否正确！";
                         return operResult;
                     }
-                    if (item.BaseUnitPrice == 0)
-                    {
-                        operResult.ErrorMsg = "基本单位单价不能为0";
-                        return operResult;
-                    }
+                   
                     if(item.DiscountPrice > item.Price)
                     {
                         operResult.ErrorMsg = "折扣价不能大于销售单价";
@@ -125,27 +126,9 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        public async Task<IEnumerable<string>> GetSpecList(string goodsId)
+        public async Task<List<GoodsQuote>> GetGoodsQuotes()
         {
-            var res = await _dal.GetSpecList(goodsId);
-            return res;
-        }
-
-        public async Task<IEnumerable<string>> GetGoodsBrands(string goodsId, string specName)
-        {
-            var res = await _dal.GetGoodsBrands(goodsId, specName);
-            return res;
-        }
-
-        public async Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName)
-        {
-            var res = await _dal.GetGoodsMatchs(goodsId, specName, brandName);
-            return res;
-        }
-
-        public async Task<GoodsSpec> GetGoodsSpec(string goodsId, string specName, string brandName, string match)
-        {
-            var res = await _dal.GetGoodsSpec(goodsId, specName, brandName, match);
+            var res = await _dal.GetGoodsQuotes();
             return res;
         }
     }

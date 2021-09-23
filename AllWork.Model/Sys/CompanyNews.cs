@@ -19,6 +19,13 @@ namespace AllWork.Model.Sys
         { get; set; }
 
         /// <summary>
+        /// 摘要
+        /// </summary>
+        [Required(ErrorMessage = "摘要不能为空")]
+        public string Summary
+        { get; set; }
+
+        /// <summary>
         /// 封面图片
         /// </summary>
         [Required(ErrorMessage = "请上传封面图片")]

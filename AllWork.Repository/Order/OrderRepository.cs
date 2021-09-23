@@ -31,9 +31,9 @@ namespace AllWork.Repository.Order
             }
             List<Tuple<string, object>> tranitems = new List<Tuple<string, object>>();
             //sql(插入主表)
-            var sqlmain = @"Insert OrderMain (OrderId,UnionId,DistributionMethod,Receiver,PhoneNumber,DeliveryAddress,Amount,Freight,Discount,RealPay,Platform,Words)
+            var sqlmain = @"Insert OrderMain (OrderId,UnionId,DistributionMethod,Receiver,PhoneNumber,DeliveryAddress,Amount,Freight,Discount,RealPay,PaymentWay,Platform,Words,InvoiceType)
 values
-(@OrderId,@UnionId,@DistributionMethod,@Receiver,@PhoneNumber,@DeliveryAddress,@Amount,@Freight,@Discount,@RealPay,@Platform,@Words)";
+(@OrderId,@UnionId,@DistributionMethod,@Receiver,@PhoneNumber,@DeliveryAddress,@Amount,@Freight,@Discount,@RealPay,@PaymentWay,@Platform,@Words, @InvoiceType)";
             //sql(插入子表)
             var sqllist = @"Insert OrderList (OrderId,LineId,GoodsId,ColorId,SpecId,Quantity,UnitPrice,Unit,Amount,Evaluate)values(@OrderId,@LineId,@GoodsId,@ColorId,@SpecId,@Quantity,@UnitPrice,@Unit,@Amount,@Evaluate)";
             //要提交的集合
@@ -43,7 +43,7 @@ values
                 tranitems.Add(new Tuple<string, object>(sqllist, item));
             }
             //加上扣减可用库存的语句
-            tranitems.Add(new Tuple<string, object>($"CALL OrderAffectStock({orderMain.OrderId}, 1)", new { }));
+         //   tranitems.Add(new Tuple<string, object>($"CALL OrderAffectStock({orderMain.OrderId}, 1)", new { }));
 
             var res = await base.ExecuteTransaction(tranitems);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2, IdentityKey = orderId.ToString() };

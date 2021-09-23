@@ -59,6 +59,30 @@ namespace AllWork.Model.Sys
         { get; set; }
 
         /// <summary>
+        /// 收款人户名
+        /// </summary>
+        public string AccountName
+        { get; set; }
+
+        /// <summary>
+        /// 银行卡号
+        /// </summary>
+        public string BankCardNo
+        { get; set; }
+
+        /// <summary>
+        /// 开户银行
+        /// </summary>
+        public string DepositBank
+        { get; set; }
+
+        /// <summary>
+        /// 银联号
+        /// </summary>
+        public string CnapsCode
+        { get; set; }
+
+        /// <summary>
         /// 创建日期
         /// </summary>
         public DateTime? CreateDate

@@ -89,6 +89,13 @@ namespace AllWork.Model.Order
         { get; set; }
 
         /// <summary>
+        /// 支付方式(0在线支付 1对公转账)
+        /// </summary>
+        [Range(0,1)]
+        public int PaymentWay
+        { get; set; }
+
+        /// <summary>
         /// 支付渠道(alipay, wechatpay,unionpay)
         /// </summary>
         public string PaymentChannel
@@ -116,6 +123,20 @@ namespace AllWork.Model.Order
         /// 买家留言
         /// </summary>
         public string Words
+        { get; set; }
+
+        /// <summary>
+        /// 开票状态(0未开票 1申请中 2已开票)
+        /// </summary>
+        [Range(0,2)]
+        public int InvoiceStatus
+        { get; set; }
+
+        /// <summary>
+        /// 发票类型(-1不开票 0普通发票 1增值税专用发票)
+        /// </summary>
+        [Range(-1,1)]
+        public int InvoiceType
         { get; set; }
 
         /// <summary>

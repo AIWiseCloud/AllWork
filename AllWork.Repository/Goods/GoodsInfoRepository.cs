@@ -17,11 +17,11 @@ namespace AllWork.Repository.Goods
             if (instance == null)
             {
                 goodsInfo.IsUnder = 1; //默认是下架 （要上架需要一个发布动作)
-                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,GoodsDesc,UnitName,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand, @GoodsDesc,@UnitName,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
+                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,Mixture, GoodsDesc,UnitName,BaseUnitPrice,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand,@Mixture, @GoodsDesc,@UnitName, @BaseUnitPrice,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
             }
             else
             {
-                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand,  GoodsDesc = @GoodsDesc,UnitName=@UnitName,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator Where GoodsId = @GoodsId";
+                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand, Mixture = @Mixture,  GoodsDesc = @GoodsDesc,UnitName=@UnitName, BaseUnitPrice = @BaseUnitPrice,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator Where GoodsId = @GoodsId";
             }
             return await base.Execute(sql, goodsInfo) > 0;
         }
@@ -194,37 +194,17 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
 
         public async Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId)
         {
-            var sql = $"select GoodsId, GoodsName from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
+            var sql = $"select GoodsId, GoodsName, UnitName, BaseUnitPrice, Mixture, CategoryId from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
             var res = await base.QueryList(sql);
             return res;
         }
 
-        public async Task<IEnumerable<string>> GetSpecList(string goodsId)
+        public async Task<List<GoodsQuote>> GetGoodsQuotes()
         {
-            var sql = "Select DISTINCT SpecName from GoodsSpec Where GoodsId = @GoodsId";
-            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId });
+            var sql = "Select * from GoodsPivotView";
+            var res = await base.QueryList<GoodsQuote>(sql);
             return res;
         }
 
-        public async Task<IEnumerable<string>> GetGoodsBrands(string goodsId, string specName)
-        {
-            var sql = "Select DISTINCT SpecDes1 from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName";
-            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId, SpecName=specName });
-            return res;
-        }
-
-        public async Task<IEnumerable<string>> GetGoodsMatchs(string goodsId, string specName, string brandName)
-        {
-            var sql = "Select DISTINCT SpecDes3 from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName and SpecDes1 = @Brand";
-            var res = await base.QueryList<string>(sql, new { GoodsId = goodsId, SpecName = specName , Brand = brandName});
-            return res;
-        }
-
-        public async Task<GoodsSpec> GetGoodsSpec(string goodsId, string specName, string brandName, string match)
-        {
-            var sql = "Select * from GoodsSpec Where GoodsId = @GoodsId and SpecName = @SpecName and SpecDes1 = @Brand and SpecDes3 = @Match";
-            var res = await base.QueryFirst<GoodsSpec>(sql, new { GoodsId = goodsId, SpecName = specName, Brand = brandName, Match = match });
-            return res;
-        }
     }
 }

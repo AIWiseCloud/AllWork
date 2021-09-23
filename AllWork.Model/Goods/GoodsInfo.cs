@@ -41,16 +41,29 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
+        /// 配比
+        /// </summary>
+        [Required(ErrorMessage = "配比不能为空")]
+        public string Mixture
+        { get; set; }
+
+        /// <summary>
         /// 商品描述
         /// </summary>
         public string GoodsDesc
         { get; set; }
 
         /// <summary>
-        /// 销售单位
+        /// 基本单位
         /// </summary>
-        [Required(ErrorMessageResourceName ="销售单位不能为空")]
+        [Required(ErrorMessageResourceName ="基本单位不能为空")]
         public string UnitName
+        { get; set; }
+
+        /// <summary>
+        /// 基本单位单价
+        /// </summary>
+        public decimal BaseUnitPrice
         { get; set; }
 
         /// <summary>

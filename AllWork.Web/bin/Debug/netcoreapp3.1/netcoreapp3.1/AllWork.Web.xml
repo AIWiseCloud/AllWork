@@ -360,43 +360,15 @@
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsList(System.String)">
             <summary>
-            获取分类下的商品列表（商品ID,商品名称）
+            获取分类下的商品列表（商品ID,商品名称、品牌、配比、价格等）
             </summary>
-            <param name="categoryId">商品分类ＩＤ</param>
+            <param name="categoryId">商品分类ID</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetSpecList(System.String)">
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsQuotes">
             <summary>
-            获取商品规格中定义的包装列表
+            材料报价表
             </summary>
-            <param name="goodsId">商品ID</param>
-            <returns></returns>
-        </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsBrands(System.String,System.String)">
-            <summary>
-            获取商品某规格下的品牌列表
-            </summary>
-            <param name="goodsId">商品ID</param>
-            <param name="specName">包装规格</param>
-            <returns></returns>
-        </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsMatchs(System.String,System.String,System.String)">
-            <summary>
-            获取商品在指定规格、品牌下的配比列表
-            </summary>
-            <param name="goodsId"></param>
-            <param name="specName"></param>
-            <param name="brandName"></param>
-            <returns></returns>
-        </member>
-        <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsSpecInfo(System.String,System.String,System.String,System.String)">
-            <summary>
-            获取商品定价信息
-            </summary>
-            <param name="goodsId">商品ID</param>
-            <param name="specName">包装规格</param>
-            <param name="brandName">品牌</param>
-            <param name="match">配比</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.InventoryController">
@@ -492,6 +464,69 @@
             获取待发货订单列表
             </summary>
             <param name="orderid">订单号(非必录)</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.InvoiceController">
+            <summary>
+            发票中心
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.SaveInvoiceTitle(AllWork.Model.Invoice.InvoiceTitle)">
+            <summary>
+            保存发票抬头
+            </summary>
+            <param name="invoiceTitle"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.GetInvoiceTitle(System.String)">
+            <summary>
+            获取发票抬头信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.DeleteInvoiceTitle(System.String)">
+            <summary>
+            删除发票抬头信息
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.GetInvoiceTitles(System.String)">
+            <summary>
+            获取用户所有发票抬头记录
+            </summary>
+            <param name="unionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.ApplyInvoicing(AllWork.Model.Invoice.Invoice)">
+            <summary>
+            客户提交开票申请（索取发票）
+            </summary>
+            <param name="invoice"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.GetInvoice(System.String)">
+            <summary>
+            获取开票记录
+            </summary>
+            <param name="id">记录ID或是订单号</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.MakeInvoice(System.String,System.String,System.String)">
+            <summary>
+            财务确认开票
+            </summary>
+            <param name="id">开票申请ID</param>
+            <param name="drawer">开票人</param>
+            <param name="invoiceUrl">发票照片</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.InvoiceController.QueryUserInvoices(AllWork.Model.RequestParams.CommonParams)">
+            <summary>
+            分页显示用户发票记录
+            </summary>
+            <param name="commonParams"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.LogisticsController">

@@ -144,6 +144,11 @@
             品牌
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.Mixture">
+            <summary>
+            配比
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.GoodsDesc">
             <summary>
             商品描述
@@ -151,7 +156,12 @@
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.UnitName">
             <summary>
-            销售单位
+            基本单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.BaseUnitPrice">
+            <summary>
+            基本单位单价
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.SalesTimes">
@@ -199,21 +209,6 @@
             规格描述
             </summary>
         </member>
-        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes1">
-            <summary>
-            自定规格1(品牌)
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes2">
-            <summary>
-            自定规格2
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.Goods.GoodsSpec.SpecDes3">
-            <summary>
-            自定规格3(配比)
-            </summary>
-        </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.SaleUnit">
             <summary>
             销售单位
@@ -222,11 +217,6 @@
         <member name="P:AllWork.Model.Goods.GoodsSpec.UnitConverter">
             <summary>
             单位转换(1销售单位等于多少基本单位)
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.Goods.GoodsSpec.BaseUnitPrice">
-            <summary>
-            基本单位单价
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.Price">
@@ -424,6 +414,201 @@
             实体接口
             </summary>
             <typeparam name="TPrimarykey"></typeparam>
+        </member>
+        <member name="T:AllWork.Model.Invoice.Invoice">
+            <summary>
+            发票记录
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.ID">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.InvoAmt">
+            <summary>
+            开票金额
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.UnionId">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.StatusId">
+            <summary>
+            状态(-1已取消 0申请中 1已开票)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.ApplyTime">
+            <summary>
+            申请时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.InvoiceTime">
+            <summary>
+            开票时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.InvoiceType">
+            <summary>
+            发票类型(1普通发票、2增值税专用发票)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.ContentType">
+            <summary>
+            发票内容(0商品明细 1商品类别)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.TitleType">
+            <summary>
+            抬头类型(0个人，1单位)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.TitleName">
+            <summary>
+            抬头名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.TaxId">
+            <summary>
+            公司税号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.RegisterAddress">
+            <summary>
+            注册地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.RegisterTel">
+            <summary>
+            注册电话
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.BankName">
+            <summary>
+            银行名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.BankAccount">
+            <summary>
+            银行账号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.Collector">
+            <summary>
+            收票人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.CollectorPhone">
+            <summary>
+            收票人手机
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.CollectorAddr">
+            <summary>
+            收票人地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.CollectorMail">
+            <summary>
+            收票人邮箱
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.Drawer">
+            <summary>
+            开票人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.Invoice.InvoiceUrl">
+            <summary>
+            发票图片
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Invoice.InvoiceTitle">
+            <summary>
+            发票抬头
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.ID">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.UnionId">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.InvoiceType">
+            <summary>
+            发票类型( 1普通发票、2自值税专用发票)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.TitleType">
+            <summary>
+            抬头类型(抬头类型  0个人，1单位)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.TitleName">
+            <summary>
+            抬头名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.ContentType">
+            <summary>
+            发票内容( 0商品明细 1商品类别)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.TaxId">
+            <summary>
+            公司税号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.RegisterAddress">
+            <summary>
+            注册地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.RegisterTel">
+            <summary>
+            注册电话
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.BankName">
+            <summary>
+            银行名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.BankAccount">
+            <summary>
+            银行账号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.Collector">
+            <summary>
+            收票人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.CollectorPhone">
+            <summary>
+            收票人手机
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.CollectorAddr">
+            <summary>
+            收票人地址
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Invoice.InvoiceTitle.CollectorMail">
+            <summary>
+            收票人邮箱
+            </summary>
         </member>
         <member name="T:AllWork.Model.OperResult">
             <summary>
@@ -640,6 +825,11 @@
             物流单号
             </summary>
         </member>
+        <member name="P:AllWork.Model.Order.OrderMain.PaymentWay">
+            <summary>
+            支付方式(0在线支付 1对公转账)
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Order.OrderMain.PaymentChannel">
             <summary>
             支付渠道(alipay, wechatpay,unionpay)
@@ -663,6 +853,16 @@
         <member name="P:AllWork.Model.Order.OrderMain.Words">
             <summary>
             买家留言
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.InvoiceStatus">
+            <summary>
+            开票状态(0未开票 1申请中 2已开票)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.InvoiceType">
+            <summary>
+            发票类型(-1不开票 0普通发票 1增值税专用发票)
             </summary>
         </member>
         <member name="P:AllWork.Model.Order.OrderMain.OrderTime">
@@ -1140,6 +1340,11 @@
             标题
             </summary>
         </member>
+        <member name="P:AllWork.Model.Sys.CompanyNews.Summary">
+            <summary>
+            摘要
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Sys.CompanyNews.ImgUrl">
             <summary>
             封面图片
@@ -1343,6 +1548,26 @@
         <member name="P:AllWork.Model.Sys.Shop.Announcement">
             <summary>
             店铺通知
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.AccountName">
+            <summary>
+            收款人户名
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.BankCardNo">
+            <summary>
+            银行卡号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.DepositBank">
+            <summary>
+            开户银行
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Shop.CnapsCode">
+            <summary>
+            银联号
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.Shop.CreateDate">
