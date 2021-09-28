@@ -194,16 +194,35 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
 
         public async Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId)
         {
-            var sql = $"select GoodsId, GoodsName, UnitName, BaseUnitPrice, Mixture, CategoryId from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
+            var sql = $"select GoodsId, GoodsName, UnitName, BaseUnitPrice, Mixture, CategoryId,Brand from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
             var res = await base.QueryList(sql);
             return res;
         }
 
-        public async Task<List<GoodsQuote>> GetGoodsQuotes()
+        public async Task<Tuple<List<QuoteExplain>, List<GoodsQuote>>> GetGoodsQuotes()
         {
-            var sql = "Select * from GoodsPivotView";
-            var res = await base.QueryList<GoodsQuote>(sql);
+            var sql = "Select * from QuoteExplain;Select * from GoodsPivotView order by CategoryId ,GoodsName ";
+            var res = await base.QueryMultiple<QuoteExplain, GoodsQuote>(sql);
+            
             return res;
+        }
+
+        public async Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain)
+        {
+            var instance = await base.QueryFirst<QuoteExplain>("Select * from QuoteExplain limit 1");
+            string sql;
+            if (instance == null)
+            {
+                sql = "Insert QuoteExplain (ID,UpdateDate,EffectiveDate,QuoteDesc,Remark,Creator)values(@ID,@UpdateDate,@EffectiveDate,@QuoteDesc,@Remark,@Creator)";
+            }
+            else
+            {
+                sql = "Update QuoteExplain set UpdateDate = current_timestamp,EffectiveDate = @EffectiveDate,QuoteDesc = @QuoteDesc,Remark = @Remark,Creator = @Creator Where ID = @ID";
+                quoteExplain.ID = instance.ID;
+            }
+            var res = await base.Execute(sql, quoteExplain);
+            return res;
+
         }
 
     }

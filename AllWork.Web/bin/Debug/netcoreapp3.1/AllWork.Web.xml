@@ -233,14 +233,14 @@
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsInfo(AllWork.Model.Goods.GoodsInfo)">
             <summary>
-            保存商品信息
+            保存商品基本信息
             </summary>
             <param name="goodsInfo"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.GetGoodsInfo(System.String)">
             <summary>
-            获取商品信息
+            获取商品完整信息
             </summary>
             <param name="goodsId"></param>
             <returns></returns>
@@ -250,6 +250,15 @@
             删除商品信息(一并删除颜色及规格设置）
             </summary>
             <param name="goodsId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.CopyGoodsInfo(System.String,System.String,System.String)">
+            <summary>
+            复制商品
+            </summary>
+            <param name="goodsId">商品ID</param>
+            <param name="newGoodsId">新商品ID</param>
+            <param name="userName">用户名</param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.ReleaseGoods(System.Boolean,System.String)">
@@ -369,6 +378,13 @@
             <summary>
             材料报价表
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.UpdateQuoteExplain(AllWork.Model.Goods.QuoteExplain)">
+            <summary>
+            更新报价说明
+            </summary>
+            <param name="quoteExplain"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.InventoryController">
@@ -515,11 +531,11 @@
         </member>
         <member name="M:AllWork.Web.Controllers.InvoiceController.MakeInvoice(System.String,System.String,System.String)">
             <summary>
-            财务确认开票
+            财务确认已开票
             </summary>
             <param name="id">开票申请ID</param>
             <param name="drawer">开票人</param>
-            <param name="invoiceUrl">发票照片</param>
+            <param name="invoiceUrl">发票图片</param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.InvoiceController.QueryUserInvoices(AllWork.Model.RequestParams.CommonParams)">
@@ -597,6 +613,14 @@
             <param name="orderDeliveryParams"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.OrderController.ConfirmPay(System.Int64,System.Int32)">
+            <summary>
+            确认线下到款
+            </summary>
+            <param name="orderId">订单号</param>
+            <param name="isConfirm">1确认,0取消确认</param>
+            <returns></returns>
+        </member>
         <member name="M:AllWork.Web.Controllers.OrderController.SignatureOrder(System.Int64)">
             <summary>
             订单签收
@@ -637,6 +661,13 @@
             由订单号获取对应的销售出库单号
             </summary>
             <param name="orderId">订单号</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderController.UploadOrderAttach(AllWork.Model.Order.OrderAttach)">
+            <summary>
+            上传打款凭证
+            </summary>
+            <param name="orderAttach"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.OrderEvaluateController">
@@ -1079,6 +1110,15 @@
             <param name="certificateType">认证类型:0个人认证 1企业认证</param>
             <param name="authState">状态:0反审、驳回 1审核</param>
             <param name="reason">审核不通过理由</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.SetUserAccount(System.String,System.String,System.String)">
+            <summary>
+            设定账号、密码
+            </summary>
+            <param name="unionId">用户标识</param>
+            <param name="userName">用户名</param>
+            <param name="password">登录密码</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.VersionController">

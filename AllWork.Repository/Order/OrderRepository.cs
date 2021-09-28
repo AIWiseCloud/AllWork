@@ -35,7 +35,7 @@ namespace AllWork.Repository.Order
 values
 (@OrderId,@UnionId,@DistributionMethod,@Receiver,@PhoneNumber,@DeliveryAddress,@Amount,@Freight,@Discount,@RealPay,@PaymentWay,@Platform,@Words, @InvoiceType)";
             //sql(插入子表)
-            var sqllist = @"Insert OrderList (OrderId,LineId,GoodsId,ColorId,SpecId,Quantity,UnitPrice,Unit,Amount,Evaluate)values(@OrderId,@LineId,@GoodsId,@ColorId,@SpecId,@Quantity,@UnitPrice,@Unit,@Amount,@Evaluate)";
+            var sqllist = @"Insert OrderList (OrderId,LineId,GoodsId,ColorId,SpecId,Quantity,UnitPrice,Packaging,Amount,Evaluate)values(@OrderId,@LineId,@GoodsId,@ColorId,@SpecId,@Quantity,@UnitPrice,@Packaging,@Amount,@Evaluate)";
             //要提交的集合
             tranitems.Add(new Tuple<string, object>(sqlmain, orderMain));
             foreach (var item in orderMain.OrderList)
@@ -43,7 +43,7 @@ values
                 tranitems.Add(new Tuple<string, object>(sqllist, item));
             }
             //加上扣减可用库存的语句
-         //   tranitems.Add(new Tuple<string, object>($"CALL OrderAffectStock({orderMain.OrderId}, 1)", new { }));
+            //   tranitems.Add(new Tuple<string, object>($"CALL OrderAffectStock({orderMain.OrderId}, 1)", new { }));
 
             var res = await base.ExecuteTransaction(tranitems);
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2, IdentityKey = orderId.ToString() };
@@ -119,7 +119,7 @@ Where a.OrderId = {0}", orderId);
         public async Task<OperResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams)
         {
             var sql = new StringBuilder();
-            if (orderDeliveryParams.IsDelivery==1)
+            if (orderDeliveryParams.IsDelivery == 1)
             {
                 sql.Append(" Update OrderMain set StatusId = 2, LogisticsId = @LogisticsId, ExpressId = @ExpressId, DeliveryTime = current_timestamp() Where OrderId = @OrderId  ");
             }
@@ -136,6 +136,22 @@ Where a.OrderId = {0}", orderId);
             var res = await base.ExecuteTransaction(tranItems);
 
             return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
+        }
+
+        //订单到款确认
+        public async Task<int> ConfirmPay(long orderId, int isConfirm)
+        {
+            string sql;
+            if (isConfirm == 1)
+            {
+                sql = "update OrderMain set StatusId = 1, PayTime = current_timestamp() where OrderId = @OrderId and StatusId = 0";
+            }
+            else
+            {
+                sql = "update OrderMain set StatusId = 0, PayTime = null where OrderId = @OrderId and StatusId = 1";
+            }
+            var res = await base.Execute(sql, new { OrderId = orderId });
+            return res;
         }
 
         //签收订单
@@ -155,7 +171,7 @@ Where a.OrderId = {0}", orderId);
         //支付成功后更新订单、更新销量
         public async Task<bool> PaySuccess(long orderId, string tradeNo)
         {
-           
+
             var sql = @"update OrderMain set 
 TradeNo = @TradeNo ,
 PaymentChannel = 'wechat' , 
@@ -237,12 +253,13 @@ left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId an
             //(3) sql语句1（求总记录数）
             var sql1 = "Select Count(OrderId) as TotalCount from (" + sqlpub + " )t "; //记录数
             //sql语句2: 重写订单主子表及关联表语句并与上面加上订单号条件，订单号取上面加了limit的去重语句
-            var sql2 = string.Format(@"Select a.*,'' as id1, b.*,'' as id2, c.*,'' as id3, d.*,'' as id4, e.*,'' as id5, f.*
+            var sql2 = string.Format(@"Select a.*,'' as id1, b.*,'' as id2, c.*,'' as id3, d.*,'' as id4, e.*,'' as id5, f.*, '' as id6, oa.*
 from OrderMain a,
 (
 {0} limit @Skip, @PageSize
 )idtab
 left join OrderList b on idtab.OrderId = b.OrderId
+left join OrderAttach oa on oa.OrderId = idtab.OrderId
 left join GoodsInfo c on b.GoodsId = c.GoodsId
 left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ID
 left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.ID
@@ -250,38 +267,39 @@ left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId an
 Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
             //完整sql
             var sql = sql1 + ";" + sql2;
-            var res = await base.QueryPagination<OrderMainExt, OrderListExt, GoodsInfo, GoodsColor, GoodsSpec, GoodsColorSpec>(sql, (om, ol, gi, gc, gs, cs) =>
-            {
-                pairs.TryGetValue(om.OrderId, out OrderMainExt tempOrder);
-                if (tempOrder == null)
-                {
-                    tempOrder = om;
-                    pairs.Add(om.OrderId, tempOrder);
-                }
-                var tempitem = tempOrder.OrderList.Find(x => x.OrderId == ol.OrderId && x.LineId == ol.LineId);
-                if (tempitem == null)
-                {
-                    tempitem = ol;
-                    ol.GoodsInfo = gi;
-                    ol.GoodsColor = gc;
-                    ol.GoodsSpec = gs;
-                    ol.GoodsColorSpec = cs;
-                    tempOrder.OrderList.Add(tempitem);
-                }
-                return om;
-            }, new
-            {
-                orderQueryParams.UnionId,
-                OrderId = orderQueryParams.QueryValue,
-                CategoryId = orderQueryParams.QueryValue,
-                GoodsId = orderQueryParams.QueryValue,
-                orderQueryParams.StartDate,
-                orderQueryParams.EndDate,
-                orderQueryParams.StatusId,
-                ProdNumber = orderQueryParams.QueryValue,
-                orderQueryParams.PageModel.Skip,
-                orderQueryParams.PageModel.PageSize,
-            }, "id1, id2,id3,id4,id5");
+            var res = await base.QueryPagination<OrderMainExt, OrderListExt, GoodsInfo, GoodsColor, GoodsSpec, GoodsColorSpec, OrderAttach>(sql, (om, ol, gi, gc, gs, cs, oa) =>
+             {
+                 pairs.TryGetValue(om.OrderId, out OrderMainExt tempOrder);
+                 if (tempOrder == null)
+                 {
+                     tempOrder = om;
+                     om.OrderAttach = oa;
+                     pairs.Add(om.OrderId, tempOrder);
+                 }
+                 var tempitem = tempOrder.OrderList.Find(x => x.OrderId == ol.OrderId && x.LineId == ol.LineId);
+                 if (tempitem == null)
+                 {
+                     tempitem = ol;
+                     ol.GoodsInfo = gi;
+                     ol.GoodsColor = gc;
+                     ol.GoodsSpec = gs;
+                     ol.GoodsColorSpec = cs;
+                     tempOrder.OrderList.Add(tempitem);
+                 }
+                 return om;
+             }, new
+             {
+                 orderQueryParams.UnionId,
+                 OrderId = orderQueryParams.QueryValue,
+                 CategoryId = orderQueryParams.QueryValue,
+                 GoodsId = orderQueryParams.QueryValue,
+                 orderQueryParams.StartDate,
+                 orderQueryParams.EndDate,
+                 orderQueryParams.StatusId,
+                 ProdNumber = orderQueryParams.QueryValue,
+                 orderQueryParams.PageModel.Skip,
+                 orderQueryParams.PageModel.PageSize,
+             }, "id1, id2,id3,id4,id5, id6");
             return new Tuple<IEnumerable<OrderMainExt>, int>(pairs.Values.ToList().AsEnumerable(), res.Item2);
         }
 
@@ -305,6 +323,22 @@ Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
         {
             var sql = string.Format("Select BillId from StockBill Where OrderId = {0} ", orderId);
             return await base.ExecuteScalar<string>(sql);
+        }
+
+        public async Task<int> UploadOrderAttach(OrderAttach orderAttach)
+        {
+            var instance = await base.QueryFirst<OrderAttach>("Select * from OrderAttach Where OrderId = @OrderId", orderAttach);
+            string sql;
+            if (instance == null)
+            {
+                sql = "Insert OrderAttach (OrderId,UnionId,PayVoucherUrl)values(@OrderId,@UnionId,@PayVoucherUrl)";
+            }
+            else
+            {
+                sql = "Update OrderAttach set OrderId = @OrderId,UnionId = @UnionId,PayVoucherUrl = @PayVoucherUrl Where OrderId = @OrderId";
+            }
+            var res = await base.Execute(sql, orderAttach);
+            return res;
         }
     }
 

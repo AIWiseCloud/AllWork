@@ -187,7 +187,8 @@ namespace AllWork.Web
             {
                 app.UseDeveloperExceptionPage();
             }
-            //app.UseHttpsRedirection(); 这句加上会出现http自动切换为https的情况
+            //app.UseHttpsRedirection(); //这句加上会出现http自动切换为https的情况
+            //以上不注销无问题，注销了用了阿里云http, 然后取消注销导致vue项目net::ERR_CERT_COMMON_NAME_INVALID错误，应是vue在此要转为https
 
             app.UseAuthentication();//增加认证(jwt)
             app.UseRouting();

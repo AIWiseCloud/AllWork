@@ -21,6 +21,8 @@ namespace AllWork.IRepository.Order
         //订单发货
         Task<OperResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams);
 
+        Task<int> ConfirmPay(long orderId, int isConfirm);
+
         //签收订单
         Task<int> SignatureOrder(long orderId);
 
@@ -36,5 +38,8 @@ namespace AllWork.IRepository.Order
 
         //由订单号获取对应的销售出库单号
         Task<string> GetBillId(long orderId);
+
+        //上传付款凭证
+        Task<int> UploadOrderAttach(OrderAttach orderAttach);
     }
 }

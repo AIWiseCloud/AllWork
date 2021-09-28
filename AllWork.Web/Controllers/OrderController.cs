@@ -107,6 +107,19 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 确认线下到款
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="isConfirm">1确认,0取消确认</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> ConfirmPay(long orderId, int isConfirm)
+        {
+            var res = await _orderServices.ConfirmPay(orderId, isConfirm);
+            return Ok(res);
+        }
+
+        /// <summary>
         /// 订单签收
         /// </summary>
         /// <param name="orderId"></param>
@@ -180,6 +193,18 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> GetBillId(long orderId)
         {
             var res = await _orderServices.GetBillId(orderId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 上传打款凭证
+        /// </summary>
+        /// <param name="orderAttach"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> UploadOrderAttach(OrderAttach orderAttach)
+        {
+            var res = await _orderServices.UploadOrderAttach(orderAttach);
             return Ok(res);
         }
     }

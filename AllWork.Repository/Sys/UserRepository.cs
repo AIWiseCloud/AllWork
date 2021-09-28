@@ -13,9 +13,9 @@ namespace AllWork.Repository.Sys
     public class UserRepository : BaseRepository<UserInfo>, IUserRepository
     {
         //获取用户信息
-        public async Task<UserInfo> GetUserInfo(string unionId)
+        public async Task<UserInfo> GetUserInfo(string unionIdOrUserName)
         {
-            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionId}' OR UserName = '{unionId}' ");
+            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionIdOrUserName}' OR UserName = '{unionIdOrUserName}' ");
             return res;
         }
 
@@ -104,7 +104,12 @@ namespace AllWork.Repository.Sys
             return res;
         }
 
-        
+        public async Task<bool> SetUserAccount(string unionId, string userName, string password)
+        {
+            var sql = "Update UserInfo set UserName = @UserName, Password = @Password Where UnionId = @UnionId";
+            var res = await base.ExecuteScalar<int>(sql, new { UserName = userName, Password = password, UnionId = unionId });
+            return res> 0;
+        }
 
     }
 }

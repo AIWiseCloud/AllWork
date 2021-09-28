@@ -139,7 +139,7 @@ namespace AllWork.Web.Controllers
             return Ok(res);
         }
         /// <summary>
-        /// 保存商品信息
+        /// 保存商品基本信息
         /// </summary>
         /// <param name="goodsInfo"></param>
         /// <returns></returns>
@@ -151,7 +151,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取商品信息
+        /// 获取商品完整信息
         /// </summary>
         /// <param name="goodsId"></param>
         /// <returns></returns>
@@ -172,6 +172,45 @@ namespace AllWork.Web.Controllers
         {
             var res = await _goodsInfoServices.DeleteGoodsInfo(goodsId);
             return Ok(res);
+        }
+
+        /// <summary>
+        /// 复制商品
+        /// </summary>
+        /// <param name="goodsId">商品ID</param>
+        /// <param name="newGoodsId">新商品ID</param>
+        /// <param name="userName">用户名</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> CopyGoodsInfo(string goodsId, string newGoodsId,string userName)
+        {
+            GoodsInfoExt goodsInfo = await _goodsInfoServices.GetGoodsInfo(goodsId) as GoodsInfoExt;
+            goodsInfo.GoodsId = newGoodsId;
+            goodsInfo.Creator = userName;
+            goodsInfo.GoodsDesc = goodsInfo.GoodsDesc + "(复制生成)";
+            var resSave = await _goodsInfoServices.SaveGoodsInfo(goodsInfo);
+            foreach (var item in goodsInfo.GoodsColors)
+            {
+                item.GoodsId = newGoodsId;
+                item.ID = System.Guid.NewGuid().ToString();
+                item.Creator = userName;
+                await _goodsColorServices.SaveGoodsColor(item);
+            }
+            foreach(var item in goodsInfo.GoodsSpecs)
+            {
+                item.GoodsId = newGoodsId;
+                item.ID = System.Guid.NewGuid().ToString();
+                item.Creator = userName;
+                await _goodsSpecServices.SaveGoodsSpec(item);
+            }
+            foreach (var item in goodsInfo.SpuImgs)
+            {
+                item.GoodsId = newGoodsId;
+                item.ID = System.Guid.NewGuid().ToString();
+                await _spuImgServices.SaveSpuImg(item);
+            }
+
+            return Ok(resSave);
         }
 
         /// <summary>
@@ -375,53 +414,21 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> GetGoodsQuotes()
         {
             var res = await _goodsInfoServices.GetGoodsQuotes();
-            return Ok(res);
+            return Ok(new { QuoteTitle = res.Item1[0], Items = res.Item2 });
         }
 
-        //[HttpGet]
-        //public async Task<IActionResult> CalcPurchaseQuantity(string goodsId, int requireQty)
-        //{
-        //    var goodsSpecs = await _goodsSpecServices.GetGoodsSpecs(goodsId);
+        /// <summary>
+        /// 更新报价说明
+        /// </summary>
+        /// <param name="quoteExplain"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public async Task<IActionResult> UpdateQuoteExplain(QuoteExplain quoteExplain)
+        {
+            var res = await _goodsInfoServices.UpdateQuoteExplain(quoteExplain);
+            return Ok(res > 0);
+        }
 
-        //    var digits = new List<decimal>();
-        //    foreach (var spec in goodsSpecs)
-        //    {
-        //        digits.Add(spec.UnitConverter);
-        //    }
-        //    if (digits.Count == 0)
-        //    {
-        //        return Ok(requireQty);
-        //    }
-        //    //冒泡排序(大到小)
-        //    for (int i = 0; i < digits.Count; i++)
-        //    {
-        //        for (int j = 0; j < digits.Count - i - 1; j++)
-        //        {
-        //            if (digits[j] < digits[j + 1])
-        //            {
-        //                decimal temp = digits[j];
-        //                digits[j] = digits[j + 1];
-        //                digits[j + 1] = temp;
-        //            }
-        //        }
-        //    }
-        //    if (digits.Count == 1)
-        //    {
-        //        var r = requireQty % digits[0];
-        //        if (r == 0)
-        //        {
-        //            return Ok(requireQty);
-        //        }
-        //        else
-        //        {
-        //            return Ok((requireQty / digits[0] + 1) * digits[0]);
-        //        }
-        //    }
-        //    else
-        //    {
-        //        return 0;
-
-        //    }
-        //}
+        
     }
 }

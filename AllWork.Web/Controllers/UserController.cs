@@ -219,8 +219,42 @@ namespace AllWork.Web.Controllers
         [HttpPut]
         public async Task<IActionResult> AuditCertificationInfo(string unionId, int certificateType, int authState, string reason = "")
         {
-            var res = await _userCertificationServices.AuditCertificationInfo(unionId, certificateType,authState, reason);
+            var res = await _userCertificationServices.AuditCertificationInfo(unionId, certificateType, authState, reason);
             return Ok(res);
+        }
+
+        /// <summary>
+        /// 设定账号、密码
+        /// </summary>
+        /// <param name="unionId">用户标识</param>
+        /// <param name="userName">用户名</param>
+        /// <param name="password">登录密码</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> SetUserAccount(string unionId, string userName, string password)
+        {
+            var result = new OperResult { Status = false };
+            if (string.IsNullOrEmpty(unionId) || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            {
+                result.ErrorMsg = "参数不完整";
+            }
+            else if (password.Length < 6)
+            {
+                result.ErrorMsg = "密码长度须6位以上";
+            }
+            else
+            {
+                var user = await _userServices.GetUserInfo(userName);
+                if (user != null && user.UnionId != unionId)
+                {
+                    result.ErrorMsg = $"已有其他用户使用{userName}";
+                }
+                else
+                {
+                    result.Status = await _userServices.SetUserAccount(unionId, userName, password);
+                }
+            }
+            return Ok(result);
         }
     }
 }

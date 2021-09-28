@@ -194,6 +194,56 @@
             创建人
             </summary>
         </member>
+        <member name="T:AllWork.Model.Goods.GoodsQuote">
+            <summary>
+            材料报价（用于打印预览)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.CategoryId">
+            <summary>
+            材料分类ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.GoodsName">
+            <summary>
+            材料名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.Mixture">
+            <summary>
+            配比
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.UnitName">
+            <summary>
+            单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.PriceST">
+            <summary>
+            盛天报价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.PriceSW">
+            <summary>
+            盛望报价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.PriceYTJ">
+            <summary>
+            倚天剑报价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.SpecName">
+            <summary>
+            包装规格
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.ParentName">
+            <summary>
+            材料大类
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsSpec.ID">
             <summary>
             主键
@@ -630,6 +680,31 @@
             状态
             </summary>
         </member>
+        <member name="T:AllWork.Model.Order.OrderAttach">
+            <summary>
+            订单附件
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderAttach.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderAttach.UnionId">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderAttach.PayVoucherUrl">
+            <summary>
+            支付凭证
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderAttach.CreateDate">
+            <summary>
+            日期
+            </summary>
+        </member>
         <member name="T:AllWork.Model.Order.OrderEvaluate">
             <summary>
             订单评价
@@ -750,9 +825,9 @@
             单价
              </summary>
         </member>
-        <member name="P:AllWork.Model.Order.OrderList.Unit">
+        <member name="P:AllWork.Model.Order.OrderList.Packaging">
             <summary>
-            单位
+            包装规格
             </summary>
         </member>
         <member name="P:AllWork.Model.Order.OrderList.Amount">

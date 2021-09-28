@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace AllWork.Model.Order
 {
@@ -72,7 +71,7 @@ namespace AllWork.Model.Order
         /// <summary>
         /// 实际支付
         /// </summary>
-        [Range(0.01,100000000)]
+        //[Range(0.01,100000000)]
         public decimal RealPay
         { get; set; }
 
@@ -178,6 +177,8 @@ namespace AllWork.Model.Order
     public class OrderMainExt : OrderMain
     {
         public new List<OrderListExt> OrderList { get; set; }
+
+        public OrderAttach OrderAttach { get; set; }
 
         public OrderMainExt()
         {

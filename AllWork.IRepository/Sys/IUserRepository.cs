@@ -9,7 +9,8 @@ namespace AllWork.IRepository.Sys
 {
     public interface IUserRepository:Base.IBaseRepository<UserInfo>
     {
-        Task<UserInfo> GetUserInfo(string unionId);
+
+        Task<UserInfo> GetUserInfo(string unionIdOrUserName);
 
         Task<bool> IsValidUser(LoginRequestDTO req);
 
@@ -21,6 +22,6 @@ namespace AllWork.IRepository.Sys
 
         Task<Tuple<IEnumerable<UserInfo>, int>> QueryUsers(UserParams userParams);
 
-     
+        Task<bool> SetUserAccount(string unionId, string userName, string password);
     }
 }

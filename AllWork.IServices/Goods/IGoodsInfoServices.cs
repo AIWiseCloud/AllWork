@@ -23,6 +23,8 @@ namespace AllWork.IServices.Goods
 
         Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId);
 
-        Task<List<GoodsQuote>> GetGoodsQuotes();
+        Task<Tuple<List<QuoteExplain>, List<GoodsQuote>>> GetGoodsQuotes();
+
+        Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain);
     }
 }

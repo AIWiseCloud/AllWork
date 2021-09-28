@@ -23,9 +23,9 @@ namespace AllWork.Services.Sys
         }
 
         //获取用户信息
-        public async Task<UserInfo> GetUserInfo(string unionId)
+        public async Task<UserInfo> GetUserInfo(string unionIdOrUserName)
         {
-            var res = await _dal.GetUserInfo(unionId);
+            var res = await _dal.GetUserInfo(unionIdOrUserName);
             return res;
         }
 
@@ -65,6 +65,14 @@ namespace AllWork.Services.Sys
         public async Task<Tuple<IEnumerable<UserInfo>, int>> QueryUsers(UserParams userParams)
         {
             var res = await _dal.QueryUsers(userParams);
+            return res;
+        }
+
+        public async Task<bool> SetUserAccount(string unionId, string userName, string password)
+        {
+            //加密
+            var pw = AllWork.Common.DesEncrypt.Encrypt(password);
+            var res = await _dal.SetUserAccount(unionId, userName, pw);
             return res;
         }
     }

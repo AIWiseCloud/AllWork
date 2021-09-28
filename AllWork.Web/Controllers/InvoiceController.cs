@@ -100,11 +100,11 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 财务确认开票
+        /// 财务确认已开票
         /// </summary>
         /// <param name="id">开票申请ID</param>
         /// <param name="drawer">开票人</param>
-        /// <param name="invoiceUrl">发票照片</param>
+        /// <param name="invoiceUrl">发票图片</param>
         /// <returns></returns>
         [HttpPut]
         public async Task<IActionResult> MakeInvoice(string id, string drawer, string invoiceUrl)

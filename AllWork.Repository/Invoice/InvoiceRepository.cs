@@ -22,14 +22,14 @@ namespace AllWork.Repository.Invoice
             string sql;
             if (instance == null)
             {
-                sql = @"Insert Invoice (ID,OrderId,InvoAmt,UnionId,StatusId,ApplyTime,InvoiceTime,InvoiceType,ContentType,TitleType,TitleName,TaxId,RegisterAddress,RegisterTel,
+                sql = @"Insert Invoice (ID,OrderId,InvoAmt,UnionId,StatusId,ApplyTime,InvoiceType,ContentType,TitleType,TitleName,TaxId,RegisterAddress,RegisterTel,
 BankName,BankAccount,Collector,CollectorPhone,CollectorAddr,CollectorMail)values
-(@ID,@OrderId,@InvoAmt,@UnionId,@StatusId,@ApplyTime,@InvoiceTime,@InvoiceType,@ContentType,@TitleType,@TitleName,@TaxId,@RegisterAddress,@RegisterTel,@BankName,@BankAccount,
+(@ID,@OrderId,@InvoAmt,@UnionId,@StatusId,current_timestamp,@InvoiceType,@ContentType,@TitleType,@TitleName,@TaxId,@RegisterAddress,@RegisterTel,@BankName,@BankAccount,
 @Collector,@CollectorPhone,@CollectorAddr,@CollectorMail)";
             }
             else
             {
-                sql = @"Update Invoice set ID = @ID,OrderId = @OrderId,InvoAmt = @InvoAmt,UnionId = @UnionId,StatusId = @StatusId,ApplyTime = @ApplyTime,InvoiceTime = @InvoiceTime,
+                sql = @"Update Invoice set InvoAmt = @InvoAmt,UnionId = @UnionId,
 InvoiceType = @InvoiceType,ContentType = @ContentType,TitleType = @TitleType,TitleName = @TitleName,TaxId = @TaxId,RegisterAddress = @RegisterAddress,RegisterTel = @RegisterTel,
 BankName = @BankName,BankAccount = @BankAccount,Collector = @Collector,CollectorPhone = @CollectorPhone,CollectorAddr = @CollectorAddr,CollectorMail = @CollectorMail
  Where ID = @ID";
@@ -52,10 +52,10 @@ BankName = @BankName,BankAccount = @BankAccount,Collector = @Collector,Collector
             return res;
         }
 
-        //开票
+        //财务确认已开票
         public async Task<int> MakeInvoice(string id, string drawer, string invoiceUrl)
         {
-            var sql = "Update Invoice set Drawer = @Deawer, InvoiceUrl = @InvoiceUrl, InvoiceTime = current_timestamp Where ID = @ID";
+            var sql = "Update Invoice set Drawer = @Drawer, InvoiceUrl = @InvoiceUrl, InvoiceTime = current_timestamp, StatusId=1 Where ID = @ID";
             var res = await base.Execute(sql, new { ID = id, Drawer = drawer, InvoiceUrl = invoiceUrl });
             return res;
         }

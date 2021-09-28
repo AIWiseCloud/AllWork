@@ -49,13 +49,27 @@ namespace AllWork.Services.Order
             {
                 return new OperResult { Status = false, ErrorMsg = "当前订单状态不能执行此操作!" };
             }
-            var billId = await _dal.GetBillId(orderDeliveryParams.OrderId);
-            if(string.IsNullOrEmpty(billId) || orderDeliveryParams.BillId.CompareTo(billId) != 0)
-            {
-                return new OperResult { Status = false, ErrorMsg = "销售出库单号不正确!" };
-            }
+            //var billId = await _dal.GetBillId(orderDeliveryParams.OrderId);
+            //if(string.IsNullOrEmpty(billId) || orderDeliveryParams.BillId.CompareTo(billId) != 0)
+            //{
+            //    return new OperResult { Status = false, ErrorMsg = "销售出库单号不正确!" };
+            //}
             var res = await _dal.DeliveryOrder(orderDeliveryParams);
             return res;
+        }
+
+        public async Task<OperResult> ConfirmPay(long orderId, int isConfirm)
+        {
+            var result = new OperResult { Status = false };
+            var orderStatus = await _dal.GetOrderStatusId(orderId);
+            if ((isConfirm == 1 && orderStatus != 0) || (isConfirm == 0 && orderStatus != 1))
+            {
+                result.ErrorMsg = "当前订单状态不能执行此操作!";
+                return result;
+            }
+            var res = await _dal.ConfirmPay(orderId, isConfirm);
+            result.Status = res > 0;
+            return result;
         }
 
         //签收订单
@@ -100,6 +114,17 @@ namespace AllWork.Services.Order
         {
             var res = await _dal.GetBillId(orderId);
             return res;
+        }
+
+        /// <summary>
+        /// 上传打款凭证
+        /// </summary>
+        /// <param name="orderAttach"></param>
+        /// <returns></returns>
+        public async Task<bool> UploadOrderAttach(OrderAttach orderAttach)
+        {
+            var res = await _dal.UploadOrderAttach(orderAttach);
+            return res > 0;
         }
     }
 }

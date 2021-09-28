@@ -1,5 +1,4 @@
 ﻿using AllWork.Model.Goods;
-using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace AllWork.Model.Order
@@ -44,21 +43,21 @@ namespace AllWork.Model.Order
         /// <summary>
         /// 数量
         /// </summary>
-        [Range(1,9999)]
+        //[Range(1,9999)]
         public decimal Quantity
         { get; set; }
 
         /// <summary>
         ///单价
         /// </summary>
-        [Range(0.01, 9999)]
+        //[Range(0.01, 9999)]
         public decimal UnitPrice
         { get; set; }
 
         /// <summary>
-        /// 单位
+        /// 包装规格
         /// </summary>
-        public string Unit
+        public string Packaging
         { get; set; }
 
         /// <summary>

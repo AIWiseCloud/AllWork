@@ -29,6 +29,8 @@ namespace AllWork.IRepository.Goods
         /// 材料价格表
         /// </summary>
         /// <returns></returns>
-        Task<List<GoodsQuote>> GetGoodsQuotes();
+        Task<Tuple<List<QuoteExplain>,List<GoodsQuote>>> GetGoodsQuotes();
+
+        Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain);
     }
 }

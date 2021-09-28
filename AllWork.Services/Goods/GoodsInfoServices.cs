@@ -126,9 +126,15 @@ namespace AllWork.Services.Goods
             return res;
         }
 
-        public async Task<List<GoodsQuote>> GetGoodsQuotes()
+        public async Task<Tuple<List<QuoteExplain>, List<GoodsQuote>>> GetGoodsQuotes()
         {
             var res = await _dal.GetGoodsQuotes();
+            return res;
+        }
+
+        public async Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain)
+        {
+            var res = await _dal.UpdateQuoteExplain(quoteExplain);
             return res;
         }
     }
