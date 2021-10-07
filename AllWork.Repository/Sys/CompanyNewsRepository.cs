@@ -29,8 +29,8 @@ Author = @Author,Creator = @Creator,FIndex = @FIndex, Summary = @Summary Where N
 
         public async Task<CompanyNews> GetCompanyNews(string newsId)
         {
-            //阅读量(只计审核状态下的)
-            await base.Execute("Update CompanyNews set AmountReading=AmountReading+1 Where NewsId = @NewsId and StatusId = 2", new { NewsId = newsId });
+            //阅读量
+            await base.Execute("Update CompanyNews set AmountReading=AmountReading+1 Where NewsId = @NewsId and StatusId >= 1", new { NewsId = newsId });
             var res = await base.QueryFirst("Select * from CompanyNews Where NewsId = @NewsId", new { NewsId = newsId });
             return res;
         }

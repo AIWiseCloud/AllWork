@@ -1,6 +1,7 @@
 ﻿using AllWork.IServices.Invoice;
 using AllWork.Model.Invoice;
 using AllWork.Model.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class InvoiceController : ControllerBase
     {
         readonly IInvoiceTitleServices _invoiceTitleServices;
@@ -119,7 +121,7 @@ namespace AllWork.Web.Controllers
         /// <param name="commonParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> QueryUserInvoices(CommonParams commonParams)
+        public async Task<IActionResult> QueryUserInvoices(InvoiceQueryParams commonParams)
         {
             var res = await _invoiceServices.QueryUserInvoices(commonParams);
             return Ok(res);

@@ -17,11 +17,11 @@ namespace AllWork.Repository.Goods
             if (instance == null)
             {
                 goodsInfo.IsUnder = 1; //默认是下架 （要上架需要一个发布动作)
-                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,Mixture, GoodsDesc,UnitName,BaseUnitPrice,SalesTimes,IsRecommend,IsNew,IsUnder,Creator)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand,@Mixture, @GoodsDesc,@UnitName, @BaseUnitPrice,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator)";
+                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,Mixture, GoodsDesc,UnitName,BaseUnitPrice,SalesTimes,IsRecommend,IsNew,IsUnder,Creator, GroupDisplayOrder)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand,@Mixture, @GoodsDesc,@UnitName, @BaseUnitPrice,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator, @GroupDisplayOrder)";
             }
             else
             {
-                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand, Mixture = @Mixture,  GoodsDesc = @GoodsDesc,UnitName=@UnitName, BaseUnitPrice = @BaseUnitPrice,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator Where GoodsId = @GoodsId";
+                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand, Mixture = @Mixture,  GoodsDesc = @GoodsDesc,UnitName=@UnitName, BaseUnitPrice = @BaseUnitPrice,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator, GroupDisplayOrder = @GroupDisplayOrder Where GoodsId = @GoodsId";
             }
             return await base.Execute(sql, goodsInfo) > 0;
         }
@@ -201,7 +201,7 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
 
         public async Task<Tuple<List<QuoteExplain>, List<GoodsQuote>>> GetGoodsQuotes()
         {
-            var sql = "Select * from QuoteExplain;Select * from GoodsPivotView order by CategoryId ,GoodsName ";
+            var sql = "Select * from QuoteExplain;Select * from GoodsPivotView order by CategoryId ,GroupDisplayOrder, GoodsName ";
             var res = await base.QueryMultiple<QuoteExplain, GoodsQuote>(sql);
             
             return res;

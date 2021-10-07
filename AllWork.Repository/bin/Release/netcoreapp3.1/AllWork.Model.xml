@@ -129,6 +129,11 @@
             商品分类ID
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.GroupDisplayOrder">
+            <summary>
+            分组显示顺序
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.ProdNumber">
             <summary>
             产品编号
@@ -680,6 +685,76 @@
             状态
             </summary>
         </member>
+        <member name="T:AllWork.Model.Order.AdvanceMoney">
+            <summary>
+            预付定金
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.ID">
+            <summary>
+            预付单号(以6开头的数字序列）
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.OrderId">
+            <summary>
+            订单号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.UnionId">
+            <summary>
+            用户标识
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.DownPayment">
+            <summary>
+            定金
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.Summary">
+            <summary>
+            摘要
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.PaymentWay">
+            <summary>
+            支付方式(0在线支付 1对公转账)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.PaymentChannel">
+            <summary>
+            支付渠道(alipay, wechatpay,unionpay)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.PayTime">
+            <summary>
+            支付时间
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.TradeNo">
+            <summary>
+            交易流水号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.PayVoucherUrl">
+            <summary>
+            支付凭证（图)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.ConfirmStatus">
+            <summary>
+            确认状态(0未确认 1已确认)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.Confirmer">
+            <summary>
+            确认人
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.AdvanceMoney.CreateDate">
+            <summary>
+            创建日期
+            </summary>
+        </member>
         <member name="T:AllWork.Model.Order.OrderAttach">
             <summary>
             订单附件
@@ -888,6 +963,11 @@
         <member name="P:AllWork.Model.Order.OrderMain.RealPay">
             <summary>
             实际支付
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Order.OrderMain.DownPayment">
+            <summary>
+            已付定金
             </summary>
         </member>
         <member name="P:AllWork.Model.Order.OrderMain.LogisticsId">
@@ -1175,6 +1255,11 @@
             分页实体参数
             </summary>
         </member>
+        <member name="P:AllWork.Model.RequestParams.InvoiceQueryParams.UnionId">
+            <summary>
+            用户标识
+            </summary>
+        </member>
         <member name="P:AllWork.Model.RequestParams.NewsParams.OnlyShowSubmitStatus">
             <summary>
             仅显示提交状态的记录(0不是，1是
@@ -1243,6 +1328,16 @@
         <member name="P:AllWork.Model.RequestParams.OrderQueryParams.EndDate">
             <summary>
             截止日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.ProjectCaseParams.SiteCategory">
+            <summary>
+            场地类型
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.ProjectCaseParams.Location">
+            <summary>
+            区域
             </summary>
         </member>
         <member name="T:AllWork.Model.RequestParams.RefundApplyParams">
@@ -1478,6 +1573,61 @@
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Password">
             <summary>
             密码
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.ProjectCase">
+            <summary>
+            工程案例
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.OrganizationName">
+            <summary>
+            客户名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.ProjectName">
+            <summary>
+            工程名称
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.SiteCategory">
+            <summary>
+            场地类型
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.Location">
+            <summary>
+            所在区域
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.Area">
+            <summary>
+            面积
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.ImgUrl">
+            <summary>
+            图片
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.InspectionDate">
+            <summary>
+            合格验收日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.Summary">
+            <summary>
+            工程简介
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.CreateDate">
+            <summary>
+            日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.ProjectCase.Creator">
+            <summary>
+            制单
             </summary>
         </member>
         <member name="T:AllWork.Model.Sys.ReportItem">

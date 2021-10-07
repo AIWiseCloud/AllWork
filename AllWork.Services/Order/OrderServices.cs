@@ -85,6 +85,7 @@ namespace AllWork.Services.Order
             return res;
         }
 
+        //支付成功（支付结果通知中调用)
         public async Task<bool> PaySuccess(string orderId, string tradeNo)
         {
             var res = await _dal.PaySuccess(long.Parse(orderId), tradeNo);

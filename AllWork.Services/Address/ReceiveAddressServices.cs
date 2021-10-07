@@ -37,5 +37,17 @@ namespace AllWork.Services.Address
             var res = await _dal.GetReceiveAddresses(unionId);
             return res;
         }
+
+        /// <summary>
+        /// 获取某层级中指定行政区域的下级区域列表
+        /// </summary>
+        /// <param name="level">行政层级(1省级,2市级,3区县级,4镇级)</param>
+        /// <param name="areaId">行政区域ID (层级为1时不用指定)</param>
+        /// <returns></returns>
+        public async Task<IEnumerable<object>> GetAreas(int level, string currentId)
+        {
+            var res = await _dal.GetAreas(level, currentId);
+            return res;
+        }
     }
 }

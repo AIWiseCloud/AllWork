@@ -91,7 +91,7 @@ values
             var res = await base.QueryPagination(sql, new
             {
                 UnionId = userCertificationParams.Keywords,
-                CertificateType = userCertificationParams.CertificateType,
+                userCertificationParams.CertificateType,
                 userCertificationParams.StartDate,
                 userCertificationParams.EndDate,
                 userCertificationParams.PageModel.Skip,

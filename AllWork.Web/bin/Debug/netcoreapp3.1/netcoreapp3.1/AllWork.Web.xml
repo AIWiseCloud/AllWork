@@ -39,6 +39,53 @@
             <param name="unionId"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.AddressController.GetAdminAreas(System.Int32,System.String)">
+            <summary>
+            获取行政区域列表
+            </summary>
+            <param name="level">行政层级(1省级,2市级,3区县级,4乡镇级)</param>
+            <param name="areaId">行政区域ID (层级为1时不用指定)</param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.AdvanceMoneyController">
+            <summary>
+            预付定金
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.AdvanceMoneyController.GetPrebuiltInfo(System.Int64,System.String,System.Decimal)">
+            <summary>
+            获取定金预生成信息
+            </summary>
+            <param name="orderId">订单号</param>
+            <param name="unionId">用户标识</param>
+            <param name="orderAmt">订单金额</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.AdvanceMoneyController.GetAdvanceMoneys(System.Int64,System.String)">
+            <summary>
+            获取订单对应的定金记录
+            </summary>
+            <param name="orderId">订单号</param>
+            <param name="unionId">用户标识</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.AdvanceMoneyController.SubmitAdvanceMoney(AllWork.Model.Order.AdvanceMoney)">
+            <summary>
+            生成预付定金记录
+            </summary>
+            <param name="advanceMoney"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.AdvanceMoneyController.ConfirmReceipt(System.Int64,System.String,System.Int32,System.String)">
+            <summary>
+            客服确认定金到账
+            </summary>
+            <param name="id">预付单号</param>
+            <param name="userName">客服</param>
+            <param name="isConfirm">确认(0取消确认,1确认)</param>
+            <param name="paytime">支付日期</param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.AuthenticationController">
             <summary>
             用户认证和签发token
@@ -538,7 +585,7 @@
             <param name="invoiceUrl">发票图片</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.InvoiceController.QueryUserInvoices(AllWork.Model.RequestParams.CommonParams)">
+        <member name="M:AllWork.Web.Controllers.InvoiceController.QueryUserInvoices(AllWork.Model.RequestParams.InvoiceQueryParams)">
             <summary>
             分页显示用户发票记录
             </summary>
@@ -796,6 +843,39 @@
             获取售后服务申请单
             </summary>
             <param name="postSaleId"></param>
+            <returns></returns>
+        </member>
+        <member name="T:AllWork.Web.Controllers.ProjectCaseController">
+            <summary>
+            工程案例
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ProjectCaseController.SaveProjectCase(AllWork.Model.Sys.ProjectCase)">
+            <summary>
+            保存工程案例
+            </summary>
+            <param name="projectCase"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ProjectCaseController.GetProjectCase(System.String)">
+            <summary>
+            获取工程案例详情
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ProjectCaseController.DeleteProjectCase(System.String)">
+            <summary>
+            删除工程案例
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.ProjectCaseController.QueryProjectCases(AllWork.Model.RequestParams.ProjectCaseParams)">
+            <summary>
+            查询工程案例
+            </summary>
+            <param name="projectCaseParams"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.ReportController">

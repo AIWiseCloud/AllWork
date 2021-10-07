@@ -14,5 +14,7 @@ namespace AllWork.IServices.Address
         Task<OperResult> DeleteReceiveAddress(string unionId, string addrId);
 
         Task<IEnumerable<ReceiveAddress>> GetReceiveAddresses(string unionId);
+
+        Task<IEnumerable<object>> GetAreas(int level, string currentId);
     }
 }

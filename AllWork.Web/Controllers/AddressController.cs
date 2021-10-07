@@ -73,5 +73,19 @@ namespace AllWork.Web.Controllers
             var res = await _receiveAddressServices.GetReceiveAddresses(unionId);
             return Ok(res);
         }
+
+        /// <summary>
+        /// 获取行政区域列表
+        /// </summary>
+        /// <param name="level">行政层级(1省级,2市级,3区县级,4乡镇级)</param>
+        /// <param name="areaId">行政区域ID (层级为1时不用指定)</param>
+        /// <returns></returns>
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetAdminAreas(int level, string areaId)
+        {
+            var res = await _receiveAddressServices.GetAreas(level, areaId);
+            return Ok(res);
+        }
     }
 }

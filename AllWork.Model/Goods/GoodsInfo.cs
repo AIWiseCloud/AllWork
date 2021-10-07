@@ -21,6 +21,12 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
+        /// 分组显示顺序
+        /// </summary>
+        public int GroupDisplayOrder
+        { get; set; }
+
+        /// <summary>
         /// 产品编号
         /// </summary>
         public string ProdNumber

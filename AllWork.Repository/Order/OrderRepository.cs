@@ -168,26 +168,43 @@ Where a.OrderId = {0}", orderId);
             return res;
         }
 
-        //支付成功后更新订单、更新销量
+        //支付成功后更新订单、更新销量  (在支付结果通知中调用)
         public async Task<bool> PaySuccess(long orderId, string tradeNo)
         {
+            string id = orderId.ToString();
+            //6开头的单号代表定金支付单号
+            if (id.StartsWith('6'))
+            {
+                var sql1 = "update AdvanceMoney set ConfirmStatus = 1, Confirmer = 'system', PayTime = current_timestamp, TradeNo = @TradeNo where ID = @ID ";
+                var sql2 = "update OrderMain a, AdvanceMoney b set a.DownPayment = a.DownPayment + b.DownPayment where a.OrderId = b.OrderId and b.ID = @ID and StatusID = 0";
 
-            var sql = @"update OrderMain set 
+                var tranitems = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>(sql1,new{ID=id, TradeNo=tradeNo }),
+                new Tuple<string, object>(sql2,new{ID=id })
+            };
+                var res = await base.ExecuteTransaction(tranitems);
+                return res.Item1 ;
+            }
+            else //订单支付成功
+            {
+                var sql = @"update OrderMain set 
 TradeNo = @TradeNo ,
 PaymentChannel = 'wechat' , 
 StatusId = 1, 
 PayTime = current_timestamp() 
 where OrderId = @OrderId  and StatusId = 0 ";
-            var sql2 = @"update GoodsInfo a, OrderList b set 
+                var sql2 = @"update GoodsInfo a, OrderList b set 
 SalesTimes = SalesTimes + b.Quantity 
 where a.GoodsId = b.GoodsId and b.OrderId =@OrderId";
-            var tranItems = new List<Tuple<string, object>>
+                var tranItems = new List<Tuple<string, object>>
             {
                 new Tuple<string, object>(sql,new { OrderId = orderId, TradeNo = tradeNo }),
                 new Tuple<string, object>(sql2,new { OrderId = orderId })
             };
-            var res = await base.ExecuteTransaction(tranItems);
-            return res.Item1;
+                var res = await base.ExecuteTransaction(tranItems);
+                return res.Item1;
+            }
         }
 
         //查询订单

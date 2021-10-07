@@ -1,8 +1,6 @@
 ﻿using AllWork.Model;
 using AllWork.Model.Address;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AllWork.IRepository.Address
@@ -16,5 +14,8 @@ namespace AllWork.IRepository.Address
         Task<OperResult> DeleteReceiveAddress(string unionId, string addrId);
 
         Task<IEnumerable<ReceiveAddress>> GetReceiveAddresses(string unionId);
+
+        //获取某层级中特定行政区域的下级区域列表
+        Task<IEnumerable<object>> GetAreas(int level, string currentId);
     }
 }

@@ -43,7 +43,7 @@ namespace AllWork.Services.Invoice
         }
 
         //分页显示用户发票记录
-        public async Task<Tuple<IEnumerable<mo.Invoice>, int>> QueryUserInvoices(CommonParams commonParams)
+        public async Task<Tuple<IEnumerable<mo.Invoice>, int>> QueryUserInvoices(InvoiceQueryParams commonParams)
         {
             var res = await _dal.QueryUserInvoices(commonParams);
             return res;

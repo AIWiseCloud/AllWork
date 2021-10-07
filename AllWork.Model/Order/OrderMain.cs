@@ -76,6 +76,12 @@ namespace AllWork.Model.Order
         { get; set; }
 
         /// <summary>
+        /// 已付定金
+        /// </summary>
+        public decimal DownPayment
+        { get; set; }
+
+        /// <summary>
         /// 物流公司ID
         /// </summary>
         public string LogisticsId

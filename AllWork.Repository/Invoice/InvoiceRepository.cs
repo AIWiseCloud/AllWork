@@ -61,10 +61,10 @@ BankName = @BankName,BankAccount = @BankAccount,Collector = @Collector,Collector
         }
 
         //分页显示用户发票记录
-        public async Task<Tuple<IEnumerable<mo.Invoice>, int>> QueryUserInvoices(CommonParams commonParams)
+        public async Task<Tuple<IEnumerable<mo.Invoice>, int>> QueryUserInvoices(InvoiceQueryParams commonParams)
         {
             //sql公共部分
-            var sqlpub = new StringBuilder(" from Invoice a ");
+            var sqlpub = new StringBuilder(" from Invoice a Where UnionId = @UnionId ");
 
             //固定排序
             string sqlorder = " Order by OrderId desc ";
@@ -78,6 +78,7 @@ BankName = @BankName,BankAccount = @BankAccount,Collector = @Collector,Collector
             var res = await base.QueryPagination<mo.Invoice>(sql,
                 new
                 {
+                    commonParams.UnionId,
                     commonParams.PageModel.Skip,
                     commonParams.PageModel.PageSize
                 });

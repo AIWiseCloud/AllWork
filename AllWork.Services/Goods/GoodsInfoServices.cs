@@ -68,22 +68,27 @@ namespace AllWork.Services.Goods
                     operResult.ErrorMsg = "必须设定规格及价格信息";
                     return operResult;
                 }
-                foreach(var item in instance.GoodsSpecs)
+                foreach (var item in instance.GoodsSpecs)
                 {
-                    if(instance.UnitName!=item.SaleUnit && item.UnitConverter == 1)
+                    if (instance.UnitName != item.SaleUnit && item.UnitConverter == 1)
                     {
                         operResult.ErrorMsg = "销售单位与表头的基本单位不相同时，请设定单位转换系数（即1销售单位等于多少基本单位），此时转换系数不能为1";
                         return operResult;
                     }
-                    if(instance.UnitName==item.SaleUnit && item.UnitConverter != 1)
+                    if (instance.UnitName == item.SaleUnit && item.UnitConverter != 1)
                     {
                         operResult.ErrorMsg = "销售单位与表头的基本单位相同，但二者的转换系数不为1，请检查是否正确！";
                         return operResult;
                     }
-                   
-                    if(item.DiscountPrice > item.Price)
+
+                    if (item.DiscountPrice > item.Price)
                     {
                         operResult.ErrorMsg = "折扣价不能大于销售单价";
+                        return operResult;
+                    }
+                    if (string.IsNullOrEmpty(instance.Mixture) && instance.Mixture.IndexOf(':') != -1 && (item.SpecName.IndexOf('甲') == -1 && item.SpecName.IndexOf('乙') == -1))
+                    {
+                        operResult.ErrorMsg = "若商品信息设定了配比，则需要在规格描述栏位注明甲组或乙组";
                         return operResult;
                     }
                 }
