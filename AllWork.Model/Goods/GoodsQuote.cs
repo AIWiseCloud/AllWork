@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AllWork.Model.Goods
+﻿namespace AllWork.Model.Goods
 {
     /// <summary>
     /// 材料报价（用于打印预览)
@@ -23,6 +21,10 @@ namespace AllWork.Model.Goods
         /// 单位
         /// </summary>
         public string UnitName { get; set; }
+        /// <summary>
+        /// 主材(0辅材,1主材)
+        /// </summary>
+        public int IsMainMaterial { get; set; }
         /// <summary>
         /// 盛天报价
         /// </summary>

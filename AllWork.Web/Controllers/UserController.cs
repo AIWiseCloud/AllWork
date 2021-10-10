@@ -3,6 +3,7 @@ using AllWork.Model;
 using AllWork.Model.RequestParams;
 using AllWork.Model.User;
 using AllWork.Web.Auth;
+using AllWork.Web.Helper.Redis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         readonly IUserServices _userServices;
@@ -39,7 +41,6 @@ namespace AllWork.Web.Controllers
         /// <param name="unionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetUserInfo(string unionId)
         {
             //var unionId = _authService.ParseToken(accessToken);
@@ -60,7 +61,6 @@ namespace AllWork.Web.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetUserInfoByToken(string token)
         {
             var unionId = _authService.ParseToken(token);
@@ -101,7 +101,6 @@ namespace AllWork.Web.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize]
         public async Task<IActionResult> Logoff(string token)
         {
             if (token == null || token.Length < 272)
@@ -151,7 +150,6 @@ namespace AllWork.Web.Controllers
         /// <param name="unionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetUserCertification(string unionId)
         {
             var res = await _userCertificationServices.GetUserCertification(unionId);
@@ -164,7 +162,6 @@ namespace AllWork.Web.Controllers
         /// <param name="corpCertification"></param>
         /// <returns></returns>
         [HttpPost]
-        [Authorize]
         public async Task<IActionResult> SaveCorpCertification(CorpCertification corpCertification)
         {
             var res = await _userCertificationServices.SaveCorpCertification(corpCertification);
@@ -177,7 +174,6 @@ namespace AllWork.Web.Controllers
         /// <param name="unionId"></param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
         public async Task<IActionResult> GetCorpCertification(string unionId)
         {
             var res = await _userCertificationServices.GetCorpCertification(unionId);
@@ -185,11 +181,12 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 保存用户信息
+        /// 注册（保存）用户信息
         /// </summary>
         /// <param name="userInfo"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> SaveUserInfo(UserInfo userInfo)
         {
             var res = await _userServices.SaveUserInfo(userInfo);
@@ -217,6 +214,7 @@ namespace AllWork.Web.Controllers
         /// <param name="reason">审核不通过理由</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy:"editor")]
         public async Task<IActionResult> AuditCertificationInfo(string unionId, int certificateType, int authState, string reason = "")
         {
             var res = await _userCertificationServices.AuditCertificationInfo(unionId, certificateType, authState, reason);
@@ -224,17 +222,19 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 设定账号、密码
+        /// 用户修改密码
         /// </summary>
-        /// <param name="unionId">用户标识</param>
-        /// <param name="userName">用户名</param>
-        /// <param name="password">登录密码</param>
+        /// <param name="unionId">UnionId</param>
+        /// <param name="password">新密码</param>
+        /// <param name="code">短信验证码</param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IActionResult> SetUserAccount(string unionId, string userName, string password)
+        public async Task<IActionResult> SetUserPassword(string unionId, string password, string code)
         {
+            var userInfo = await _userServices.GetUserInfo(unionId);
+            var value = RedisClient.redisClient.GetStringKey(unionId);
             var result = new OperResult { Status = false };
-            if (string.IsNullOrEmpty(unionId) || string.IsNullOrEmpty(userName) || string.IsNullOrEmpty(password))
+            if (string.IsNullOrEmpty(unionId) || string.IsNullOrEmpty(code) || string.IsNullOrEmpty(password))
             {
                 result.ErrorMsg = "参数不完整";
             }
@@ -242,19 +242,68 @@ namespace AllWork.Web.Controllers
             {
                 result.ErrorMsg = "密码长度须6位以上";
             }
+            else if (value == null || value.Split(',').Length != 2)
+            {
+                result.ErrorMsg = "验证码不存在或已过期";
+            }
+            else if (string.IsNullOrWhiteSpace(userInfo.PhoneNumber))
+            {
+                result.ErrorMsg = $"当前账号{userInfo.UserName}未绑定手机号";
+            }
+            else if (value.Split(',')[1] != code)
+            {
+                result.ErrorMsg = "验证码错误";
+            }
             else
             {
-                var user = await _userServices.GetUserInfo(userName);
-                if (user != null && user.UnionId != unionId)
-                {
-                    result.ErrorMsg = $"已有其他用户使用{userName}";
-                }
-                else
-                {
-                    result.Status = await _userServices.SetUserAccount(unionId, userName, password);
-                }
+                result.Status = await _userServices.SetUserPassword(unionId, password);
             }
             return Ok(result);
+        }
+
+        /// <summary>
+        /// 账号绑定手机号
+        /// </summary>
+        /// <param name="unionId">UnionId</param>
+        /// <param name="phoneNumber">手机号</param>
+        /// <param name="code">短信验证码</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> BindPhoneNumber(string unionId, string phoneNumber, string code)
+        {
+            var value = RedisClient.redisClient.GetStringKey(unionId);
+            var result = new OperResult { Status = false };
+            if (value == null || value.Split(',').Length != 2)
+            {
+                result.ErrorMsg = "验证码不存在或已过期";
+            } else if (value.Split(',')[0] != phoneNumber)
+            {
+                result.ErrorMsg = "手机号验证前后不一致";
+            }
+            else if (value.Split(',')[1] != code)
+            {
+                result.ErrorMsg = "验证码错误";
+            }
+            else
+            {
+                var res = await _userServices.BindPhoeNumber(unionId, phoneNumber);
+                result.Status = res;
+            }
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// 设定用户角色
+        /// </summary>
+        /// <param name="unionId"></param>
+        /// <param name="roles"></param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize(policy:"Admin")]
+        public async Task<IActionResult> SetUserRoles(string unionId, string roles)
+        {
+            var res = await _userServices.SetUserRoles(unionId, roles);
+            return Ok(res);
         }
     }
 }

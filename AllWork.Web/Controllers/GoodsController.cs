@@ -85,6 +85,7 @@ namespace AllWork.Web.Controllers
                     ParentId = item.ParentId,
                     Findex = item.Findex,
                     ShopId = item.ShopId,
+                    IsMainMaterial=item.IsMainMaterial,
                     IsCancellation = item.IsCancellation
                 };
                 parentCategory.Children.Add(category);

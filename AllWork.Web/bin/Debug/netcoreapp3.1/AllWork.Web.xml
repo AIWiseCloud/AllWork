@@ -4,6 +4,16 @@
         <name>AllWork.Web</name>
     </assembly>
     <members>
+        <member name="P:AllWork.Web.Auth.TokenManagement.Issuer">
+            <summary>
+            发行人
+            </summary>
+        </member>
+        <member name="P:AllWork.Web.Auth.TokenManagement.Audience">
+            <summary>
+            订阅人
+            </summary>
+        </member>
         <member name="T:AllWork.Web.Controllers.AddressController">
             <summary>
             收货地址
@@ -90,6 +100,13 @@
             <summary>
             用户认证和签发token
             </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.AuthenticationController.RequestToken(AllWork.Model.Sys.LoginRequestDTO)">
+            <summary>
+            获取AccessToken
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.AuthenticationController.ParseToken(System.String)">
             <summary>
@@ -955,19 +972,20 @@
             短信息服务
             </summary>
         </member>
-        <member name="M:AllWork.Web.Controllers.SMSController.GetTemplates">
+        <member name="M:AllWork.Web.Controllers.SMSController.GetVerifyCode(System.String,System.String)">
             <summary>
-            获取所有短信模板
+            获取验证码（有效期1分钟）
             </summary>
+            <param name="unionId">UnionId</param>
+            <param name="phoneNumber">手机号</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.SMSController.SendSms(System.String,System.String,System.String)">
+        <member name="M:AllWork.Web.Controllers.SMSController.GetAccountPassword(System.String,System.String)">
             <summary>
-            发送短信
+            用户请求账号、密码
             </summary>
-            <param name="phoneNumbers">接收短信的手机号码: 支持对多个手机号码发送短信，手机号码之间以英文逗号（,）分隔。上限为1000个手机号</param>
-            <param name="id">模板项Id （可在获取所有短信模板接口查看）</param>
-            <param name="templateParam">短信模板变量对应的实际值，JSON格式。示例值：{"code":"1111"}</param>
+            <param name="unionId">UnionId</param>
+            <param name="code">短信验证码</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.SysController">
@@ -1170,7 +1188,7 @@
         </member>
         <member name="M:AllWork.Web.Controllers.UserController.SaveUserInfo(AllWork.Model.User.UserInfo)">
             <summary>
-            保存用户信息
+            注册（保存）用户信息
             </summary>
             <param name="userInfo"></param>
             <returns></returns>
@@ -1192,13 +1210,30 @@
             <param name="reason">审核不通过理由</param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.UserController.SetUserAccount(System.String,System.String,System.String)">
+        <member name="M:AllWork.Web.Controllers.UserController.SetUserPassword(System.String,System.String,System.String)">
             <summary>
-            设定账号、密码
+            用户修改密码
             </summary>
-            <param name="unionId">用户标识</param>
-            <param name="userName">用户名</param>
-            <param name="password">登录密码</param>
+            <param name="unionId">UnionId</param>
+            <param name="password">新密码</param>
+            <param name="code">短信验证码</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.BindPhoneNumber(System.String,System.String,System.String)">
+            <summary>
+            账号绑定手机号
+            </summary>
+            <param name="unionId">UnionId</param>
+            <param name="phoneNumber">手机号</param>
+            <param name="code">短信验证码</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.SetUserRoles(System.String,System.String)">
+            <summary>
+            设定用户角色
+            </summary>
+            <param name="unionId"></param>
+            <param name="roles"></param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Controllers.VersionController">

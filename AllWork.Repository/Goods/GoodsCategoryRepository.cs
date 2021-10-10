@@ -13,12 +13,12 @@ namespace AllWork.Repository.Goods
             var instance = await base.QueryFirst("Select * from GoodsCategory Where CategoryId = @CategoryId", new { goodsCategory.CategoryId });
             if (instance == null)
             {
-                var insertSql = "Insert GoodsCategory (CategoryId,CategoryName,ShopId,ImgUrl,ParentId,Findex,IsCancellation)values(@CategoryId,@CategoryName,@ShopId,@ImgUrl,@ParentId,@Findex,@IsCancellation)";
+                var insertSql = "Insert GoodsCategory (CategoryId,CategoryName,ShopId,ImgUrl,ParentId,IsMainMaterial,Findex,IsCancellation)values(@CategoryId,@CategoryName,@ShopId,@ImgUrl,@ParentId,@IsMainMaterial, @Findex,@IsCancellation)";
                 return await base.Execute(insertSql, goodsCategory) > 0;
             }
             else
             {
-                var updateSql = "Update GoodsCategory set CategoryName = @CategoryName,ShopId = @ShopId,ImgUrl = @ImgUrl,ParentId = @ParentId,Findex = @Findex,IsCancellation = @IsCancellation Where CategoryId = @CategoryId";
+                var updateSql = "Update GoodsCategory set CategoryName = @CategoryName,ShopId = @ShopId,ImgUrl = @ImgUrl,ParentId = @ParentId, IsMainMaterial=@IsMainMaterial, Findex = @Findex,IsCancellation = @IsCancellation Where CategoryId = @CategoryId";
                 return await base.Execute(updateSql, goodsCategory) > 0;
             }
         }

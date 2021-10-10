@@ -12,7 +12,7 @@ namespace AllWork.IServices.Sys
     {
         Task<UserInfo> GetUserInfo(string unionIdOrUserName);
 
-        Task<bool> IsValidUser(LoginRequestDTO req);
+        Task<UserInfo> IsValidUser(LoginRequestDTO req);
 
         Task<bool> SaveUserInfo(UserInfo userInfo);
 
@@ -22,6 +22,10 @@ namespace AllWork.IServices.Sys
 
         Task<Tuple<IEnumerable<UserInfo>, int>> QueryUsers(UserParams userParams);
 
-        Task<bool> SetUserAccount(string unionId, string userName, string password);
+        Task<bool> SetUserPassword(string unionId, string password);
+
+        Task<bool> BindPhoeNumber(string unionId, string phoneNumber);
+
+        Task<bool> SetUserRoles(string unionId, string roles);
     }
 }

@@ -74,6 +74,11 @@
             上级分类ID
             </summary>
         </member>
+        <member name="P:AllWork.Model.Goods.GoodsCategory.IsMainMaterial">
+            <summary>
+            是否主材分类(0副材,1主材)
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsCategory.Findex">
             <summary>
             排序索引
@@ -222,6 +227,11 @@
         <member name="P:AllWork.Model.Goods.GoodsQuote.UnitName">
             <summary>
             单位
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsQuote.IsMainMaterial">
+            <summary>
+            主材(0辅材,1主材)
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsQuote.PriceST">
@@ -2010,9 +2020,14 @@
             提交日期
             </summary>
         </member>
+        <member name="P:AllWork.Model.User.UserInfo.UserId">
+            <summary>
+            用户ID
+            </summary>
+        </member>
         <member name="P:AllWork.Model.User.UserInfo.UnionId">
             <summary>
-            用户Id
+            开放平台用户标识
             </summary>
         </member>
         <member name="P:AllWork.Model.User.UserInfo.UserName">

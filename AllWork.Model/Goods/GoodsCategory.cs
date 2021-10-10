@@ -39,6 +39,12 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
+        /// 是否主材分类(0副材,1主材)
+        /// </summary>
+        public int IsMainMaterial
+        { get; set; }
+
+        /// <summary>
         /// 排序索引
         /// </summary>
         public int Findex

@@ -1,6 +1,7 @@
 ﻿using AllWork.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using System;
 
 namespace AllWork.Web.Filter
 {
@@ -11,6 +12,9 @@ namespace AllWork.Web.Filter
     {
         public override void OnResultExecuting(ResultExecutingContext context)
         {
+            //var name = context.ActionDescriptor.AttributeRouteInfo.Name; //2021-10-10个别action忽略全局过滤器，将route的name标识为ignore开头（不能重名）
+            //if (!string.IsNullOrEmpty(name) && name.StartsWith("ignore")) return; //暂时用这个方法，以后有好方法再作改善
+
             if (context.Result is ObjectResult objectResult)//写法：使用模式匹配来避免后跟强制转换的“is”检查
             {
                 if (objectResult.Value == null)
@@ -53,5 +57,9 @@ namespace AllWork.Web.Filter
                 context.Result = new ObjectResult(new { code = (context.Result as StatusCodeResult).StatusCode, sub_msg = "", msg = "", returnStatus = 1 });
             }
         }
+    }
+
+    public class SkipMyGlobalActionFilterAttribute : Attribute
+    {
     }
 }

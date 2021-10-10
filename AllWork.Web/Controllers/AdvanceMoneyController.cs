@@ -1,6 +1,7 @@
 ﻿using AllWork.IServices.Order;
 using AllWork.Model;
 using AllWork.Model.Order;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -11,6 +12,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize]
     public class AdvanceMoneyController : ControllerBase
     {
         readonly IAdvanceMoneyServices _advanceMoneyServices;

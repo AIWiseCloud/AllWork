@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace AllWork.Common
 {
@@ -60,6 +61,7 @@ namespace AllWork.Common
             }
             return strRet;
         }
+       
 
         /// <summary>
         /// 获取10位时间戳
@@ -81,6 +83,18 @@ namespace AllWork.Common
             System.Security.Cryptography.RNGCryptoServiceProvider r = new System.Security.Cryptography.RNGCryptoServiceProvider();
             r.GetBytes(bytes);
             return BitConverter.ToInt32(bytes, 0);
+        }
+
+        /// <summary>
+        /// 判断输入的字符串是否是一个合法的手机号
+        /// </summary>
+        /// <param name="input"></param>
+        /// <returns></returns>
+        public static bool IsMobilePhone(string input)
+        {
+            Regex regex = new Regex("^1[34578]\\d{9}$");
+            return regex.IsMatch(input);
+
         }
 
         /// <summary>

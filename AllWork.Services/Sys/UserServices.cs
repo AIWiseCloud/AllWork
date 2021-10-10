@@ -30,7 +30,7 @@ namespace AllWork.Services.Sys
         }
 
         //验证是否为有效用户
-        public async Task<bool> IsValidUser(LoginRequestDTO req)
+        public async Task<UserInfo> IsValidUser(LoginRequestDTO req)
         {
             //前台输的明文加密后再与系统中的比对
             if (req.Username.Length != 28 && !string.IsNullOrEmpty(req.Password))
@@ -68,11 +68,23 @@ namespace AllWork.Services.Sys
             return res;
         }
 
-        public async Task<bool> SetUserAccount(string unionId, string userName, string password)
+        public async Task<bool> SetUserPassword(string unionId, string password)
         {
             //加密
             var pw = AllWork.Common.DesEncrypt.Encrypt(password);
-            var res = await _dal.SetUserAccount(unionId, userName, pw);
+            var res = await _dal.SetUserPassword(unionId, pw);
+            return res;
+        }
+
+        public async Task<bool> BindPhoeNumber(string unionId, string phoneNumber)
+        {
+            var res = await _dal.BindPhoeNumber(unionId, phoneNumber);
+            return res;
+        }
+
+        public async Task<bool> SetUserRoles(string unionId, string roles)
+        {
+            var res = await _dal.SetUserRoles(unionId, roles);
             return res;
         }
     }

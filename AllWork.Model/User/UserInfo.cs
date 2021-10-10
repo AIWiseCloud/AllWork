@@ -6,9 +6,17 @@ namespace AllWork.Model.User
     public partial class UserInfo
     {
         /// <summary>
-        /// 用户Id
+        /// 用户ID
+        /// </summary>
+        [Key]
+        public int UserId
+        { get; }
+
+        /// <summary>
+        /// 开放平台用户标识
         /// </summary>
         [Required(ErrorMessage ="UnionId不能为空")]
+        [MinLength(28,ErrorMessage ="UnionId长度不合法")]
         public string UnionId
         { get; set; }
 
@@ -19,7 +27,7 @@ namespace AllWork.Model.User
         /// 用户名
         /// </summary>
         public string UserName
-        { get; set; }
+        { get { return UserId.ToString("000000"); } }
 
         [Required(ErrorMessage = "昵称不能为空")]
         public string NickName

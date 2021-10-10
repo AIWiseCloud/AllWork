@@ -83,6 +83,7 @@ namespace AllWork.Web
                     );
             });
 
+           
 
             //百度编辑器
             services.AddUEditorService();
@@ -93,6 +94,8 @@ namespace AllWork.Web
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                
+               
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
@@ -122,7 +125,17 @@ namespace AllWork.Web
                         return Task.FromResult(0);
                     }
                 };
+                
 
+            });
+
+            //添加接口授权策略 （好处：有多个角色时，不用在控制器写多个Roles，只要[Authorize(Policy = "Admin")]这样写就行）
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("User", policy => policy.RequireRole("user").Build());
+                options.AddPolicy("Editor", policy => policy.RequireRole("editor","finance","admin").Build());
+                options.AddPolicy("Finance", policy => policy.RequireRole("finance").Build());
+                options.AddPolicy("Admin", policy => policy.RequireRole("admin").Build());
             });
 
             //安装Microsoft.AspNetCore.Mvc.NewtonsoftJson后添加（解决前端实体中数字字符串不能转换为int32之类的错误
@@ -192,8 +205,8 @@ namespace AllWork.Web
 
             app.UseAuthentication();//增加认证(jwt)
             app.UseRouting();
-
-            app.UseAuthorization();//授权
+            //授权
+            app.UseAuthorization();
             app.UseCors("any"); // 跨域请求（放在app.UseAuthorization()后, 且在UseRouting后，UseEndpoints前)
 
             app.UseSwagger();

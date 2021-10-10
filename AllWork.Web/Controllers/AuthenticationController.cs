@@ -1,9 +1,12 @@
-﻿using AllWork.Model;
-using AllWork.Model.Sys;
+﻿using AllWork.Model.Sys;
 using AllWork.Web.Auth;
+using AllWork.Web.Filter;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
+using System;
+using System.Drawing; //如果在Linux上运行，要改引用using System.DrawingCore;  using System.DrawingCore.Imaging;
+using System.Drawing.Imaging;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
@@ -15,13 +18,18 @@ namespace AllWork.Web.Controllers
     [ApiController]
     public class AuthenticationController : ControllerBase
     {
-        private readonly IAuthenticateService _authService;
+        readonly IAuthenticateService _authService;
 
         public AuthenticationController(IAuthenticateService authService)
         {
             this._authService = authService;
         }
 
+        /// <summary>
+        /// 获取AccessToken
+        /// </summary>
+        /// <param name="request"></param>
+        /// <returns></returns>
         [AllowAnonymous]
         [HttpPost,Route("requestToken")]
         public async Task<ActionResult> RequestToken([FromBody] LoginRequestDTO request)
@@ -49,5 +57,9 @@ namespace AllWork.Web.Controllers
             var data = _authService.ParseToken(accessToken);
             return data;
         }
+
+      
+
+     
     }
 }
