@@ -61,9 +61,10 @@ namespace AllWork.Web.Controllers
         /// <param name="token"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetUserInfoByToken(string token)
         {
-            var unionId = _authService.ParseToken(token);
+            var unionId = _authService.ParseToken(token); //解析结果可能是unionId, userName, phoneNumber, 由登录参数决定
             try
             {
                 var res = await _userServices.GetUserInfo(unionId);
@@ -214,7 +215,7 @@ namespace AllWork.Web.Controllers
         /// <param name="reason">审核不通过理由</param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize(policy:"editor")]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> AuditCertificationInfo(string unionId, int certificateType, int authState, string reason = "")
         {
             var res = await _userCertificationServices.AuditCertificationInfo(unionId, certificateType, authState, reason);
@@ -273,10 +274,16 @@ namespace AllWork.Web.Controllers
         {
             var value = RedisClient.redisClient.GetStringKey(unionId);
             var result = new OperResult { Status = false };
-            if (value == null || value.Split(',').Length != 2)
+            var bindOther = await _userServices.CheckPhoneNumberBindOther(unionId, phoneNumber);
+            if (bindOther)
+            {
+                result.ErrorMsg = $"{phoneNumber}已被其他账号绑定";
+            }
+            else if (value == null || value.Split(',').Length != 2)
             {
                 result.ErrorMsg = "验证码不存在或已过期";
-            } else if (value.Split(',')[0] != phoneNumber)
+            }
+            else if (value.Split(',')[0] != phoneNumber)
             {
                 result.ErrorMsg = "手机号验证前后不一致";
             }
@@ -299,7 +306,7 @@ namespace AllWork.Web.Controllers
         /// <param name="roles"></param>
         /// <returns></returns>
         [HttpPut]
-        [Authorize(policy:"Admin")]
+        [Authorize(policy: "Admin")]
         public async Task<IActionResult> SetUserRoles(string unionId, string roles)
         {
             var res = await _userServices.SetUserRoles(unionId, roles);

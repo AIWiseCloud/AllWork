@@ -1,8 +1,11 @@
-﻿using AllWork.Web.Helper.Redis;
+﻿using AllWork.IServices.Sys;
+using AllWork.Model.Sys;
+using AllWork.Web.Helper.Redis;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 
@@ -21,9 +24,11 @@ namespace AllWork.Web.Controllers
         readonly string _permanentCode = "0648EE60D0B06ABC2D7FF7419B154148";//永久授权码
         readonly string _key_corpAccessToken = "xiaoke_corpAccessToken"; //缓存键
         readonly string _key_corpId = "xiaoke_corpId"; //缓存键-
-        public XiaokeController(IHttpClientFactory httpClientFactory)
+        readonly ISalesmanServices _salesmanServices;
+        public XiaokeController(IHttpClientFactory httpClientFactory, ISalesmanServices salesmanServices)
         {
             _httpClientFactory = httpClientFactory;
+            _salesmanServices = salesmanServices;
         }
 
         async Task<object> GetCorpAccessToken()
@@ -62,7 +67,7 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取部门列表
+        /// 从销客获取部门列表
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -79,13 +84,13 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
-        /// 获取销客部门下成员信息(详细)
+        /// 从销客获取销客部门下成员信息(详细)
         /// </summary>
         /// <param name="departmentId">部门ID, 为非负整数 </param>
         /// <param name="fetchChild">获取子部门员工</param>
         /// <returns></returns>
         [HttpGet]
-        [Authorize]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> GetEmps(int departmentId=999999, bool fetchChild=true)
         {
             object rightdata2 = await GetCorpAccessToken();
@@ -105,6 +110,32 @@ namespace AllWork.Web.Controllers
             response.EnsureSuccessStatusCode();
             var res = await response.Content.ReadAsStringAsync();
             return Ok(JsonConvert.DeserializeObject(res));
+        }
+
+        /// <summary>
+        /// 批量汇入业务员到APP后台
+        /// </summary>
+        /// <param name="salesmen">业务员集合</param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(policy:"Editor")]
+        public async Task<IActionResult> ImportSalesmen(List<Salesman> salesmen)
+        {
+            var res = await _salesmanServices.ImportSalesma(salesmen);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 从APP数据库获取营销人员列表
+        /// </summary>
+        /// <param name="keywords">关键字(可为空)</param>
+        /// <param name="ignoreStop">是否忽略离职人员，默认不忽略</param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSalesmen(string keywords = "", bool ignoreStop = false)
+        {
+            var res = await _salesmanServices.GetSalesmen(keywords, ignoreStop);
+            return Ok(res);
         }
     }
 }

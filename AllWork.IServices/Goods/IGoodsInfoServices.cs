@@ -26,5 +26,9 @@ namespace AllWork.IServices.Goods
         Task<Tuple<List<QuoteExplain>, List<GoodsQuote>>> GetGoodsQuotes();
 
         Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain);
+
+        Task<IEnumerable<GoodsInfo>> GetAllGoodsInfo();
+
+        Task<OperResult> BatchUpdatePrice(List<GoodsInfo> goodsInfos);
     }
 }

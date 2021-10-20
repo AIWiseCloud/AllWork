@@ -1,10 +1,22 @@
 {
   "version": 2,
-  "dgSpecHash": "pNfkQuo6Zfu5yLiSoIpJBQ1ZsYPREYNphgpWnd47UJWnftZi66GFGq73VrsGf1Wtk6L4cMKIe6fdP/khfvs2+Q==",
+  "dgSpecHash": "fM2OW/QH4iPJzKeAuumRr/8LgE+R1pkGdXporg0MqnktPe9V2SibA5WolWrlTP60Vu65pHbaru4xPgsnxcT6aw==",
   "success": true,
   "projectFilePath": "D:\\AppCode\\AllWork\\AllWork.Services\\AllWork.Services.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\86134\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512"
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.endpointutil\\0.1.1\\alibabacloud.endpointutil.0.1.1.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.openapiclient\\0.0.13\\alibabacloud.openapiclient.0.0.13.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.openapiutil\\1.0.10\\alibabacloud.openapiutil.1.0.10.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.rpcclient\\1.0.1\\alibabacloud.rpcclient.1.0.1.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.sdk.common\\0.2.5\\alibabacloud.sdk.common.0.2.5.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.sdk.dysmsapi20170525\\1.0.3\\alibabacloud.sdk.dysmsapi20170525.1.0.3.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\alibabacloud.teautil\\0.1.11\\alibabacloud.teautil.0.1.11.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\aliyun.credentials\\1.3.1\\aliyun.credentials.1.3.1.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\microsoft.extensions.configuration.abstractions\\5.0.0\\microsoft.extensions.configuration.abstractions.5.0.0.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\microsoft.extensions.primitives\\5.0.0\\microsoft.extensions.primitives.5.0.0.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\newtonsoft.json\\12.0.3\\newtonsoft.json.12.0.3.nupkg.sha512",
+    "C:\\Users\\86134\\.nuget\\packages\\tea\\1.0.11\\tea.1.0.11.nupkg.sha512"
   ],
   "logs": []
 }

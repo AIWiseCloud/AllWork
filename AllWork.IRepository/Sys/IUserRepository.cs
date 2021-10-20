@@ -14,6 +14,8 @@ namespace AllWork.IRepository.Sys
 
         Task<UserInfo> IsValidUser(LoginRequestDTO req);
 
+        Task<bool> CheckPhoneNumberBindOther(string unionId, string phoneNumber);//检查手机号是否被其他账号绑定
+
         Task<bool> SaveUserInfo(UserInfo userInfo);
 
         Task<bool> Logout(string unionId);
@@ -27,5 +29,7 @@ namespace AllWork.IRepository.Sys
         Task<bool> BindPhoeNumber(string unionId, string phoneNumber);
 
         Task<bool> SetUserRoles(string unionId, string roles);
+
+        Task<string> GetCustomerServicePhoneNumbers();
     }
 }

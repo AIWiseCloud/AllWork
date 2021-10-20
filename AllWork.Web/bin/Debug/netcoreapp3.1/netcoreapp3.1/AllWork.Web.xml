@@ -96,6 +96,13 @@
             <param name="paytime">支付日期</param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.AdvanceMoneyController.QueryAdvanceMoney(AllWork.Model.RequestParams.AMQueryParams)">
+            <summary>
+            分页查询定金记录
+            </summary>
+            <param name="queryParams"></param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.AuthenticationController">
             <summary>
             用户认证和签发token
@@ -255,6 +262,30 @@
             <param name="commonParams"></param>
             <returns></returns>
         </member>
+        <member name="T:AllWork.Web.Controllers.DataCenterController">
+            <summary>
+            数据中心
+            </summary>
+        </member>
+        <member name="M:AllWork.Web.Controllers.DataCenterController.WriteAppVisits">
+            <summary>
+            更新日访问量
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.DataCenterController.GetAppVisits(System.Int32)">
+            <summary>
+            获取访问量
+            </summary>
+            <param name="rangType">访问量类型(0表示总访问量，1表示今天访问量)</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.DataCenterController.GetMallData">
+            <summary>
+            获取商城统计数据
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.GoodsController">
             <summary>
             商品服务
@@ -331,6 +362,19 @@
             </summary>
             <param name="isRelease">true发布,false取消发布</param>
             <param name="goodsId">商品ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.GetAllGoodsInfo">
+            <summary>
+            获取商品列表（用于下载批量更新单价的模板)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.GoodsController.BatchUpdatePrice(System.Collections.Generic.List{AllWork.Model.Goods.GoodsInfo})">
+            <summary>
+            批量更新商品价格（用于通过Excel上传批量更新)
+            </summary>
+            <param name="goodsInfos"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.GoodsController.SaveGoodsColor(AllWork.Model.Goods.GoodsColor)">
@@ -974,7 +1018,7 @@
         </member>
         <member name="M:AllWork.Web.Controllers.SMSController.GetVerifyCode(System.String,System.String)">
             <summary>
-            获取验证码（有效期1分钟）
+            获取验证码（有效期60秒）
             </summary>
             <param name="unionId">UnionId</param>
             <param name="phoneNumber">手机号</param>
@@ -1027,7 +1071,7 @@
             <param name="sourceId"></param>
             <returns></returns>
         </member>
-        <member name="M:AllWork.Web.Controllers.SysController.QueryResourceSettings(AllWork.Model.RequestParams.CommonParams)">
+        <member name="M:AllWork.Web.Controllers.SysController.QueryResourceSettings(AllWork.Model.RequestParams.ResourceParams)">
             <summary>
             查询资源配置
             </summary>
@@ -1438,16 +1482,31 @@
         </member>
         <member name="M:AllWork.Web.Controllers.XiaokeController.GetDepts">
             <summary>
-            获取部门列表
+            从销客获取部门列表
             </summary>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.XiaokeController.GetEmps(System.Int32,System.Boolean)">
             <summary>
-            获取销客部门下成员信息(详细)
+            从销客获取销客部门下成员信息(详细)
             </summary>
             <param name="departmentId">部门ID, 为非负整数 </param>
             <param name="fetchChild">获取子部门员工</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.XiaokeController.ImportSalesmen(System.Collections.Generic.List{AllWork.Model.Sys.Salesman})">
+            <summary>
+            批量汇入业务员到APP后台
+            </summary>
+            <param name="salesmen">业务员集合</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.XiaokeController.GetSalesmen(System.String,System.Boolean)">
+            <summary>
+            从APP数据库获取营销人员列表
+            </summary>
+            <param name="keywords">关键字(可为空)</param>
+            <param name="ignoreStop">是否忽略离职人员，默认不忽略</param>
             <returns></returns>
         </member>
         <member name="T:AllWork.Web.Filter.CustomerGlobalExceptionFilterAsync">

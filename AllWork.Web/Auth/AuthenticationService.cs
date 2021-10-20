@@ -52,6 +52,7 @@ namespace AllWork.Web.Auth
             return Tuple.Create(true, token);
         }
 
+        //解析token得到账号（可能是unionId,也可能是账号、手机号，由登录参数决定）
         public string ParseToken(string accessToken)
         {
             var jwtHandler = new JwtSecurityTokenHandler();

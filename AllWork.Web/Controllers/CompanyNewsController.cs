@@ -2,6 +2,7 @@
 using AllWork.Model;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(policy: "Editor")]
     public class CompanyNewsController : ControllerBase
     {
         readonly ICompanyNewsServices _companyNewsServices;
@@ -43,6 +45,7 @@ namespace AllWork.Web.Controllers
         /// <param name="newsId"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetCompanyNews(string newsId)
         {
             var res = await _companyNewsServices.GetCompanyNews(newsId);
@@ -93,6 +96,7 @@ namespace AllWork.Web.Controllers
         /// <param name="commonParams"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> QueryCompanyNews(NewsParams commonParams)
         {
             var res = await _companyNewsServices.QueryCompanyNews(commonParams);

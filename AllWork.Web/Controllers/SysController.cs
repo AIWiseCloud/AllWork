@@ -2,8 +2,8 @@
 using AllWork.IServices.Sys;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
@@ -13,7 +13,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    //[Authorize]
+    [Authorize(policy: "Editor")]
     public class SysController : BaseController
     {
         readonly IResourceSettingsServices _resourceSettingsServices;
@@ -48,6 +48,7 @@ namespace AllWork.Web.Controllers
         /// <param name="sourceId"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetResourceSettings(string sourceId)
         {
             var res = await _resourceSettingsServices.GetResourceSettings(sourceId);
@@ -60,6 +61,7 @@ namespace AllWork.Web.Controllers
         /// <param name="groupNo">分组码</param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetResourceSettingsByGroup(string groupNo)
         {
             var res = await _resourceSettingsServices.GetResourceSettingsByGroup(groupNo);
@@ -71,6 +73,7 @@ namespace AllWork.Web.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetGroups()
         {
             var res = await _resourceSettingsServices.GetGroups();
@@ -95,7 +98,8 @@ namespace AllWork.Web.Controllers
         /// <param name="resourceParams"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> QueryResourceSettings(CommonParams resourceParams)
+        [AllowAnonymous]
+        public async Task<IActionResult> QueryResourceSettings(ResourceParams resourceParams)
         {
             var res = await _resourceSettingsServices.QueryResourceSettings(resourceParams);
             return Ok(new { totalCount = res.Item2, items = res.Item1 });
@@ -178,6 +182,7 @@ namespace AllWork.Web.Controllers
         /// <param name="parentId"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetSubMessageList(string parentId)
         {
             var res = await _subMessageServices.GetSubMessageList(parentId);

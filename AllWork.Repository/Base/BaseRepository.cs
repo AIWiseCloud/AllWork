@@ -266,6 +266,16 @@ namespace AllWork.Repository.Base
             return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst>(), totalCount);
         }
 
+        // 分页查询(2表)
+        public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst, TSecond>(string sql, Func<TFirst, TSecond, TFirst> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
+        {
+            using var con = GetOpenConn();
+            var multi = await con.QueryMultipleAsync(sql, param, transaction, commandTimeout, commandType);
+
+            var totalCount = multi.ReadFirst<int>();
+            return Tuple.Create<IEnumerable<TFirst>, int>(multi.Read<TFirst, TSecond, TFirst>(map, splitNo, buffered), totalCount);
+        }
+
         // 分页查询(3表)
         public async Task<Tuple<IEnumerable<TFirst>, int>> QueryPagination<TFirst, TSecond, TThird>(string sql, Func<TFirst, TSecond, TThird, TFirst> map, object param = null, string splitNo = "id", IDbTransaction transaction = null, bool buffered = true, int? commandTimeout = null, CommandType? commandType = null)
         {

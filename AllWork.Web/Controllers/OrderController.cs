@@ -1,5 +1,6 @@
 ﻿using AllWork.IServices.Goods;
 using AllWork.IServices.Order;
+using AllWork.IServices.Sys;
 using AllWork.Model;
 using AllWork.Model.Order;
 using AllWork.Model.RequestParams;
@@ -19,10 +20,14 @@ namespace AllWork.Web.Controllers
     {
         readonly IOrderServices _orderServices;
         readonly IInventoryServices _inventoryServices;
-        public OrderController(IOrderServices orderServices, IInventoryServices inventoryServices)
+        readonly IUserServices _userServices;
+        readonly ISMSServices _smsServices;
+        public OrderController(IOrderServices orderServices, IInventoryServices inventoryServices, IUserServices userServices, ISMSServices sMSServices)
         {
             _orderServices = orderServices;
             _inventoryServices = inventoryServices;
+            _userServices = userServices;
+            _smsServices = sMSServices;
         }
 
         /// <summary>
@@ -45,6 +50,15 @@ namespace AllWork.Web.Controllers
             //    return BadRequest(new { msg = checkresult.ErrorMsg });
             //}
             var res = await _orderServices.GenerateOrder(orderMain);
+            //发送短信提示
+            if (res.Status)
+            {
+                var csPhones = await _userServices.GetCustomerServicePhoneNumbers();
+                if (!string.IsNullOrEmpty(csPhones))
+                {
+                    await _smsServices.SendOrderMsg(csPhones, orderMain.Receiver, orderMain.OrderId.ToString());
+                }
+            }
             return Ok(res);
         }
 
@@ -100,6 +114,7 @@ namespace AllWork.Web.Controllers
         /// <param name="orderDeliveryParams"></param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy: "CS")]
         public async Task<IActionResult> DeliveryOrder(OrderDeliveryParams orderDeliveryParams)
         {
             var res = await _orderServices.DeliveryOrder(orderDeliveryParams);
@@ -113,6 +128,7 @@ namespace AllWork.Web.Controllers
         /// <param name="isConfirm">1确认,0取消确认</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy: "CS")]
         public async Task<IActionResult> ConfirmPay(long orderId, int isConfirm)
         {
             var res = await _orderServices.ConfirmPay(orderId, isConfirm);

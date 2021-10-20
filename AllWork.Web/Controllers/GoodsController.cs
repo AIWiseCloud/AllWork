@@ -1,6 +1,7 @@
 ﻿using AllWork.IServices.Goods;
 using AllWork.Model.Goods;
 using AllWork.Model.RequestParams;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -40,6 +41,7 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsCategory"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> SaveGoodsCategory(GoodsCategory goodsCategory)
         {
             var res = await _goodsCategoryServices.SaveGoodsCategory(goodsCategory);
@@ -134,6 +136,7 @@ namespace AllWork.Web.Controllers
         /// <param name="categoryId"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> DeleteGoodsCategory(string categoryId)
         {
             var res = await _goodsCategoryServices.DeleteGoodsCategory(categoryId);
@@ -145,6 +148,7 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsInfo"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> SaveGoodsInfo(GoodsInfo goodsInfo)
         {
             var res = await _goodsInfoServices.SaveGoodsInfo(goodsInfo);
@@ -169,6 +173,7 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsId"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> DeleteGoodsInfo(string goodsId)
         {
             var res = await _goodsInfoServices.DeleteGoodsInfo(goodsId);
@@ -183,12 +188,13 @@ namespace AllWork.Web.Controllers
         /// <param name="userName">用户名</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> CopyGoodsInfo(string goodsId, string newGoodsId,string userName)
         {
             GoodsInfoExt goodsInfo = await _goodsInfoServices.GetGoodsInfo(goodsId) as GoodsInfoExt;
             goodsInfo.GoodsId = newGoodsId;
             goodsInfo.Creator = userName;
-            goodsInfo.GoodsDesc = goodsInfo.GoodsDesc + "(复制生成)";
+            goodsInfo.GoodsDesc +=  "(复制生成)";
             var resSave = await _goodsInfoServices.SaveGoodsInfo(goodsInfo);
             foreach (var item in goodsInfo.GoodsColors)
             {
@@ -221,9 +227,35 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsId">商品ID</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> ReleaseGoods(bool isRelease, string goodsId)
         {
             var res = await _goodsInfoServices.ReleaseGoods(isRelease, goodsId);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 获取商品列表（用于下载批量更新单价的模板)
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        [Authorize(policy: "Editor")]
+        public async Task<IActionResult> GetAllGoodsInfo()
+        {
+            var res = await _goodsInfoServices.GetAllGoodsInfo();
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 批量更新商品价格（用于通过Excel上传批量更新)
+        /// </summary>
+        /// <param name="goodsInfos"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [Authorize(policy: "Editor")]
+        public async Task<IActionResult> BatchUpdatePrice(List<GoodsInfo> goodsInfos)
+        {
+            var res = await _goodsInfoServices.BatchUpdatePrice(goodsInfos);
             return Ok(res);
         }
 
@@ -233,6 +265,7 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsColor"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> SaveGoodsColor(GoodsColor goodsColor)
         {
             var res = await _goodsColorServices.SaveGoodsColor(goodsColor);
@@ -281,6 +314,7 @@ namespace AllWork.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> DeleteGoodsColor(string id)
         {
             var res = await _goodsColorServices.DeleteGoodsColor(id);
@@ -305,6 +339,7 @@ namespace AllWork.Web.Controllers
         /// <param name="goodsSpec"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> SaveGoodsSpec(GoodsSpec goodsSpec)
         {
             var res = await _goodsSpecServices.SaveGoodsSpec(goodsSpec);
@@ -341,6 +376,7 @@ namespace AllWork.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> DeleteGoodsSpec(string id)
         {
             var res = await _goodsSpecServices.DeleteGoodsSpec(id);
@@ -353,6 +389,7 @@ namespace AllWork.Web.Controllers
         /// <param name="spuImg"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> SaveSpuImg(SpuImg spuImg)
         {
             var res = await _spuImgServices.SaveSpuImg(spuImg);
@@ -389,6 +426,7 @@ namespace AllWork.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> DeleteSpuImg(string id)
         {
             var res = await _spuImgServices.DeleteSpuImg(id);
@@ -424,6 +462,7 @@ namespace AllWork.Web.Controllers
         /// <param name="quoteExplain"></param>
         /// <returns></returns>
         [HttpPost]
+        [Authorize(policy: "Editor")]
         public async Task<IActionResult> UpdateQuoteExplain(QuoteExplain quoteExplain)
         {
             var res = await _goodsInfoServices.UpdateQuoteExplain(quoteExplain);

@@ -15,7 +15,7 @@ namespace AllWork.Repository.Sys
         //获取用户信息
         public async Task<UserInfo> GetUserInfo(string unionIdOrUserName)
         {
-            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionIdOrUserName}' OR UserId = '{unionIdOrUserName}' ");
+            var res = await base.QueryFirst($"Select * from UserInfo Where UnionId = '{unionIdOrUserName}' or PhoneNumber = '{unionIdOrUserName}' OR UserId = '{unionIdOrUserName}' ");
             return res;
         }
 
@@ -29,7 +29,7 @@ namespace AllWork.Repository.Sys
             }
             else
             {
-                var res = await base.QueryFirst($"Select * from UserInfo Where UserId = '{req.Username}' and Password = '{req.Password}' and UserState != -1 ");
+                var res = await base.QueryFirst($"Select * from UserInfo Where (UserId = '{req.Username}' or PhoneNumber = '{req.Username}' ) and Password = '{req.Password}' and UserState != -1 ");
                 return res;
             }
         }
@@ -50,7 +50,7 @@ namespace AllWork.Repository.Sys
             }
             else
             {
-                var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,PhoneNumber = @PhoneNumber,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState Where UnionId = @UnionId";
+                var updateSql = @"Update UserInfo set OpenId = @OpenId,NickName = @NickName,Email = @Email,Avatar = @Avatar,Province = @Province,City = @City,County = @County,Gender = @Gender,UserState = @UserState Where UnionId = @UnionId";
                 return await base.Execute(updateSql, userInfo) > 0;
             }
         }
@@ -111,7 +111,8 @@ namespace AllWork.Repository.Sys
         public async Task<bool> SetUserPassword(string unionId, string password)
         {
             var sql = "Update UserInfo set Password = @Password Where UnionId = @UnionId";
-            var res = await base.ExecuteScalar<int>(sql, new {  Password = password, UnionId = unionId });
+            var res = await base.Execute(sql, new { UnionId = unionId, Password = password });
+           
             return res> 0;
         }
 
@@ -127,6 +128,21 @@ namespace AllWork.Repository.Sys
             var sql = "Update UserInfo set Roles = @Roles Where UnionId = @unionId";
             var res = await base.Execute(sql, new { UnionId = unionId, Roles = roles });
             return res > 0;
+        }
+
+        //检查手机号是否被其他账号绑定
+        public async Task<bool> CheckPhoneNumberBindOther(string unionId, string phoneNumber)
+        {
+            var sql = "Select count(*) from UserInfo Where UnionID != @UnionId and PhoneNumber = @PhoneNumber";
+            var res = await base.ExecuteScalar<int>(sql, new { UnionId = unionId, PhoneNumber = phoneNumber });
+            return res > 0;
+        }
+
+        public async Task<string> GetCustomerServicePhoneNumbers()
+        {
+            var sql = "select group_concat(PhoneNumber) from UserInfo where (Roles  like concat('%','cs','%') or Roles  like concat('%','admin','%')) and ifnull(PhoneNumber,'')!=''";
+            var res = await base.ExecuteScalar<string>(sql);
+            return res;
         }
     }
 }

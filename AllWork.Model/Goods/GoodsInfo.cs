@@ -73,6 +73,12 @@ namespace AllWork.Model.Goods
         { get; set; }
 
         /// <summary>
+        /// 基本单位折扣价
+        /// </summary>
+        public decimal DiscountUnitPrice
+        { get; set; }
+
+        /// <summary>
         /// 销量
         /// </summary>
         public int SalesTimes

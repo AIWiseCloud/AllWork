@@ -109,6 +109,7 @@ namespace AllWork.Web.Controllers
         /// <param name="invoiceUrl">发票图片</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy: "CS")]
         public async Task<IActionResult> MakeInvoice(string id, string drawer, string invoiceUrl)
         {
             var res = await _invoiceServices.MakeInvoice(id, drawer, invoiceUrl);

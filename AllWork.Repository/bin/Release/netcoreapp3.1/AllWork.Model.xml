@@ -49,6 +49,36 @@
             是否默认址
             </summary>
         </member>
+        <member name="P:AllWork.Model.DataCenter.AppVisits.ID">
+            <summary>
+            流水号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.DataCenter.AppVisits.FDate">
+            <summary>
+            日期
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.DataCenter.AppVisits.Visits">
+            <summary>
+            访问量
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.DataCenter.MallData.GroupNo">
+            <summary>
+            数据分组
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.DataCenter.MallData.ItemName">
+            <summary>
+            统计项
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.DataCenter.MallData.Value">
+            <summary>
+            统计数
+            </summary>
+        </member>
         <member name="P:AllWork.Model.Goods.GoodsCategory.CategoryId">
             <summary>
             商品分类ID
@@ -172,6 +202,11 @@
         <member name="P:AllWork.Model.Goods.GoodsInfo.BaseUnitPrice">
             <summary>
             基本单位单价
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Goods.GoodsInfo.DiscountUnitPrice">
+            <summary>
+            基本单位折扣价
             </summary>
         </member>
         <member name="P:AllWork.Model.Goods.GoodsInfo.SalesTimes">
@@ -1190,6 +1225,16 @@
             申请时间
             </summary>
         </member>
+        <member name="P:AllWork.Model.RequestParams.AMQueryParams.StartDate">
+            <summary>
+            开始日期(QueryScheme = 0时用)
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.AMQueryParams.EndDate">
+            <summary>
+            截止日期(QueryScheme = 0时用)
+            </summary>
+        </member>
         <member name="P:AllWork.Model.RequestParams.AppTransactionsParams.OrderId">
             <summary>
             商城订单号
@@ -1390,6 +1435,16 @@
             需求数量
             </summary>
         </member>
+        <member name="T:AllWork.Model.RequestParams.ResourceParams">
+            <summary>
+            查询资源实体参数
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.RequestParams.ResourceParams.GroupNo">
+            <summary>
+            分组码
+            </summary>
+        </member>
         <member name="T:AllWork.Model.RequestParams.StockBillParams">
             <summary>
             出入库单据查询请求参数
@@ -1577,7 +1632,7 @@
         </member>
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Username">
             <summary>
-            用户名(userName或者unionId)
+            登录账号（UnionId/用户账号/手机号)
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.LoginRequestDTO.Password">
@@ -1743,6 +1798,36 @@
         <member name="P:AllWork.Model.Sys.ResourceSettings.FIndex">
             <summary>
             排序索引
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.Sys.Salesman">
+            <summary>
+            业务员
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Salesman.OpenUserId">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Salesman.Name">
+            <summary>
+            姓名
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Salesman.Mobile">
+            <summary>
+            手机号
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Salesman.ProfileImageUrl">
+            <summary>
+            头像
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.Sys.Salesman.IsStop">
+            <summary>
+            停用
             </summary>
         </member>
         <member name="P:AllWork.Model.Sys.Shop.ShopId">

@@ -18,7 +18,6 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.IO;
-using System.Net.Mime;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
@@ -94,8 +93,6 @@ namespace AllWork.Web
             {
                 x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                
-               
             }).AddJwtBearer(x =>
             {
                 x.RequireHttpsMetadata = false;
@@ -125,15 +122,16 @@ namespace AllWork.Web
                         return Task.FromResult(0);
                     }
                 };
-                
-
             });
 
             //添加接口授权策略 （好处：有多个角色时，不用在控制器写多个Roles，只要[Authorize(Policy = "Admin")]这样写就行）
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("User", policy => policy.RequireRole("user").Build());
-                options.AddPolicy("Editor", policy => policy.RequireRole("editor","finance","admin").Build());
+                options.AddPolicy("Editor", policy => policy.RequireRole("editor", "cs",  "finance",  "programmer", "admin").Build());
+                options.AddPolicy("Programmer", policy => policy.RequireRole("programmer", "admin").Build());
+                options.AddPolicy("Salesman", policy => policy.RequireRole("salesman", "cs", "finance", "programmer", "admin").Build());
+                options.AddPolicy("CS", policy => policy.RequireRole("cs", "finance","programmer", "admin").Build());
                 options.AddPolicy("Finance", policy => policy.RequireRole("finance").Build());
                 options.AddPolicy("Admin", policy => policy.RequireRole("admin").Build());
             });
@@ -215,7 +213,6 @@ namespace AllWork.Web
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "AllWork API V1");
                 c.RoutePrefix = "api";// 如果设为空，访问路径就是根域名/index.html，设置为空，表示直接在根域名访问；想换一个路径，直接写名字即可，比如直接写c.RoutePrefix = "swagger"; 则访问路径为 根域名/swagger/index.html
             });
-
 
 
             app.UseStaticFiles(new StaticFileOptions

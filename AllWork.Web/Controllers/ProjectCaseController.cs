@@ -1,6 +1,7 @@
 ﻿using AllWork.IServices.Sys;
 using AllWork.Model.RequestParams;
 using AllWork.Model.Sys;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -15,6 +16,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
+    [Authorize(policy: "Editor")]
     public class ProjectCaseController : ControllerBase
     {
         readonly IProjectCaseServices _projectCaseServices;
@@ -40,6 +42,7 @@ namespace AllWork.Web.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [AllowAnonymous]
         public async Task<IActionResult> GetProjectCase(string id)
         {
             var res = await _projectCaseServices.GetProjectCase(id);
@@ -64,6 +67,7 @@ namespace AllWork.Web.Controllers
         /// <param name="projectCaseParams"></param>
         /// <returns></returns>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> QueryProjectCases(ProjectCaseParams projectCaseParams)
         {
             var res = await _projectCaseServices.QueryProjectCase(projectCaseParams);

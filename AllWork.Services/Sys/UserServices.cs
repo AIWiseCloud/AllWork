@@ -87,5 +87,17 @@ namespace AllWork.Services.Sys
             var res = await _dal.SetUserRoles(unionId, roles);
             return res;
         }
+
+        public async Task<bool> CheckPhoneNumberBindOther(string unionId, string phoneNumber)
+        {
+            var res = await _dal.CheckPhoneNumberBindOther(unionId, phoneNumber);
+            return res;
+        }
+
+        public async Task<string> GetCustomerServicePhoneNumbers()
+        {
+            var res = await _dal.GetCustomerServicePhoneNumbers();
+            return res;
+        }
     }
 }

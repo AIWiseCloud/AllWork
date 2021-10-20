@@ -1,5 +1,7 @@
 ﻿using AllWork.Model;
 using AllWork.Model.Order;
+using AllWork.Model.RequestParams;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,5 +20,7 @@ namespace AllWork.IRepository.Order
         Task<int> SubmitAdvanceMoney(AdvanceMoney advanceMoney);
 
         Task<OperResult> ConfirmReceipt(long id, string userName, int isConfirm,string paytime);
+
+        Task<Tuple<IEnumerable<AdvanceMoneyExt>, int>> QueryAdvanceMoney(AMQueryParams queryParams);
     }
 }

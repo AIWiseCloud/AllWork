@@ -142,5 +142,17 @@ namespace AllWork.Services.Goods
             var res = await _dal.UpdateQuoteExplain(quoteExplain);
             return res;
         }
+
+        public async Task<IEnumerable<GoodsInfo>> GetAllGoodsInfo()
+        {
+            var res = await _dal.GetAllGoodsInfo();
+            return res;
+        }
+
+        public async Task<OperResult> BatchUpdatePrice(List<GoodsInfo> goodsInfos)
+        {
+            var res = await _dal.BatchUpdatePrice(goodsInfos);
+            return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
+        }
     }
 }

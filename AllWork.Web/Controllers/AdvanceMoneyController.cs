@@ -1,8 +1,11 @@
 ﻿using AllWork.IServices.Order;
 using AllWork.Model;
 using AllWork.Model.Order;
+using AllWork.Model.RequestParams;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace AllWork.Web.Controllers
@@ -78,10 +81,24 @@ namespace AllWork.Web.Controllers
         /// <param name="paytime">支付日期</param>
         /// <returns></returns>
         [HttpPut]
+        [Authorize(policy:"CS")]
         public async Task<IActionResult> ConfirmReceipt(long id, string userName, int isConfirm, string paytime)
         {
             var res = await _advanceMoneyServices.ConfirmReceipt(id, userName, isConfirm, paytime);
             return Ok(res);
+        }
+
+        /// <summary>
+        /// 分页查询定金记录
+        /// </summary>
+        /// <param name="queryParams"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [AllowAnonymous]
+        public async Task<IActionResult> QueryAdvanceMoney(AMQueryParams queryParams)
+        {
+            var res = await _advanceMoneyServices.QueryAdvanceMoney(queryParams);
+            return Ok(new { totalCount = res.Item2, items = res.Item1 });
         }
     }
 }

@@ -32,5 +32,9 @@ namespace AllWork.IRepository.Goods
         Task<Tuple<List<QuoteExplain>,List<GoodsQuote>>> GetGoodsQuotes();
 
         Task<int> UpdateQuoteExplain(QuoteExplain quoteExplain);
+
+        Task<IEnumerable<GoodsInfo>> GetAllGoodsInfo();
+
+        Task<Tuple<bool,string>> BatchUpdatePrice(List<GoodsInfo> goodsInfos);
     }
 }

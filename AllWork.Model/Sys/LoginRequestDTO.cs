@@ -6,7 +6,7 @@ namespace AllWork.Model.Sys
     public class LoginRequestDTO
     {
         /// <summary>
-        /// 用户名(userName或者unionId)
+        /// 登录账号（UnionId/用户账号/手机号)
         /// </summary>
         [Required]
         [JsonProperty("username")]

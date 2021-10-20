@@ -17,11 +17,11 @@ namespace AllWork.Repository.Goods
             if (instance == null)
             {
                 goodsInfo.IsUnder = 1; //默认是下架 （要上架需要一个发布动作)
-                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,Mixture, GoodsDesc,UnitName,BaseUnitPrice,SalesTimes,IsRecommend,IsNew,IsUnder,Creator, GroupDisplayOrder)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand,@Mixture, @GoodsDesc,@UnitName, @BaseUnitPrice,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator, @GroupDisplayOrder)";
+                sql = "Insert GoodsInfo (GoodsId,CategoryId,ProdNumber,GoodsName, Brand ,Mixture, GoodsDesc,UnitName,BaseUnitPrice, DiscountUnitPrice,SalesTimes,IsRecommend,IsNew,IsUnder,Creator, GroupDisplayOrder)values(@GoodsId,@CategoryId,@ProdNumber,@GoodsName, @Brand,@Mixture, @GoodsDesc,@UnitName, @BaseUnitPrice, @DiscountUnitPrice,@SalesTimes,@IsRecommend,@IsNew,@IsUnder,@Creator, @GroupDisplayOrder)";
             }
             else
             {
-                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand, Mixture = @Mixture,  GoodsDesc = @GoodsDesc,UnitName=@UnitName, BaseUnitPrice = @BaseUnitPrice,SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator, GroupDisplayOrder = @GroupDisplayOrder Where GoodsId = @GoodsId";
+                sql = "Update GoodsInfo set CategoryId = @CategoryId,ProdNumber = @ProdNumber,GoodsName = @GoodsName, Brand = @Brand, Mixture = @Mixture,  GoodsDesc = @GoodsDesc,UnitName=@UnitName, BaseUnitPrice = @BaseUnitPrice, DiscountUnitPrice = @DiscountUnitPrice, SalesTimes = @SalesTimes,IsRecommend = @IsRecommend,IsNew = @IsNew,IsUnder = @IsUnder,Creator = @Creator, GroupDisplayOrder = @GroupDisplayOrder Where GoodsId = @GoodsId";
             }
             return await base.Execute(sql, goodsInfo) > 0;
         }
@@ -194,7 +194,7 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
 
         public async Task<IEnumerable<GoodsInfo>> GetGoodsList(string categoryId)
         {
-            var sql = $"select GoodsId, GoodsName, UnitName, BaseUnitPrice, Mixture, CategoryId,Brand from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
+            var sql = $"select GoodsId, GoodsName, UnitName, BaseUnitPrice, DiscountUnitPrice, Mixture, CategoryId,Brand from GoodsInfo where CategoryId like '{categoryId}%' and IsUnder = 0";
             var res = await base.QueryList(sql);
             return res;
         }
@@ -222,7 +222,36 @@ left join GoodsSpec t2 on t2.ID = s.ID  Where (1 = 1) ");
             }
             var res = await base.Execute(sql, quoteExplain);
             return res;
+        }
 
+
+        public async Task<IEnumerable<GoodsInfo>> GetAllGoodsInfo()
+        {
+            var sql = "Select * from GoodsInfo Order by CategoryId, GoodsName ";
+            var res = await base.QueryList(sql);
+            return res;
+        }
+
+        /// <summary>
+        /// 批量更新商品价格
+        /// </summary>
+        /// <param name="goodsInfos"></param>
+        /// <returns></returns>
+        public async Task<Tuple<bool, string>> BatchUpdatePrice(List<GoodsInfo> goodsInfos)
+        {
+            var sql = "update GoodsInfo set BaseUnitPrice = @BaseUnitPrice, DiscountUnitPrice = @DiscountUnitPrice where GoodsId = @GoodsId ";
+            var tranitems = new List<Tuple<string, object>>();
+            foreach(var item in goodsInfos)
+            {
+                tranitems.Add(new Tuple<string, object>(sql, item));
+            };
+            var sql2 = @"update GoodsSpec a, GoodsInfo b set 
+a.Price = b.BaseUnitPrice * a.UnitConverter , 
+a.DiscountPrice = case  when b.DiscountUnitPrice = 0 then b.BaseUnitPrice  else b.DiscountUnitPrice end * a.UnitConverter 
+where a.GoodsId = b.GoodsId";
+            tranitems.Add(new Tuple<string, object>(sql2, null));//统一更新规格表中的单价
+            var res = await base.ExecuteTransaction(tranitems);
+            return res;
         }
 
     }

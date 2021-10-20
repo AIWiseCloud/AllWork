@@ -27,5 +27,9 @@ namespace AllWork.IServices.Sys
         Task<bool> BindPhoeNumber(string unionId, string phoneNumber);
 
         Task<bool> SetUserRoles(string unionId, string roles);
+
+        Task<bool> CheckPhoneNumberBindOther(string unionId, string phoneNumber);
+
+        Task<string> GetCustomerServicePhoneNumbers();
     }
 }

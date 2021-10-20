@@ -2,6 +2,8 @@
 using AllWork.IServices.Order;
 using AllWork.Model;
 using AllWork.Model.Order;
+using AllWork.Model.RequestParams;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -45,6 +47,12 @@ namespace AllWork.Services.Order
         public async Task<OperResult> ConfirmReceipt(long id, string userName, int isConfirm, string paytime)
         {
             var res = await _dal.ConfirmReceipt(id, userName, isConfirm, paytime);
+            return res;
+        }
+
+        public async Task<Tuple<IEnumerable<AdvanceMoneyExt>, int>> QueryAdvanceMoney(AMQueryParams queryParams)
+        {
+            var res = await _dal.QueryAdvanceMoney(queryParams);
             return res;
         }
     }

@@ -92,7 +92,7 @@ namespace AllWork.Common
         /// <returns></returns>
         public static bool IsMobilePhone(string input)
         {
-            Regex regex = new Regex("^1[34578]\\d{9}$");
+            Regex regex = new Regex("^1[345789]\\d{9}$");
             return regex.IsMatch(input);
 
         }

@@ -31,7 +31,6 @@
     ".NETCoreApp,Version=v3.1": {
       "AllWork.Web/1.0.0": {
         "dependencies": {
-          "AlibabaCloud.SDK.Dysmsapi20170525": "1.0.3",
           "AllWork.Common": "1.0.0",
           "AllWork.IRepository": "1.0.0",
           "AllWork.IServices": "1.0.0",
@@ -2762,9 +2761,11 @@
       },
       "AllWork.Services/1.0.0": {
         "dependencies": {
+          "AlibabaCloud.SDK.Dysmsapi20170525": "1.0.3",
           "AllWork.Common": "1.0.0",
           "AllWork.IRepository": "1.0.0",
-          "AllWork.IServices": "1.0.0"
+          "AllWork.IServices": "1.0.0",
+          "Microsoft.Extensions.Configuration.Abstractions": "5.0.0"
         },
         "runtime": {
           "AllWork.Services.dll": {}

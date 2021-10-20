@@ -89,4 +89,9 @@ namespace AllWork.Model.Order
         { get; set; }
 
     }
+
+    public class AdvanceMoneyExt : AdvanceMoney
+    {
+        public OrderMain OrderMain { get; set; } = new OrderMain { };
+    }
 }

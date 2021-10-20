@@ -18,7 +18,7 @@ namespace AllWork.Web.Controllers
     /// </summary>
     [Route("api/[controller]/[action]")]
     [ApiController]
-    [Authorize]
+    [Authorize(policy: "Programmer")]
     public class VersionController : ControllerBase
     {
         readonly IVersionManagementServices _versionManagementServices;
