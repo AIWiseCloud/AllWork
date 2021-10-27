@@ -184,7 +184,7 @@ Where a.OrderId = {0}", orderId);
                 new Tuple<string, object>(sql2,new{ID=id })
             };
                 var res = await base.ExecuteTransaction(tranitems);
-                return res.Item1 ;
+                return res.Item1;
             }
             else //订单支付成功
             {
@@ -221,7 +221,14 @@ left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.ID
 left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId Where (1 = 1)");
             if (orderQueryParams.UnionId != "*")
             {
-                sqlpub.Append(" and UnionId = @UnionId ");//*表示后端查询不用按用户ID过滤
+                
+                var unionids = @"Select UnionId from UserInfo where OpenUserId 
+in(
+select b.OpenUserId from UserInfo a, Salesman b where a.PhoneNumber = b.Mobile and a.UnionId=@UnionId
+)
+union select  @UnionId ";
+                //sqlpub.Append(" and UnionId = @UnionId ");//*表示后端查询不用按用户ID过滤
+                sqlpub.AppendFormat(" and union in ({0}) ", unionids); //移动端可以查看自己及自己客户下的订单(2021-10-27)
             }
             //查询方案为0：按关键字搜索
             if (orderQueryParams.QueryScheme == 0)
@@ -230,8 +237,6 @@ left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId an
                 {
                     sqlpub.AppendFormat(" and (a.OrderId = @OrderId or b.GoodsId = @GoodsId or c.ProdNumber like @ProdNumber or c.GoodsName like '%{0}%')  ", orderQueryParams.QueryValue);
                 }
-
-
                 if (orderQueryParams.StatusId != 9)
                 {
                     sqlpub.Append(" and a.StatusId = @StatusId "); //默认9表示所有状态
@@ -273,7 +278,7 @@ left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId an
             var sql2 = string.Format(@"Select a.*,'' as id1, b.*,'' as id2, c.*,'' as id3, d.*,'' as id4, e.*,'' as id5, f.*, '' as id6, oa.*
 from OrderMain a,
 (
-{0} limit @Skip, @PageSize
+{0} {1} limit @Skip, @PageSize
 )idtab
 left join OrderList b on idtab.OrderId = b.OrderId
 left join OrderAttach oa on oa.OrderId = idtab.OrderId
@@ -281,7 +286,7 @@ left join GoodsInfo c on b.GoodsId = c.GoodsId
 left join GoodsColor d on b.GoodsId = d.GoodsId and b.ColorId = d.ID
 left join GoodsSpec e on b.GoodsId = e.GoodsId and b.SpecId = e.ID
 left join GoodsColorSpec f on b.GoodsId = f.GoodsId and b.ColorId = f.ColorId and b.SpecId = f.SpecId 
-Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
+Where a.OrderId = idtab.OrderId", sqlpub, sqlorder);
             //完整sql
             var sql = sql1 + ";" + sql2;
             var res = await base.QueryPagination<OrderMainExt, OrderListExt, GoodsInfo, GoodsColor, GoodsSpec, GoodsColorSpec, OrderAttach>(sql, (om, ol, gi, gc, gs, cs, oa) =>
@@ -355,6 +360,40 @@ Where a.OrderId = idtab.OrderId", sqlpub) + sqlorder;
                 sql = "Update OrderAttach set OrderId = @OrderId,UnionId = @UnionId,PayVoucherUrl = @PayVoucherUrl Where OrderId = @OrderId";
             }
             var res = await base.Execute(sql, orderAttach);
+            return res;
+        }
+
+        //订单调价
+        public async Task<Tuple<bool, string>> AdjustOrderPrice(long orderId, int lineId, decimal newPrice)
+        {
+            var sql1 = "update OrderList set UnitPrice = @UnitPrice, Amount = Quantity * @UnitPrice where OrderId = @OrderId and LineId = @LineId ";
+            var sql2 = @"update OrderMain a, (select sum(Amount)as Amount from OrderList where OrderId = @OrderId)b set
+a.Amount = b.Amount, a.RealPay = b.Amount - a.Freight - a.Discount 
+where a.OrderId = @OrderId";
+
+            var transitems = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>(sql1,new{UnitPrice = newPrice, OrderId= orderId,LineId=lineId}),
+                new Tuple<string, object>(sql2,new{OrderId=orderId})
+            };
+            var res = await base.ExecuteTransaction(transitems);
+            return res;
+        }
+
+        //订单调数量
+        public async Task<Tuple<bool, string>> AdjustOrderQuantity(long orderId, int lineId, decimal newQty)
+        {
+            var sql1 = "update OrderList set Quantity = @Quantity, Amount = @Quantity * UnitPrice where OrderId = @OrderId and LineId = @LineId ";
+            var sql2 = @"update OrderMain a, (select sum(Amount)as Amount from OrderList where OrderId = @OrderId)b set
+a.Amount = b.Amount, a.RealPay = b.Amount - a.Freight - a.Discount 
+where a.OrderId = @OrderId";
+
+            var transitems = new List<Tuple<string, object>>
+            {
+                new Tuple<string, object>(sql1,new{Quantity = newQty, OrderId= orderId,LineId=lineId}),
+                new Tuple<string, object>(sql2,new{OrderId=orderId})
+            };
+            var res = await base.ExecuteTransaction(transitems);
             return res;
         }
     }

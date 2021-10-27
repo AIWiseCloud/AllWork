@@ -2025,16 +2025,6 @@
             单位地址
             </summary>
         </member>
-        <member name="P:AllWork.Model.User.CorpCertification.OpenUserId">
-            <summary>
-            销客职员ID
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.User.CorpCertification.SalesMan">
-            <summary>
-            业务员
-            </summary>
-        </member>
         <member name="P:AllWork.Model.User.CorpCertification.CreateDate">
             <summary>
             提交日期
@@ -2088,16 +2078,6 @@
         <member name="P:AllWork.Model.User.UserCertification.CorpAddress">
             <summary>
             单位地址
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.User.UserCertification.OpenUserId">
-            <summary>
-            销客职员ID
-            </summary>
-        </member>
-        <member name="P:AllWork.Model.User.UserCertification.SalesMan">
-            <summary>
-            业务员
             </summary>
         </member>
         <member name="P:AllWork.Model.User.UserCertification.CreateDate">
@@ -2163,6 +2143,16 @@
         <member name="P:AllWork.Model.User.UserInfo.Roles">
             <summary>
             用户角色
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.OpenUserId">
+            <summary>
+            业务员ID
+            </summary>
+        </member>
+        <member name="P:AllWork.Model.User.UserInfo.Salesman">
+            <summary>
+            业务员姓名
             </summary>
         </member>
         <member name="P:AllWork.Model.User.UserInfo.CreateDate">

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace AllWork.Services.Order
 {
-    public class OrderServices:Base.BaseServices<OrderMain>,IOrderServices
+    public class OrderServices : Base.BaseServices<OrderMain>, IOrderServices
     {
         readonly IOrderRepository _dal;
         public OrderServices(IOrderRepository orderRepository)
@@ -126,6 +126,34 @@ namespace AllWork.Services.Order
         {
             var res = await _dal.UploadOrderAttach(orderAttach);
             return res > 0;
+        }
+
+        public async Task<OperResult> AdjustOrderPrice(long orderId, int lineId, decimal newPrice)
+        {
+            var result = new OperResult { Status = false };
+            var orderStatus = await _dal.GetOrderStatusId(orderId);
+            if (orderStatus != 0)
+            {
+                result.ErrorMsg = "当前订单状态不能执行此操作!";
+                return result;
+            }
+
+            var res = await _dal.AdjustOrderPrice(orderId, lineId, newPrice);
+            return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
+        }
+        //订单调数量
+        public async Task<OperResult> AdjustOrderQuantity(long orderId, int lineId, decimal newQty)
+        {
+            var result = new OperResult { Status = false };
+            var orderStatus = await _dal.GetOrderStatusId(orderId);
+            if (orderStatus != 0)
+            {
+                result.ErrorMsg = "当前订单状态不能执行此操作!";
+                return result;
+            }
+
+            var res = await _dal.AdjustOrderQuantity(orderId, lineId, newQty);
+            return new OperResult { Status = res.Item1, ErrorMsg = res.Item2 };
         }
     }
 }

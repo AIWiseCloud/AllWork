@@ -63,6 +63,7 @@ namespace AllWork.Model.User
         public string CorpAddress
         { get; set; }
 
+        /*
         /// <summary>
         /// 销客职员ID
         /// </summary>
@@ -76,6 +77,7 @@ namespace AllWork.Model.User
         /// </summary>
         public string SalesMan
         { get; set; }
+        */
 
         /// <summary>
         /// 提交日期

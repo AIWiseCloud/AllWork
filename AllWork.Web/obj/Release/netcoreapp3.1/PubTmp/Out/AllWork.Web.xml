@@ -778,6 +778,24 @@
             <param name="orderAttach"></param>
             <returns></returns>
         </member>
+        <member name="M:AllWork.Web.Controllers.OrderController.AdjustOrderPrice(System.Int64,System.Int32,System.Decimal)">
+            <summary>
+            调整订单单价（客服人员针对待付款订单）
+            </summary>
+            <param name="orderId">订单号</param>
+            <param name="lineId">行号</param>
+            <param name="newPrice">调整价</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.OrderController.AdjustOrderQuantity(System.Int64,System.Int32,System.Decimal)">
+            <summary>
+            调整订单数量（客服人员针对待付款订单）
+            </summary>
+            <param name="orderId">订单号</param>
+            <param name="lineId">行号</param>
+            <param name="newQty">调整数量</param>
+            <returns></returns>
+        </member>
         <member name="T:AllWork.Web.Controllers.OrderEvaluateController">
             <summary>
             商品评价
@@ -1270,6 +1288,22 @@
             <param name="unionId">UnionId</param>
             <param name="phoneNumber">手机号</param>
             <param name="code">短信验证码</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.BindSalesman(System.String,System.String,System.String)">
+            <summary>
+            绑定业务员
+            </summary>
+            <param name="unionId">用户标识</param>
+            <param name="openUserId">业务员ID</param>
+            <param name="salesman">业务员姓名</param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.GetSalesman(System.String)">
+            <summary>
+            获取绑定的业务员
+            </summary>
+            <param name="unionId"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.UserController.SetUserRoles(System.String,System.String)">

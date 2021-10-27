@@ -39,5 +39,10 @@ namespace AllWork.IServices.Order
         Task<string> GetBillId(long orderId);
 
         Task<bool> UploadOrderAttach(OrderAttach orderAttach);
+
+        Task<OperResult> AdjustOrderPrice(long orderId, int lineId, decimal newPrice);
+
+        //订单调数量
+        Task<OperResult> AdjustOrderQuantity(long orderId, int lineId, decimal newQty);
     }
 }

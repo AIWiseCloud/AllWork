@@ -67,20 +67,21 @@ namespace AllWork.Model.User
         public string CorpAddress
         { get; set; }
 
-        /// <summary>
-        /// 销客职员ID
-        /// </summary>
-        public string OpenUserId
-        {
-            get;set;
-        }
+        /*
+         /// <summary>
+         /// 销客职员ID
+         /// </summary>
+         public string OpenUserId
+         {
+             get; set;
+         }
 
-        /// <summary>
-        /// 业务员
-        /// </summary>
-        [Required(ErrorMessage = "业务员不能为空")]
-        public string SalesMan
-        { get; set; }
+         /// <summary>
+         /// 业务员
+         /// </summary>
+         public string SalesMan
+         { get; set; }
+         */
 
         /// <summary>
         /// 提交日期

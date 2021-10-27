@@ -272,4 +272,3 @@ D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Tea.dll
 D:\AppCode\AllWork\AllWork.Web\obj\Debug\netcoreapp3.1\AllWork.Web.MvcApplicationPartsAssemblyInfo.cs
 D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\AllWork.Model.pdb
 D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\AllWork.Model.xml
-D:\AppCode\AllWork\AllWork.Web\bin\Debug\netcoreapp3.1\netcoreapp3.1\Microsoft.Extensions.Configuration.dll

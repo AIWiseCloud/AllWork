@@ -300,6 +300,41 @@ namespace AllWork.Web.Controllers
         }
 
         /// <summary>
+        /// 绑定业务员
+        /// </summary>
+        /// <param name="unionId">用户标识</param>
+        /// <param name="openUserId">业务员ID</param>
+        /// <param name="salesman">业务员姓名</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<IActionResult> BindSalesman(string unionId, string openUserId, string salesman)
+        {
+            var result = new OperResult { Status = false };
+            if(string.IsNullOrEmpty(unionId) || string.IsNullOrWhiteSpace(openUserId)|| string.IsNullOrWhiteSpace(salesman))
+            {
+                result.ErrorMsg = "参数不能为空";
+            }
+            else
+            {
+                var res = await _userServices.BindSalesman(unionId, openUserId, salesman);
+                result.Status = res;
+            }
+            return Ok(result);
+        }
+
+        /// <summary>
+        /// 获取绑定的业务员
+        /// </summary>
+        /// <param name="unionId"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetSalesman(string unionId)
+        {
+            var res = await _userServices.GetSalesman(unionId);
+            return Ok(res);
+        }
+
+        /// <summary>
         /// 设定用户角色
         /// </summary>
         /// <param name="unionId"></param>

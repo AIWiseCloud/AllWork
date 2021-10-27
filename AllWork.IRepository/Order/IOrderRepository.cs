@@ -41,5 +41,11 @@ namespace AllWork.IRepository.Order
 
         //上传付款凭证
         Task<int> UploadOrderAttach(OrderAttach orderAttach);
+
+        //订单调价
+        Task<Tuple<bool,string>> AdjustOrderPrice(long orderId, int lineId, decimal newPrice);
+
+        //订单调数量
+        Task<Tuple<bool, string>> AdjustOrderQuantity(long orderId, int lineId, decimal newQty);
     }
 }

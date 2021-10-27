@@ -123,6 +123,13 @@ namespace AllWork.Repository.Sys
             return res > 0;
         }
 
+        public async Task<bool> BindSalesman(string unionId, string openUserId, string salesman)
+        {
+            var sql = "Update UserInfo set OpenUserId = @OpenUserId, Salesman = @Salesman Where UnionId = @UnionId";
+            var res = await base.Execute(sql, new { UnionId = unionId, OpenUserId = openUserId, Salesman = salesman });
+            return res > 0;
+        }
+
         public async Task<bool> SetUserRoles(string unionId, string roles)
         {
             var sql = "Update UserInfo set Roles = @Roles Where UnionId = @unionId";
@@ -138,10 +145,21 @@ namespace AllWork.Repository.Sys
             return res > 0;
         }
 
+        //所有客服电话
         public async Task<string> GetCustomerServicePhoneNumbers()
         {
             var sql = "select group_concat(PhoneNumber) from UserInfo where (Roles  like concat('%','cs','%') or Roles  like concat('%','admin','%')) and ifnull(PhoneNumber,'')!=''";
             var res = await base.ExecuteScalar<string>(sql);
+            return res;
+        }
+
+        //我的业务员
+        public async Task<UserInfo> GetSalesman(string unionId)
+        {
+            var sql = @"select a.* from UserInfo a, SalesMan b, UserInfo c 
+where b.OpenUserId = c.OpenUserId and c.UnionId = @UnionId
+and a.PhoneNumber = b.Mobile";
+            var res = await base.QueryFirst(sql, new { UnionId = unionId });
             return res;
         }
     }

@@ -28,8 +28,12 @@ namespace AllWork.IRepository.Sys
 
         Task<bool> BindPhoeNumber(string unionId, string phoneNumber);
 
+        Task<bool> BindSalesman(string unionId, string openUserId, string salesman);
+
         Task<bool> SetUserRoles(string unionId, string roles);
 
         Task<string> GetCustomerServicePhoneNumbers();
+
+        Task<UserInfo> GetSalesman(string unionId);
     }
 }

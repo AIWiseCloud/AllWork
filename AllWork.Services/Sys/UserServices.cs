@@ -82,6 +82,12 @@ namespace AllWork.Services.Sys
             return res;
         }
 
+        public async Task<bool> BindSalesman(string unionId, string openUserId, string salesman)
+        {
+            var res = await _dal.BindSalesman(unionId, openUserId,salesman);
+            return res;
+        }
+
         public async Task<bool> SetUserRoles(string unionId, string roles)
         {
             var res = await _dal.SetUserRoles(unionId, roles);
@@ -94,9 +100,17 @@ namespace AllWork.Services.Sys
             return res;
         }
 
+        //所有客服的电话号码 
         public async Task<string> GetCustomerServicePhoneNumbers()
         {
             var res = await _dal.GetCustomerServicePhoneNumbers();
+            return res;
+        }
+
+        //获取我的业务员
+        public async Task<UserInfo> GetSalesman(string unionId)
+        {
+            var res = await _dal.GetSalesman(unionId);
             return res;
         }
     }

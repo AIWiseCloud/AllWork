@@ -94,6 +94,18 @@ namespace AllWork.Model.User
         { get; set; }
 
         /// <summary>
+        /// 业务员ID
+        /// </summary>
+        public string OpenUserId
+        { get; set; }
+
+        /// <summary>
+        /// 业务员姓名
+        /// </summary>
+        public string Salesman
+        { get; set; }
+
+        /// <summary>
         /// 创建日期
         /// </summary>
         public DateTime CreateDate

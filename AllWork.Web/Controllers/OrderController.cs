@@ -54,9 +54,11 @@ namespace AllWork.Web.Controllers
             if (res.Status)
             {
                 var csPhones = await _userServices.GetCustomerServicePhoneNumbers();
-                if (!string.IsNullOrEmpty(csPhones))
+                var salesman = await _userServices.GetSalesman(orderMain.UnionId);
+                var salesmanMobile = salesman == null ? "" : salesman.PhoneNumber;
+                if (!string.IsNullOrEmpty(csPhones) || !string.IsNullOrEmpty(salesmanMobile))
                 {
-                    await _smsServices.SendOrderMsg(csPhones, orderMain.Receiver, orderMain.OrderId.ToString());
+                    await _smsServices.SendOrderMsg(csPhones + "," + salesmanMobile, orderMain.Receiver, orderMain.OrderId.ToString());
                 }
             }
             return Ok(res);
@@ -83,9 +85,9 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> DeleteOrder(long orderId)
         {
             var statusId = await _orderServices.GetOrderStatusId(orderId);
-            if(statusId!=0 && statusId != -1)
+            if (statusId != 0 && statusId != -1)
             {
-                return Ok(new OperResult {Status=false,ErrorMsg="订单所处状态不允许删除"});
+                return Ok(new OperResult { Status = false, ErrorMsg = "订单所处状态不允许删除" });
             }
             var res = await _orderServices.DeleteOrder(orderId);
             return Ok(res);
@@ -221,6 +223,36 @@ namespace AllWork.Web.Controllers
         public async Task<IActionResult> UploadOrderAttach(OrderAttach orderAttach)
         {
             var res = await _orderServices.UploadOrderAttach(orderAttach);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 调整订单单价（客服人员针对待付款订单）
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="lineId">行号</param>
+        /// <param name="newPrice">调整价</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize(policy: "CS")]
+        public async Task<IActionResult> AdjustOrderPrice(long orderId, int lineId, decimal newPrice)
+        {
+            var res = await _orderServices.AdjustOrderPrice(orderId, lineId, newPrice);
+            return Ok(res);
+        }
+
+        /// <summary>
+        /// 调整订单数量（客服人员针对待付款订单）
+        /// </summary>
+        /// <param name="orderId">订单号</param>
+        /// <param name="lineId">行号</param>
+        /// <param name="newQty">调整数量</param>
+        /// <returns></returns>
+        [HttpPut]
+        [Authorize(policy: "CS")]
+        public async Task<IActionResult> AdjustOrderQuantity(long orderId, int lineId, decimal newQty)
+        {
+            var res = await _orderServices.AdjustOrderQuantity(orderId, lineId, newQty);
             return Ok(res);
         }
     }
