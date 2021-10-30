@@ -1301,9 +1301,16 @@
         </member>
         <member name="M:AllWork.Web.Controllers.UserController.GetSalesman(System.String)">
             <summary>
-            获取绑定的业务员
+            获取绑定的业务员及企业认证简要信息
             </summary>
             <param name="unionId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:AllWork.Web.Controllers.UserController.GetMyCustomers(AllWork.Model.RequestParams.CustomerParams)">
+            <summary>
+            我的客户
+            </summary>
+            <param name="customerParams"></param>
             <returns></returns>
         </member>
         <member name="M:AllWork.Web.Controllers.UserController.SetUserRoles(System.String,System.String)">

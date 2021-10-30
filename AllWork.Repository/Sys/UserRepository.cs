@@ -154,13 +154,42 @@ namespace AllWork.Repository.Sys
         }
 
         //我的业务员
-        public async Task<UserInfo> GetSalesman(string unionId)
+        public async Task<object> GetSalesman(string unionId)
         {
-            var sql = @"select a.* from UserInfo a, SalesMan b, UserInfo c 
+            var sql = @"select a.PhoneNumber, a.Salesman,
+IFNull(t2.Name,t3.Name )as LegalPerson, 
+IFNull(t2.CorpName, t3.CorpName) as CorpName,
+IFNull(t2.CorpAddress,t3.CorpAddress ) as CorpAddress,
+IFNull(t2.PhoneNumber,t3.PhoneNumber ) as CorpPhone
+from UserInfo a, SalesMan b, UserInfo c left join corpcertification t2 on c.UnionId = t2.UnionId 
+left join usercertification t3 on c.UnionId = t3.UnionId 
 where b.OpenUserId = c.OpenUserId and c.UnionId = @UnionId
 and a.PhoneNumber = b.Mobile";
-            var res = await base.QueryFirst(sql, new { UnionId = unionId });
+            var res = await base.QueryFirst<object>(sql, new { UnionId = unionId });
             return res;
+        }
+
+        //我的客户
+        public async Task<Tuple<IEnumerable<object>, int>> GetMyCustomers(CustomerParams customerParams)
+        {
+            var sqlpub = @" from UserInfo u 
+where OpenUserId in (select OpenUserId from userinfo where UnionId = @UnionId )";
+            var sql1 = "Select count(UnionId) as TotalCount " + sqlpub;
+            var sql2 = " select NickName , Avatar,PhoneNumber " + sqlpub + " Order by CreateDate desc limit @Skip, @PageSize ";
+            var sqlfull = sql1 + ";" + sql2;
+            var res = await base.QueryPagination<UserInfo>(sqlfull, new
+            {
+                customerParams.UnionId,
+                customerParams.PageModel.Skip,
+                customerParams.PageModel.PageSize
+            });
+            var items = new List<object>();
+            foreach(var item in res.Item1)
+            {
+                items.Add(new { nickName = item.NickName, avatar = item.Avatar, phoneNumber = item.PhoneNumber });
+            }
+            var result = new Tuple<IEnumerable<object>, int>(items, res.Item2);
+            return result;
         }
     }
 }

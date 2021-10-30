@@ -34,6 +34,10 @@ namespace AllWork.IServices.Sys
 
         Task<string> GetCustomerServicePhoneNumbers();
 
-        Task<UserInfo> GetSalesman(string unionId);
+        //我的业务员与认证信息
+        Task<object> GetSalesman(string unionId);
+
+        //我的客户
+        Task<Tuple<IEnumerable<object>, int>> GetMyCustomers(CustomerParams customerParams);
     }
 }

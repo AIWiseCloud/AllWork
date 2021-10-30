@@ -49,7 +49,7 @@ namespace AllWork.Model.Goods
         /// <summary>
         /// 折扣价
         /// </summary>
-        [Range(0.01, 20000)]
+        [Range(0.00, 20000)]
         public decimal DiscountPrice
         { get; set; }
 

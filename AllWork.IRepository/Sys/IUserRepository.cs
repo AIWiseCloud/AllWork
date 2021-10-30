@@ -34,6 +34,8 @@ namespace AllWork.IRepository.Sys
 
         Task<string> GetCustomerServicePhoneNumbers();
 
-        Task<UserInfo> GetSalesman(string unionId);
+        Task<object> GetSalesman(string unionId);
+
+        Task<Tuple<IEnumerable<object>, int>> GetMyCustomers(CustomerParams customerParams);
     }
 }

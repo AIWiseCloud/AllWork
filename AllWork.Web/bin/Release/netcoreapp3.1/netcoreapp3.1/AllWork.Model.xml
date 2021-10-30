@@ -1085,6 +1085,11 @@
             取消日期
             </summary>
         </member>
+        <member name="P:AllWork.Model.Order.OrderMain.Salesman">
+            <summary>
+            业务员
+            </summary>
+        </member>
         <member name="P:AllWork.Model.PostSale.OrderRefunds.PostSaleId">
             <summary>
             售后服务单号
@@ -1263,6 +1268,11 @@
         <member name="P:AllWork.Model.RequestParams.CommonParams.Keywords">
             <summary>
             关键字
+            </summary>
+        </member>
+        <member name="T:AllWork.Model.RequestParams.CustomerParams">
+            <summary>
+            查询我的客户参数
             </summary>
         </member>
         <member name="P:AllWork.Model.RequestParams.GoodsEvaluatePraams.GoodsId">

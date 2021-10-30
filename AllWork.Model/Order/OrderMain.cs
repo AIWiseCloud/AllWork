@@ -178,6 +178,11 @@ namespace AllWork.Model.Order
         }
 
         public virtual List<OrderList> OrderList { get; set; }
+
+        /// <summary>
+        /// 业务员
+        /// </summary>
+        public string Salesman { get; set; }
     }
 
     public class OrderMainExt : OrderMain

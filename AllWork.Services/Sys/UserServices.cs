@@ -107,10 +107,17 @@ namespace AllWork.Services.Sys
             return res;
         }
 
-        //获取我的业务员
-        public async Task<UserInfo> GetSalesman(string unionId)
+        //获取我的业务员与企业认证信息
+        public async Task<object> GetSalesman(string unionId)
         {
             var res = await _dal.GetSalesman(unionId);
+            return res;
+        }
+
+        //我的客户
+        public async Task<Tuple<IEnumerable<object>, int>> GetMyCustomers(CustomerParams customerParams)
+        {
+            var res = await _dal.GetMyCustomers(customerParams);
             return res;
         }
     }

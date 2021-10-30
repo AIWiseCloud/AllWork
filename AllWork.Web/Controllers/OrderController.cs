@@ -54,7 +54,7 @@ namespace AllWork.Web.Controllers
             if (res.Status)
             {
                 var csPhones = await _userServices.GetCustomerServicePhoneNumbers();
-                var salesman = await _userServices.GetSalesman(orderMain.UnionId);
+                dynamic salesman = await _userServices.GetSalesman(orderMain.UnionId);
                 var salesmanMobile = salesman == null ? "" : salesman.PhoneNumber;
                 if (!string.IsNullOrEmpty(csPhones) || !string.IsNullOrEmpty(salesmanMobile))
                 {
@@ -166,7 +166,7 @@ namespace AllWork.Web.Controllers
         /// </summary>
         /// <param name="orderQueryParams"></param>
         /// <returns></returns>
-        [HttpPost]
+        [HttpPost][AllowAnonymous]
         public async Task<IActionResult> QueryOrders(OrderQueryParams orderQueryParams)
         {
             var res = await _orderServices.QueryOrders(orderQueryParams);

@@ -228,7 +228,7 @@ select b.OpenUserId from UserInfo a, Salesman b where a.PhoneNumber = b.Mobile a
 )
 union select  @UnionId ";
                 //sqlpub.Append(" and UnionId = @UnionId ");//*表示后端查询不用按用户ID过滤
-                sqlpub.AppendFormat(" and union in ({0}) ", unionids); //移动端可以查看自己及自己客户下的订单(2021-10-27)
+                sqlpub.AppendFormat(" and UnionId in ({0}) ", unionids); //移动端可以查看自己及自己客户下的订单(2021-10-27)
             }
             //查询方案为0：按关键字搜索
             if (orderQueryParams.QueryScheme == 0)
@@ -275,8 +275,9 @@ union select  @UnionId ";
             //(3) sql语句1（求总记录数）
             var sql1 = "Select Count(OrderId) as TotalCount from (" + sqlpub + " )t "; //记录数
             //sql语句2: 重写订单主子表及关联表语句并与上面加上订单号条件，订单号取上面加了limit的去重语句
-            var sql2 = string.Format(@"Select a.*,'' as id1, b.*,'' as id2, c.*,'' as id3, d.*,'' as id4, e.*,'' as id5, f.*, '' as id6, oa.*
-from OrderMain a,
+            var sql2 = string.Format(@"Select a.*,  '' as id1, b.*,'' as id2, c.*,'' as id3, d.*,'' as id4, e.*,'' as id5, f.*, '' as id6, oa.*
+from 
+(Select t1.*,t2.Salesman from OrderMain t1 left join UserInfo t2 on t1.UnionId = t2.UnionId) a ,
 (
 {0} {1} limit @Skip, @PageSize
 )idtab
